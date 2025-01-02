@@ -3,4 +3,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
+}
+
+:root {
+    --color-primario: #6EC1E4;
+    --color-secundario: #f2f2f2;
+    --color-terciario: #296580;
+}

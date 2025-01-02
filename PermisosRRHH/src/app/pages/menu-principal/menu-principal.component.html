@@ -1,24 +1,30 @@
 <div class="menu-lateral">
+    <div class="logo">
+      <img src="favicon.ico" alt="Logo" class="logo-img">
+    </div>
     <ul>
-      <li>Item 1
-        <ul>
-          <li>Subitem 1</li>
-          <li>Subitem 2</li>
-          <li>Subitem 3</li>
-        </ul>
+      <li class="menu">Solicitar
+        <div class="submenu">
+          <a routerLink="permiso-personal">Permiso Personal</a>
+          <a routerLink="permiso-oficial">Permiso Oficial</a>
+          <a routerLink="vacaciones">Vacaciones</a>
+        </div>
       </li>
-      <li>Item 2
-        <ul>
-          <li>Subitem 1</li>
-        </ul>
+      <li class="menu">Validar
+        <div class="submenu">
+          <a routerLink="mis-solicitudes">Mis Solicitudes</a>
+        </div>
       </li>
-      <li>Item 3
-        <ul>
-          <li>Subitem 1</li>
-        </ul>
+      <li class="menu">Aprobar
+        <div class="submenu">
+          <a routerLink="solicitudes">Solicitudes</a>
+        </div>
       </li>
     </ul>
+    <div>
+      <button class="btn button">Cerrar Sesión</button>
+    </div>
   </div>
-  <div class="contenido">
-    <h1>Bienvenido al Menú Principal</h1>
-  </div>
+<div class="contenido">
+  <router-outlet></router-outlet>
+</div>

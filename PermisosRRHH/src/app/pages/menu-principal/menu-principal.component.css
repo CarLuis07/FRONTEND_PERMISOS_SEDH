@@ -1,16 +1,69 @@
 .menu-lateral {
-    width: 200px;
-    background-color: #f2f2f2;
-    height: 100vh;
-    float: left;
-    padding: 10px;
-  }
-  .menu-lateral ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .contenido {
-    margin-left: 200px;
-    padding: 20px;
-  }
+  width: 200px;
+  background-color:#296580;
+  height: 100vh;
+  float: left;
+  padding: 10px;
+}
+
+.logo-img {
+  width: 180px;
+  height: 140px;
+  margin: 0;
+  display: block;
+}
+.menu-lateral ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 40px;
+
+}
+
+.menu {
+  margin-top: 10px;
+  color: rgb(139, 135, 135);
+  text-decoration: none;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.submenu a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 5px 0;
+  font-size: 0.9em;
+}
+
+.submenu a:hover {
+  color: #000000;
+  text-decoration: none;
+}
+
+.button {
+  background-color: #000000;
+  color: #6EC1E4;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin-top: 320px;
+  margin-left: 15px;
+}
+
+button:hover {
+  background-color: #6EC1E4;
+  color: #000000;
+  padding: 10px;
+}
+
+.contenido {
+  margin-left: 200px;
+  padding: 20px;
+}
