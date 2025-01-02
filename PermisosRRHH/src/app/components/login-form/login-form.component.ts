@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 export class LoginFormComponent {
   username: string = '';
   password: string = '';
+  showError: boolean = false;
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
   
@@ -27,6 +29,11 @@ export class LoginFormComponent {
       },
       (error) => {
         console.error('Error en login', error);
+        this.showError = true;
+        this.errorMessage = 'Usuario o contraseña incorrectos';
+        setTimeout(() => {
+          this.showError = false;
+        }, 3000);
       }
     );
   }
