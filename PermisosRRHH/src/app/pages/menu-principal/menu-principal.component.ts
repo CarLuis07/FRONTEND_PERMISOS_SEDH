@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-principal',
@@ -10,5 +10,13 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./menu-principal.component.css']
 })
 export class MenuPrincipalComponent {
+  constructor(private router: Router) {}
 
+  logout() {
+    // Eliminar token
+    localStorage.removeItem('token');
+    
+    // Redireccionar a la ruta raíz
+    this.router.navigate(['/']);
+  }
 }
