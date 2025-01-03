@@ -13,29 +13,36 @@
       <label for="cargo">Cargo:</label>
       <input type="text" id="cargo" [(ngModel)]="empleado.cargo" name="cargo" class="form-control" readonly>
     </div>
-    <div class="form-group">
-      <label for="fecha">Fecha:</label>
-      <input type="date" id="fecha" [(ngModel)]="fecha" name="fecha" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="horas">Horas que desea tomar:</label>
-      <input type="number" id="horas" [(ngModel)]="horas" name="horas" class="form-control" min="1" max="9">
+
+    <div class="form-date">
+      <div>
+        <label for="fecha">Fecha de solicitud:</label>
+        <input type="date" id="fecha" [(ngModel)]="fecha" name="fecha" class="form-control" required>
+      </div>
+      <div>
+        <label for="horas">Horas que desea tomar:</label>
+        <input type="number" id="horas" [(ngModel)]="horas" name="horas" class="form-control" min="1" max="9" required>
+      </div>
     </div>
     <div class="form-group">
       <label for="motivo">Motivo de la salida:</label>
-      <textarea id="motivo" [(ngModel)]="motivo" name="motivo" class="form-control" rows="3"></textarea>
+      <textarea id="motivo" [(ngModel)]="motivo" name="motivo" class="form-control" rows="3" required></textarea> 
     </div>
     <div class="form-group">
       <label>¿Es cita médica?</label>
-      <div>
+      <div class="radio-group">
         <input type="radio" id="cita-si" [(ngModel)]="citaMedica" name="citaMedica" value="si">
         <label for="cita-si">Sí</label>
-      </div>
-      <div>
         <input type="radio" id="cita-no" [(ngModel)]="citaMedica" name="citaMedica" value="no">
         <label for="cita-no">No</label>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <div class="form-group" *ngIf="citaMedica === 'si'">
+      <label for="comprobante" class="warning">*Usted debera adjuntar la evidencia medica en este momento o en un 
+        plazo de 3 dìas despues fecha de esta la solicitud.
+      </label>
+      <input type="file" id="comprobante" name="comprobante" class="form-control" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar A Jefe Inmediato</button>
   </form>
 </div>

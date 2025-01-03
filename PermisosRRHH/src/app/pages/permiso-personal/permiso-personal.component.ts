@@ -19,7 +19,7 @@ export class PermisoPersonalComponent {
   horas: number = 1;
   motivo: string = '';
   citaMedica: string = 'no';
-
+  
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -47,7 +47,7 @@ export class PermisoPersonalComponent {
       fecha: this.fecha,
       horas: this.horas,
       motivo: this.motivo,
-      citaMedica: this.citaMedica
+      citaMedica: this.citaMedica,
     };
     
     this.http.post('http://localhost:8000/api/solicitud-permiso', solicitud).subscribe(
