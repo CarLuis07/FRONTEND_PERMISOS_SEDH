@@ -1,1 +1,30 @@
-<h1>Solicitud Permiso Oficial</h1>
+<div class="form-container">
+    <h1>Solicitud De Permiso Oficial</h1>
+    <form (ngSubmit)="submitForm()">
+        <div class="form-group">
+            <label for="nombre">Nombre del Empleado:</label>
+            <input type="text" id="nombre" [(ngModel)]="empleado.nombre" name="nombre" class="form-control" readonly>
+        </div>
+      
+        <div class="form-group">
+            <label for="dependencia">Dependencia:</label>
+            <input type="text" id="dependencia" [(ngModel)]="empleado.dependencia" name="dependencia" class="form-control" readonly>
+        </div>
+      
+        <div class="form-group">
+            <label for="cargo">Cargo:</label>
+            <input type="text" id="cargo" [(ngModel)]="empleado.cargo" name="cargo" class="form-control" readonly>
+        </div>
+
+        <div class="form-date">
+            <label for="fecha">Fecha de solicitud:</label>
+            <input type="date" id="fecha" [(ngModel)]="fecha" name="fecha" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="motivo">Motivo de la salida:</label>
+            <textarea id="motivo" [(ngModel)]="motivo" name="motivo" class="form-control" rows="3" required></textarea> 
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar A Jefe Inmediato</button>
+    </form>
+</div>

@@ -23,9 +23,17 @@ export class LoginFormComponent {
     console.log('Intentando iniciar sesión con:', this.username);
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
-        console.log('Respuesta del servidor:', response);
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/menu-principal']);
+        if (response.access_token) {
+          localStorage.setItem('token', response.access_token);
+          this.router.navigate(['/menu-principal']);
+        } else {
+          console.error('No se recibió token en la respuesta');
+          this.showError = true;
+          this.errorMessage = 'Error en la autenticación';
+          setTimeout(() => {
+            this.showError = false;
+          }, 3000);
+        }
       },
       (error) => {
         console.error('Error en login', error);
