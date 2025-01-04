@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-permiso-personal',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgbModule],
   templateUrl: './permiso-personal.component.html',
   styleUrl: './permiso-personal.component.css'
 })
@@ -31,9 +32,9 @@ export class PermisoPersonalComponent implements OnInit {
   };
   modalTitle: string = '';
   modalMessage: string = '';
-  modalContent: any;
+  @ViewChild('modalContent') modalContent: any;
   
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, @Inject(NgbModal) private modalService: NgbModal) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal) {}
   
   ngOnInit() {
     this.obtenerDatosEmpleado();
@@ -89,12 +90,12 @@ export class PermisoPersonalComponent implements OnInit {
     this.http.post(this.apiUrl, solicitud).subscribe({
       next: (response) => {
         console.log('Solicitud enviada', response);
-        this.openModal('¡Éxito!', 'Solicitud enviada correctamente');
+        this.openModal('¡Éxito!', 'Solicitud enviada correctamente a su jefe inmediato.');
         this.limpiarFormulario();
       },
       error: (error) => {
         console.error('Error al enviar la solicitud', error);
-        this.openModal('Error', 'No cuenta con horas disponibles para permisos personales');
+        this.openModal('¡Ups Lo Sentimos!', `Usted No cuenta con ${this.horas} horas disponibles para permisos personales este mes, intente menos horas.`);
       }
     });
   }
@@ -115,3 +116,5 @@ export class PermisoPersonalComponent implements OnInit {
     this.citaMedica = 0; // No por defecto
   }
 }
+
+

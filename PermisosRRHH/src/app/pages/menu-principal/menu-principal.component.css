@@ -64,6 +64,14 @@ button:hover {
 }
 
 .contenido {
-  margin-left: 200px;
   padding: 20px;
+}
+
+footer {
+  color: #296580;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
