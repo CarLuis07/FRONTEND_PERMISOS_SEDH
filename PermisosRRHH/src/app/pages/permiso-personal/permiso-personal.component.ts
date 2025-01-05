@@ -20,7 +20,15 @@ export class PermisoPersonalComponent implements OnInit {
     dependencia: '',
     cargo: ''
   };
-  fecha: string = new Date().toISOString().split('T')[0]; // Fecha actual por defecto
+  
+  // Establecer fecha actual en zona horaria de Honduras (UTC-6)
+  fecha: string = new Date().toLocaleString('es-HN', { 
+    timeZone: 'America/Tegucigalpa',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).split('/').reverse().join('-'); // Fecha actual por defecto
+
   horas: number = 1;
   motivo: string = 'Asunto Personal.';
   citaMedica: number = 0; // 0 = No, 1 = Sí
