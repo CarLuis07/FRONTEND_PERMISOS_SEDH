@@ -6,6 +6,7 @@ import { PermisoOficialComponent } from './pages/permiso-oficial/permiso-oficial
 import { VacacionesComponent } from './pages/vacaciones/vacaciones.component';
 import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes.component';
 import { SolicitudesComponent } from './pages/solicitudes/solicitudes.component';
+import { authGuard } from './services/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -17,5 +18,18 @@ export const routes: Routes = [
     { path: 'solicitudes', component: SolicitudesComponent },
   ]},
   // Ruta comodín para redireccionar a login si la ruta no coincide
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
+  {
+    path: 'menu',
+    component: MenuPrincipalComponent,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'permiso-personal',
+        component: PermisoPersonalComponent,
+        canActivate: [authGuard]
+      },
+      // ...existing routes...
+    ]
+  }
 ];

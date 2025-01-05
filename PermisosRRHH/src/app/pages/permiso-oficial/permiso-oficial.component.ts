@@ -3,28 +3,39 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-permiso-oficial',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgbModule],
   templateUrl: './permiso-oficial.component.html',
   styleUrl: './permiso-oficial.component.css'
 })
-export class PermisoOficialComponent {
-  apiUrl = `${environment.apiUrl}/permisoPersonal`;
+export class PermisoOficialComponent implements OnInit {
+  apiUrl = `${environment.apiUrl}/permisoOficial`;
 
   empleado = {
     nombre: '',
     dependencia: '',
     cargo: ''
   };
-  fecha: string = '';
+  fecha: string = new Date().toISOString().split('T')[0]; // Fecha actual por defecto
   motivo: string = '';
+  formInvalido: boolean = true;
+  camposInvalidos = {
+    fecha: false,
+    motivo: false,
+  };
+  modalTitle: string = '';
+  modalMessage: string = '';
+  @ViewChild('modalContent') modalContent: any;
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal) {}
   
   ngOnInit() {
     this.obtenerDatosEmpleado();
+    this.validarFormulario();
   }
 
   obtenerDatosEmpleado() {   
@@ -41,21 +52,53 @@ export class PermisoOficialComponent {
       }
     });
   }
+  validarFormulario() {
+    this.camposInvalidos = {
+      fecha: !this.fecha,
+      motivo: !this.motivo?.trim()
+    }
+   
+    this.formInvalido = Object.values(this.camposInvalidos).some(invalid => invalid);
+  }
+
+  onInputChange() {
+    this.validarFormulario();
+  }
 
   submitForm() {
+    const fechaFormateada = new Date(this.fecha).toISOString().split('T')[0];
+    
     const solicitud = {
-      fecha_solicitud: this.fecha,
-      motivo: this.motivo,
+      fecha_solicitud: fechaFormateada,
+      motivo: this.motivo.trim()
     };
+    this.agregarPermisoOficial(solicitud);
+  }
 
-    this.http.post("cambiarURl", solicitud).subscribe(
-      response => {
-        console.log('Solicitud enviada', response);
-        // Aquí puedes agregar lógica para mostrar un mensaje de éxito o redirigir al usuario
+  agregarPermisoOficial(solicitud: any) {
+    this.http.post(this.apiUrl, solicitud).subscribe({
+      next: () => {
+        this.openModal('¡Éxito!', 'Solicitud enviada correctamente a su jefe inmediato.');
+        this.limpiarFormulario();
       },
-      error => {
+      error: (error) => {
         console.error('Error al enviar la solicitud', error);
+        this.openModal('¡Ups Lo Sentimos!', error.error.message);
       }
-    );
+    });
+  }
+
+  openModal(title: string, message: string) {
+    this.modalTitle = title;
+    this.modalMessage = message;
+    this.modalService.open(this.modalContent, {
+      centered: true,
+      backdrop: 'static'
+    });
+  }
+
+  limpiarFormulario() {
+    this.fecha = new Date().toISOString().split('T')[0];
+    this.motivo = '';
   }
 }

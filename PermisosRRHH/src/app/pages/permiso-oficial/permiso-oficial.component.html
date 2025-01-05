@@ -18,13 +18,51 @@
 
         <div class="form-date">
             <label for="fecha">Fecha de solicitud:</label>
-            <input type="date" id="fecha" [(ngModel)]="fecha" name="fecha" class="form-control" required>
+            <input type="date" 
+               id="fecha" 
+               [(ngModel)]="fecha" 
+               name="fecha" 
+               class="form-control" 
+               [class.invalido]="camposInvalidos.fecha"
+               (change)="onInputChange()" 
+               required>
+        <span class="error-message" *ngIf="camposInvalidos.fecha">
+          Seleccione una fecha
+        </span>
         </div>
         
         <div class="form-group">
             <label for="motivo">Motivo de la salida:</label>
-            <textarea id="motivo" [(ngModel)]="motivo" name="motivo" class="form-control" rows="3" required></textarea> 
+            <textarea id="motivo" 
+                [(ngModel)]="motivo" 
+                name="motivo" 
+                class="form-control" 
+                [class.invalido]="camposInvalidos.motivo"
+                (input)="onInputChange()" 
+                rows="3" 
+                required></textarea>
+      <span class="error-message" *ngIf="camposInvalidos.motivo">
+        Ingrese el motivo
+      </span>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar A Jefe Inmediato</button>
+        <button type="submit" 
+          class="btn btn-primary" 
+          [disabled]="formInvalido">
+      Enviar A Jefe Inmediato
+      </button>
     </form>
 </div>
+
+
+<ng-template #modalContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{ modalTitle }}</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+      <p>{{ modalMessage }}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>

@@ -86,10 +86,8 @@ export class PermisoPersonalComponent implements OnInit {
   }
   
   agregarPermisoPersonal(solicitud: any) {
-    console.log('Enviando solicitud:', solicitud);
     this.http.post(this.apiUrl, solicitud).subscribe({
-      next: (response) => {
-        console.log('Solicitud enviada', response);
+      next: () => {
         this.openModal('¡Éxito!', 'Solicitud enviada correctamente a su jefe inmediato.');
         this.limpiarFormulario();
       },
