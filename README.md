@@ -28,7 +28,7 @@ para ejecutar este proyecto
 npm i
 ```
 
-4. este proyecto tiene metodos de seguridad como varibles de entorno, cree un archivo en la sisguiente ruta del proyecto como: `src/environments/enviroment.ts` en ella necesitará colocar las credenciales de conexion de la API para consumirlas.
+4. este proyecto tiene metodos de seguridad como varibles de entorno, cree un archivo en la siguiente ruta del proyecto como: `src/environments/enviroment.ts` en ella necesitará colocar las credenciales de conexion de la API para consumirlas.
 necesitará las variables para la conexion debera colocar en el archivo: 
 
 ```
