@@ -33,6 +33,12 @@ h1 {
     overflow-y: auto;
   }
   
+  .table-responsive2 {
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 180px;  /* Altura para mostrar ~2 filas */
+    overflow-y: auto;
+  }
   .table thead {
     position: sticky;
     top: 0;

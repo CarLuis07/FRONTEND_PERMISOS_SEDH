@@ -23,8 +23,8 @@
               {{solicitud.nom_estado}}
             </span>
           </td>
-          <td>{{solicitud.pri_aporbacion || 'Pendiente'}}</td>
-          <td>{{solicitud.seg_aprobacion || 'Pendiente'}}</td>
+          <td>{{solicitud.pri_aporbacion || 'PENDIENTE'}}</td>
+          <td>{{solicitud.seg_aprobacion || 'PENDIENTE'}}</td>
           <td>{{solicitud.mot_rechazo || 'N/A'}}</td>
         </tr>
       </tbody>
@@ -32,10 +32,10 @@
   </div>
 </div>
 
-<div class="container mt-4">
+<div class="container mt-5">
     <h1 class="mb-4">Mis Solicitudes De Emergencia</h1>
     
-    <div class="table-responsive">
+    <div class="table-responsive2">
       <table class="table table-striped table-hover">
         <thead>
           <tr>
@@ -59,8 +59,8 @@
                 {{solicitudE.nom_estado}}
               </span>
             </td>
-            <td>{{solicitudE.pri_aporbacion || 'Pendiente'}}</td>
-            <td>{{solicitudE.seg_aprobacion || 'Pendiente'}}</td>
+            <td>{{solicitudE.pri_aporbacion || 'PENDIENTE'}}</td>
+            <td>{{solicitudE.seg_aprobacion || 'PENDIENTE'}}</td>
             <td>{{solicitudE.mot_rechazo || 'N/A'}}</td>
             <td>
             </td>   
