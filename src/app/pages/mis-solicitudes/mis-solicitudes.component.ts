@@ -30,8 +30,6 @@ export class MisSolicitudesComponent implements OnInit {
       next: ([solicitudes, emergencias]) => {
         this.solicitudes = solicitudes;
         this.solicitudEmergencias = emergencias;
-        console.log('Solicitudes regulares:', solicitudes);
-        console.log('Solicitudes emergencia:', emergencias);
       },
       error: (error) => {
         console.error('Error al obtener solicitudes:', error);

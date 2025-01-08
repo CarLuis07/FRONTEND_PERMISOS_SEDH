@@ -29,7 +29,7 @@ export class PermisoPersonalComponent implements OnInit {
     day: '2-digit'
   }).split('/').reverse().join('-'); // Fecha actual por defecto
 
-  horas: number = 1;
+  horas: number = 3;
   motivo: string = 'Asunto Personal.';
   citaMedica: number = 0; // 0 = No, 1 = Sí
   formInvalido: boolean = true;
@@ -53,7 +53,6 @@ export class PermisoPersonalComponent implements OnInit {
 
     this.http.get<any>(this.apiUrl).subscribe({
       next: (data) => {
-        console.log('Datos del empleado:', data[0]);
         this.empleado.nombre = `${data[0].pri_nombre} ${data[0].seg_nombre} ${data[0].pri_apellido} ${data[0].seg_apellido}`;
         this.empleado.dependencia = data[0].nom_dependencia;
         this.empleado.cargo = data[0].nom_cargo;
@@ -117,7 +116,7 @@ export class PermisoPersonalComponent implements OnInit {
 
   limpiarFormulario() {
     this.fecha = new Date().toISOString().split('T')[0];
-    this.horas = 1;
+    this.horas = 3;
     this.motivo = 'Asunto Personal.';
     this.citaMedica = 0; // No por defecto
   }

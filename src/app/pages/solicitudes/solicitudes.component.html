@@ -1,1 +1,93 @@
-<h1>Aprobar Solicitudes De Mis Subordinados</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Aprobar Solicitudes De Subordinados</h1>
+    
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Fecha Solicitud</th>
+            <th>Tipo Solicitud</th>
+            <th>Subordinado</th>
+            <th>Estado Solicitud</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let solicitud of solicitudes">
+            <td>{{solicitud.fec_solicitud | date:'dd/MM/yyyy'}}</td>
+            <td>{{solicitud.nom_tipo_solicitud}}</td>
+            <td>{{solicitud.pri_nombre}} {{solicitud.pri_apellido}}</td>
+            <td>
+              <span [class]="'badge ' + (solicitud.nom_estado === 'EN PROCESO' ? 'bg-warning' : 
+                                      solicitud.nom_estado === 'APROBADO' ? 'bg-success' : 'bg-danger')">
+                {{solicitud.nom_estado}}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="openModal(solicitud)">
+                Ver Solicitud
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Modal Template -->
+  <ng-template #modalContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{modalTitle}}</h4>
+      <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="form-group">
+          <label class="form-label">Nombre del Empleado:</label>
+          <input type="text" class="form-control" [value]="solicitudSeleccionada?.pri_nombre + ' ' +solicitudSeleccionada?.seg_nombre+ ' ' +solicitudSeleccionada?.pri_apellido+ ' ' +solicitudSeleccionada?.seg_apellido" readonly>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Dependencia:</label>
+          <input type="text" class="form-control" [value]="solicitudSeleccionada?.nom_dependencia" readonly>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Cargo:</label>
+          <input type="text" class="form-control" [value]="solicitudSeleccionada?.nom_cargo" readonly>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Fecha de Solicitud:</label>
+          <input type="text" class="form-control" [value]="solicitudSeleccionada?.fec_solicitud | date:'dd/MM/yyyy'" readonly>
+        </div>
+        
+        <div class="form-group" *ngIf="solicitudSeleccionada?.nom_tipo_solicitud !== 'PERMISO OFICIAL'">
+          <label class="form-label">Horas Solicitadas:</label>
+          <input type="text" class="form-control" [value]="solicitudSeleccionada?.hor_solicitadas" readonly>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Motivo de Salida:</label>
+          <textarea class="form-control" rows="2" [value]="solicitudSeleccionada?.motivo" readonly></textarea>
+        </div>
+        <div class="form-group" *ngIf="solicitudSeleccionada?.nom_tipo_solicitud !== 'PERMISO OFICIAL'">
+            <label class="form-label emergencia" *ngIf="solicitudSeleccionada?.cat_emergencia === 'True'">
+                Este Permiso SI es considerado una emergencia médica.
+            </label>
+            <label class="form-label emergencia" *ngIf="solicitudSeleccionada?.cat_emergencia === 'False'">
+                Este Permiso NO es considerado una emergencia médica.
+            </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Motivo de Rechazo:</label>
+          <span class="error-message">*Solo llene este campo sino va ha aprobar la solictud.</span>
+          <textarea class="form-control" rows="3" [(ngModel)]="mot_rechazo" name="motivoRechazo"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="rechazarSolicitud()">NO APROBAR ESTE PERMISO</button>
+      <button type="button" class="btn btn-primary" (click)="aprobarSolicitud()">APROBAR ESTE PERMISO</button>
+    </div>
+  </ng-template>

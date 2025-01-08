@@ -20,7 +20,6 @@ export class LoginFormComponent {
   constructor(private authService: AuthService, private router: Router) {}
   
   login() {
-    console.log('Intentando iniciar sesión con:', this.username);
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
         if (response.access_token) {

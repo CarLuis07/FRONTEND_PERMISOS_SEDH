@@ -50,7 +50,6 @@ export class PermisoOficialComponent implements OnInit {
 
     this.http.get<any>(this.apiUrl).subscribe({
       next: (data) => {
-        console.log('Datos del empleado:', data[0]);
         this.empleado.nombre = `${data[0].pri_nombre} ${data[0].seg_nombre} ${data[0].pri_apellido} ${data[0].seg_apellido}`;
         this.empleado.dependencia = data[0].nom_dependencia;
         this.empleado.cargo = data[0].nom_cargo;
