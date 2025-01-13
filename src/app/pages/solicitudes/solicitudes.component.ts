@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class SolicitudesComponent implements OnInit {
   solicitudes: any[] = [];
   apiUrl = `${environment.apiUrl}/aprobarSolicitudes`;
+  apiUrl2= `${environment.apiUrl}/rechazarSolicitudes`;
   
   empleado = {
     fecha: '',
@@ -66,10 +67,29 @@ export class SolicitudesComponent implements OnInit {
     }
     
     actualizarSolicitud(id: number, estado: string) {
-      this.http.put(`${this.apiUrl}/${id}`, { estado }).subscribe({
+      const token = localStorage.getItem('token');
+      let userEmail = '';
+      
+      if (token) {
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        userEmail = tokenData.sub;
+      }
+    
+      const payload = {
+        id_permiso: this.solicitudSeleccionada.id_permiso,
+        tip_permiso: this.solicitudSeleccionada.nom_tipo_solicitud,
+        pri_aprobacion: userEmail,
+        mot_rechazo: estado === 'RECHAZADO' ? this.mot_rechazo : null
+      };
+    
+      const url = estado === 'RECHAZADO' ? this.apiUrl2 : this.apiUrl;
+    
+      this.http.put(url, payload).subscribe({
         next: (response) => {
+          console.log('Respuesta:', response);
           this.obtenerTodasLasSolicitudes();
           this.modalService.dismissAll();
+          this.limpiarFormulario();
         },
         error: (error) => {
           console.error('Error:', error);
@@ -78,7 +98,7 @@ export class SolicitudesComponent implements OnInit {
     }
 
     aprobarSolicitud() {
-      this.actualizarSolicitud(this.solicitudSeleccionada.id, 'APROBADO');
+      this.actualizarSolicitud(this.solicitudSeleccionada.id, 'APROBADO');  
     }
 
     rechazarSolicitud() {
@@ -89,4 +109,7 @@ export class SolicitudesComponent implements OnInit {
       this.actualizarSolicitud(this.solicitudSeleccionada.id, 'RECHAZADO');
     }
 
+    limpiarFormulario() {
+      this.mot_rechazo = '';
+    }
 }

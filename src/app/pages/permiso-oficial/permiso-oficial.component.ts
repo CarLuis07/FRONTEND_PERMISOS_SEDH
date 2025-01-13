@@ -105,7 +105,12 @@ export class PermisoOficialComponent implements OnInit {
   }
 
   limpiarFormulario() {
-    this.fecha = new Date().toISOString().split('T')[0];
+    this.fecha = new Date().toLocaleString('es-HN', { 
+      timeZone: 'America/Tegucigalpa',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).split('/').reverse().join('-');
     this.motivo = '';
   }
 }
