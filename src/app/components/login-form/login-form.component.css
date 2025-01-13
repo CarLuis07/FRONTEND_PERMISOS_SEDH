@@ -97,3 +97,44 @@ button {
 button:hover {
   background-color: #296580;
 }
+
+
+.password-field {
+  position: relative;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 45px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  color: #296580 !important;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle:hover {
+  color: #0e303f;
+  background: none;
+}
+
+.password-toggle i {
+  font-size: 1.5em;
+}
+
+input[type="password"],
+input[type="text"] {
+  padding-right: 40px;
+}

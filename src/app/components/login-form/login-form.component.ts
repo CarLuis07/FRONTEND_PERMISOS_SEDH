@@ -16,10 +16,16 @@ export class LoginFormComponent {
   password: string = '';
   showError: boolean = false;
   errorMessage: string = '';
+  showPassword: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
-  
+ 
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
   login() {
+    
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
         if (response.access_token) {
