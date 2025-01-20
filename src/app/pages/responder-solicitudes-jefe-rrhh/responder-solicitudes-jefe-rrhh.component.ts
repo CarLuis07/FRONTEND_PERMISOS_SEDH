@@ -1,35 +1,35 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
-  selector: 'app-solicitudes',
+  selector: 'app-responder-solicitudes-jefe-rrhh',
   imports: [CommonModule, FormsModule, NgbModule],
-  templateUrl: './solicitudes.component.html',
-  styleUrl: './solicitudes.component.css'
+  templateUrl: './responder-solicitudes-jefe-rrhh.component.html',
+  styleUrl: './responder-solicitudes-jefe-rrhh.component.css'
 })
-
-export class SolicitudesComponent implements OnInit {
+export class ResponderSolicitudesJefeRrhhComponent implements OnInit {
   solicitudes: any[] = [];
-  apiUrl = `${environment.apiUrl}/aprobarSolicitudes`;
-  apiUrl2= `${environment.apiUrl}/rechazarSolicitudes`;
-  
+  apiUrl = `${environment.apiUrl}/aprobarSolicitudesRRHH`;
+  apiUrl2= `${environment.apiUrl}/rechazarSolicitudesRRHH`;
+
   empleado = {
     fecha: '',
     tipoSolicitud: '',
     nombre: '',
     estadoSolicitud: ''
   };
-  
+     
   modalTitle: string = '';
   modalMessage: string = '';
   @ViewChild('modalContent') modalContent: any;
-    
+
   constructor(private http: HttpClient, private modalService: NgbModal) {}
-    
+
   fecha: string = new Date().toLocaleString('es-HN', { 
     timeZone: 'America/Tegucigalpa',
     year: 'numeric',
@@ -43,7 +43,7 @@ export class SolicitudesComponent implements OnInit {
   ngOnInit() {
     this.obtenerTodasLasSolicitudes();
   }
-
+  
   obtenerTodasLasSolicitudes() {
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
@@ -64,11 +64,11 @@ export class SolicitudesComponent implements OnInit {
       size: 'lg'
     });
   }
-    
+
   actualizarSolicitud(id: number, estado: string) {
     const token = localStorage.getItem('token');
     let userEmail = '';
-      
+
     if (token) {
       const tokenData = JSON.parse(atob(token.split('.')[1]));
       userEmail = tokenData.sub;
@@ -80,7 +80,7 @@ export class SolicitudesComponent implements OnInit {
       pri_aprobacion: userEmail,
       mot_rechazo: estado === 'RECHAZADO' ? this.mot_rechazo : null
     };
-    
+
     const url = estado === 'RECHAZADO' ? this.apiUrl2 : this.apiUrl;
     
     this.http.put(url, payload).subscribe({
@@ -95,7 +95,7 @@ export class SolicitudesComponent implements OnInit {
       }
     });
   }
-
+  
   aprobarSolicitud() {
     this.actualizarSolicitud(this.solicitudSeleccionada.id, 'APROBADO');  
   }
@@ -112,3 +112,4 @@ export class SolicitudesComponent implements OnInit {
     this.mot_rechazo = '';
   }
 }
+

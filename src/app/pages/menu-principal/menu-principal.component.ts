@@ -10,7 +10,15 @@ import { RouterModule, Router } from '@angular/router';
   styleUrls: ['./menu-principal.component.css']
 })
 export class MenuPrincipalComponent {
-  constructor(private router: Router) {}
+  userRole: number = 1;
+
+  constructor(private router: Router) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      this.userRole = tokenData.role;
+    }
+  }
 
   logout() {
     // Eliminar token

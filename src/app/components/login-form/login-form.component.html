@@ -5,10 +5,13 @@
       <h1>Hola, Ingresa Al Sistema!</h1>
     </div>
    
-    <form (ngSubmit)="login()" class="login-form">
+    <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form">
       <div class="form-group mb-3">
         <label for="username">Usuario:</label>
-        <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required>
+        <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required #usernameInput="ngModel" placeholder="Usuario">
+        <div *ngIf="usernameInput.invalid && usernameInput.touched" class="text-danger">
+          Usuario es requerido
+        </div>
       </div>
       <div class="form-group mb-3 password-field">
         <label for="password">Contraseña:</label>
@@ -18,18 +21,23 @@
                  id="password" 
                  [(ngModel)]="password" 
                  name="password" 
-                 required>
+                 required
+                 #passwordInput="ngModel"
+                 placeholder="Contraseña">
           <button type="button" 
                   class="password-toggle" 
                   (click)="togglePassword()">
             <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
           </button>
         </div>
+        <div *ngIf="passwordInput.invalid && passwordInput.touched" class="text-danger">
+          Contraseña es requerida
+        </div>
       </div>
-      <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
         {{ errorMessage }}
       </div>
-      <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Ingresar</button>
     </form>
   </div>
 </div>

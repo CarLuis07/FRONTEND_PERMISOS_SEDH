@@ -17,7 +17,8 @@
       </li>
       <li class="menu">Aprobar
         <div class="submenu">
-          <a routerLink="solicitudes">Solicitudes</a>
+          <a *ngIf="userRole === 2" routerLink="solicitudes">Como Jefe Inmediato</a>
+          <a *ngIf="userRole === 3" routerLink="responder-solicitudes-jefe-rrhh">Como Jefe RRHH</a>
         </div>
       </li>
     </ul>
