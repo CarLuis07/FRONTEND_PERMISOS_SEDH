@@ -7,7 +7,8 @@
           <tr>
             <th>Fecha Solicitud</th>
             <th>Tipo Solicitud</th>
-            <th>Subordinado</th>
+            <th>Empleado</th>
+            <th>Dependencia</th>
             <th>Estado Solicitud</th>
             <th>Acciones</th>
           </tr>
@@ -17,6 +18,7 @@
             <td>{{solicitud.fec_solicitud | date:'dd/MM/yyyy'}}</td>
             <td>{{solicitud.nom_tipo_solicitud}}</td>
             <td>{{solicitud.pri_nombre}} {{solicitud.pri_apellido}}</td>
+            <td>{{solicitud.nom_dependencia}}</td>
             <td>
               <span [class]="'badge ' + (solicitud.nom_estado === 'EN PROCESO' ? 'bg-warning' : 
                                       solicitud.nom_estado === 'APROBADO' ? 'bg-success' : 'bg-danger')">

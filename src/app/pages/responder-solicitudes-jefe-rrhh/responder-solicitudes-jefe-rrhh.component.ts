@@ -1,9 +1,10 @@
+
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../environments/environment';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -76,16 +77,18 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit {
     
     const payload = {
       id_permiso: this.solicitudSeleccionada.id_permiso,
-      tip_permiso: this.solicitudSeleccionada.nom_tipo_solicitud,
-      pri_aprobacion: userEmail,
-      mot_rechazo: estado === 'RECHAZADO' ? this.mot_rechazo : null
+      tipo_permiso: this.solicitudSeleccionada.nom_tipo_solicitud,
+      seg_aprobacion: userEmail,
+      mot_rechazo: estado === 'RECHAZADO' ? this.mot_rechazo : null,
+      hor_rechazadas: estado === 'RECHAZADO' && 
+                     this.solicitudSeleccionada.nom_tipo_solicitud === 'PERMISO PERSONAL' ? 
+                     this.solicitudSeleccionada.hor_solicitadas : 0
     };
 
     const url = estado === 'RECHAZADO' ? this.apiUrl2 : this.apiUrl;
     
     this.http.put(url, payload).subscribe({
       next: (response) => {
-        console.log('Respuesta:', response);
         this.obtenerTodasLasSolicitudes();
         this.modalService.dismissAll();
         this.limpiarFormulario();
