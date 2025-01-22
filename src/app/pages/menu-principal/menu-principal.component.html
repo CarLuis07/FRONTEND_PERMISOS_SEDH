@@ -10,7 +10,7 @@
           <a routerLink="vacaciones">Vacaciones</a>
         </div>
       </li>
-      <li class="menu">Validar
+      <li class="menu">Ver
         <div class="submenu">
           <a routerLink="mis-solicitudes">Mis Solicitudes</a>
         </div>
@@ -23,6 +23,11 @@
       <li *ngIf="userRole === 3" class="menu">Aprobar
         <div class="submenu">
           <a routerLink="responder-solicitudes-jefe-rrhh">Como Jefe RRHH</a>
+        </div>
+      </li>
+      <li *ngIf="userRole === 2" class="menu">Aprobar
+        <div class="submenu">
+          <a routerLink="responder-solicitudes-agente-seguridad">Como Agente Seguridad</a>
         </div>
       </li>
     </ul>

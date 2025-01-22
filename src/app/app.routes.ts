@@ -8,6 +8,7 @@ import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes
 import { SolicitudesComponent } from './pages/solicitudes/solicitudes.component';
 import { authGuard } from './services/auth.guard';
 import { ResponderSolicitudesJefeRrhhComponent } from './pages/responder-solicitudes-jefe-rrhh/responder-solicitudes-jefe-rrhh.component';
+import { ResponderSolicitudesAgenteSeguridadComponent } from './pages/responder-solicitudes-agente-seguridad/responder-solicitudes-agente-seguridad.component';
 
 export const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -26,6 +27,11 @@ export const routes: Routes = [
       path: 'responder-solicitudes-jefe-rrhh', 
       component: ResponderSolicitudesJefeRrhhComponent,
       data: { roles: [3] } // solo rol RRHH
+    },
+    { 
+      path: 'responder-solicitudes-agente-seguridad', 
+      component: ResponderSolicitudesAgenteSeguridadComponent,
+      data: { roles: [2] } // solo rol agente de seguridad
     }
   ]},
   // Ruta comodín para redireccionar a login si la ruta no coincide
