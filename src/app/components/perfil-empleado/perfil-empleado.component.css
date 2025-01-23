@@ -1,0 +1,23 @@
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .card-header {
+    background-color: #296580;
+    color: white;
+  }
+  
+  .form-control:disabled {
+    background-color: #f8f9fa;
+    opacity: 1;
+  }
+  
+  .btn-primary {
+    background-color: #296580;
+    border-color: #296580;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1a4d66;
+    border-color: #1a4d66;
+  }
