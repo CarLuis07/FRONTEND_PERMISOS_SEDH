@@ -14,6 +14,9 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="solicitudes.length === 0">
+          <td colspan="6" class="text-center">No hay solicitudes disponibles</td>
+        </tr>
         <tr *ngFor="let solicitud of solicitudes">
           <td>{{solicitud.fec_solicitud | date:'dd/MM/yyyy'}}</td>
           <td>{{solicitud.nom_tipo_solicitud}}</td>
@@ -50,7 +53,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let solicitudE of solicitudEmergencias">
+          <tr *ngIf="solicitudesEmergencia.length === 0">
+            <td colspan="7" class="text-center">No hay solicitudes de emergencia disponibles</td>
+          </tr>
+          <tr *ngFor="let solicitudE of solicitudesEmergencia">
             <td>{{solicitudE.fec_solicitud | date:'dd/MM/yyyy'}}</td>
             <td>{{solicitudE.nom_tipo_solicitud}}</td>
             <td>

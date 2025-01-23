@@ -12,7 +12,7 @@ import { combineLatest } from 'rxjs';
 })
 export class MisSolicitudesComponent implements OnInit {
   solicitudes: any[] = [];
-  solicitudEmergencias: any[] = [];
+  solicitudesEmergencia: any[] = [];
   apiUrl = `${environment.apiUrl}/misSolicitudes`;
   apiUrl2 = `${environment.apiUrl}/misSolicitudesEmergencia`;
 
@@ -20,19 +20,29 @@ export class MisSolicitudesComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerTodasLasSolicitudes();
+    this.obtenerSolicitudesEmergencia();
   }
 
   obtenerTodasLasSolicitudes() {
-    combineLatest([
-      this.http.get<any[]>(this.apiUrl),
-      this.http.get<any[]>(this.apiUrl2)
-    ]).subscribe({
-      next: ([solicitudes, emergencias]) => {
-        this.solicitudes = solicitudes;
-        this.solicitudEmergencias = emergencias;
+    this.http.get<any[]>(this.apiUrl).subscribe({
+      next: (data) => {
+        this.solicitudes = data;
       },
       error: (error) => {
-        console.error('Error al obtener solicitudes:', error);
+        console.error('Error:', error);
+        this.solicitudes = [];
+      }
+    });
+  }
+
+  obtenerSolicitudesEmergencia() {
+    this.http.get<any[]>(this.apiUrl2).subscribe({
+      next: (data) => {
+        this.solicitudesEmergencia = data;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        this.solicitudesEmergencia = [];
       }
     });
   }
