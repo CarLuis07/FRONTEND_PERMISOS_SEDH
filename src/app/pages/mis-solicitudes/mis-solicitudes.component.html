@@ -26,8 +26,8 @@
               {{solicitud.nom_estado}}
             </span>
           </td>
-          <td>{{solicitud.pri_aporbacion || 'PENDIENTE'}}</td>
-          <td>{{solicitud.seg_aprobacion || 'PENDIENTE'}}</td>
+          <td>{{solicitud.pri_aporbacion || (solicitud.mot_rechazo ? '----------------' : 'PENDIENTE')}}</td>
+          <td>{{solicitud.seg_aprobacion || (solicitud.mot_rechazo ? '----------------' : 'PENDIENTE')}}</td>
           <td>{{solicitud.mot_rechazo || 'N/A'}}</td>
         </tr>
       </tbody>
@@ -65,8 +65,9 @@
                 {{solicitudE.nom_estado}}
               </span>
             </td>
-            <td>{{solicitudE.pri_aporbacion || 'PENDIENTE'}}</td>
-            <td>{{solicitudE.seg_aprobacion || 'PENDIENTE'}}</td>
+            <!-- En la sección de solicitudes de emergencia -->
+            <td>{{solicitudE.pri_aporbacion || (solicitudE.mot_rechazo ? '----------------' : 'PENDIENTE')}}</td>
+            <td>{{solicitudE.seg_aprobacion || (solicitudE.mot_rechazo ? '----------------' : 'PENDIENTE')}}</td>
             <td>{{solicitudE.mot_rechazo || 'N/A'}}</td>
             <td>
             </td>   
