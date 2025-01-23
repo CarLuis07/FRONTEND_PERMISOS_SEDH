@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarAdmin">
+        <ul class="navbar-nav me-auto mb-lg-0">
+          <!-- Solicitudes Pendientes -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              SOLICITUDES PENDIENTES
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="permisos-personales">Permisos Personales</a></li>
+              <li><a class="dropdown-item" routerLink="permisos-oficiales">Permisos Oficiales</a></li>
+            </ul>
+          </li>
+  
+          <!-- Ver Permisos -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              VER PERMISOS
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="ver-personales">Permisos Personales</a></li>
+              <li><a class="dropdown-item" routerLink="ver-oficiales">Permisos Oficiales</a></li>
+            </ul>
+          </li>
+  
+          <!-- Empleados -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              EMPLEADOS
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="agregar-empleado">Agregar</a></li>
+              <li><a class="dropdown-item" routerLink="ver-empleados">Ver</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

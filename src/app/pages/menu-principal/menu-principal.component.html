@@ -7,7 +7,6 @@
         <div class="submenu">
           <a routerLink="permiso-personal">Permiso Personal</a>
           <a routerLink="permiso-oficial">Permiso Oficial</a>
-          <a routerLink="vacaciones">Vacaciones</a>
         </div>
       </li>
       <li class="menu">Ver
@@ -25,9 +24,14 @@
           <a routerLink="responder-solicitudes-jefe-rrhh">Como Jefe RRHH</a>
         </div>
       </li>
-      <li *ngIf="userRole === 2" class="menu">Aprobar
+      <li *ngIf="userRole === 4" class="menu">Aprobar
         <div class="submenu">
           <a routerLink="responder-solicitudes-agente-seguridad">Como Agente Seguridad</a>
+        </div>
+      </li>
+      <li *ngIf="userRole === 5" class="menu">Administrar
+        <div class="submenu">
+          <a routerLink="administracion-sistema-rrhh">Usuarios/Permisos</a>
         </div>
       </li>
     </ul>

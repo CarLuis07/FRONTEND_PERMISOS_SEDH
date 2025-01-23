@@ -7,10 +7,10 @@
    
     <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form">
       <div class="form-group mb-3">
-        <label for="username">Usuario:</label>
-        <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required #usernameInput="ngModel" placeholder="Usuario">
+        <label for="username">Correo:</label>
+        <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required #usernameInput="ngModel" placeholder="nombre.apellido@sedh.gob.hn">
         <div *ngIf="usernameInput.invalid && usernameInput.touched" class="text-danger">
-          Usuario es requerido
+          El correo es requerido
         </div>
       </div>
       <div class="form-group mb-3 password-field">
@@ -23,7 +23,7 @@
                  name="password" 
                  required
                  #passwordInput="ngModel"
-                 placeholder="Contraseña">
+                 placeholder="su contraseña de correo...">
           <button type="button" 
                   class="password-toggle" 
                   (click)="togglePassword()">
@@ -31,7 +31,7 @@
           </button>
         </div>
         <div *ngIf="passwordInput.invalid && passwordInput.touched" class="text-danger">
-          Contraseña es requerida
+          La contraseña es requerida
         </div>
       </div>
       <div *ngIf="errorMessage" class="alert alert-danger mt-3">

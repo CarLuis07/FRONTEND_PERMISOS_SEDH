@@ -9,6 +9,7 @@ import { SolicitudesComponent } from './pages/solicitudes/solicitudes.component'
 import { authGuard } from './services/auth.guard';
 import { ResponderSolicitudesJefeRrhhComponent } from './pages/responder-solicitudes-jefe-rrhh/responder-solicitudes-jefe-rrhh.component';
 import { ResponderSolicitudesAgenteSeguridadComponent } from './pages/responder-solicitudes-agente-seguridad/responder-solicitudes-agente-seguridad.component';
+import { AdministracionSistemaRrhhComponent } from './pages/administracion-sistema-rrhh/administracion-sistema-rrhh.component';
 
 export const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -26,12 +27,17 @@ export const routes: Routes = [
     { 
       path: 'responder-solicitudes-jefe-rrhh', 
       component: ResponderSolicitudesJefeRrhhComponent,
-      data: { roles: [3] } // solo rol RRHH
+      data: { roles: [3] } // solo rol jefe RRHH
     },
     { 
       path: 'responder-solicitudes-agente-seguridad', 
       component: ResponderSolicitudesAgenteSeguridadComponent,
-      data: { roles: [2] } // solo rol agente de seguridad
+      data: { roles: [4] } // solo rol agente de seguridad
+    },
+    { 
+      path: 'administracion-sistema-rrhh', 
+      component: AdministracionSistemaRrhhComponent,
+      data: { roles: [5] } // solo rol agente de asistente de RRHH
     }
   ]},
   // Ruta comodín para redireccionar a login si la ruta no coincide
