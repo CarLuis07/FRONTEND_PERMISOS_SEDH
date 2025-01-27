@@ -49,7 +49,9 @@ export class PermisoPersonalComponent implements OnInit {
   @ViewChild('modalContent') modalContent: any;
   isLoading: boolean = true;
   
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal, private router: Router) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) 
+              private platformId: Object, private modalService: NgbModal, 
+              private router: Router) {}
   
   ngOnInit() {
     this.obtenerDatosEmpleado();
@@ -123,7 +125,6 @@ export class PermisoPersonalComponent implements OnInit {
         this.limpiarFormulario();
         setTimeout(() => {
           this.modalService.dismissAll();
-          // Redirigir dentro del menú principal
           this.router.navigate(['/menu-principal/mis-solicitudes']);
         }, 2000);
       },
