@@ -13,6 +13,9 @@
           </tr>
         </thead>
         <tbody>
+          <tr *ngIf="solicitudes.length === 0">
+            <td colspan="6" class="text-center">No hay solicitudes pendientes para que usted las apruebe</td>
+          </tr>
           <tr *ngFor="let solicitud of solicitudes">
             <td>{{solicitud.fec_solicitud | date:'dd/MM/yyyy'}}</td>
             <td>{{solicitud.nom_tipo_solicitud}}</td>
