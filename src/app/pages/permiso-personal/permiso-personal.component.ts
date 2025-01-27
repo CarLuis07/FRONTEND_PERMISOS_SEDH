@@ -31,6 +31,8 @@ export class PermisoPersonalComponent implements OnInit {
     day: '2-digit'
   }).split('/').reverse().join('-'); // Fecha actual por defecto
 
+  fechaMinima: string = new Date().toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
+
   horas: number = 3;
   minutos: number = 0;
   motivo: string = 'Asunto Personal.';
@@ -72,10 +74,17 @@ export class PermisoPersonalComponent implements OnInit {
   }
 
   validarFormulario() {
+    const fechaSeleccionada = new Date(this.fecha);
+    const fechaActual = new Date();
+    
+    // Convertir ambas fechas a string YYYY-MM-DD para comparar solo fechas
+    const fechaSeleccionadaStr = fechaSeleccionada.toISOString().split('T')[0];
+    const fechaActualStr = fechaActual.toISOString().split('T')[0];
+
     this.camposInvalidos = {
-      fecha: !this.fecha,
+      fecha: !this.fecha || fechaSeleccionadaStr < fechaActualStr,
       motivo: !this.motivo?.trim(),
-      horas: this.horas < 1 || this.horas > 9,
+      horas: this.horas < 0 || this.horas > 9,
       minutos: this.minutos < 0 || this.minutos > 59
     };
 

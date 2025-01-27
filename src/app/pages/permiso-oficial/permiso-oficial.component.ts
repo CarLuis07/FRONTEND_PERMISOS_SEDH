@@ -39,6 +39,7 @@ export class PermisoOficialComponent implements OnInit {
   modalMessage: string = '';
   @ViewChild('modalContent') modalContent: any;
   isLoading: boolean = true;
+  fechaMinima: string = new Date().toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal) {}
   
@@ -64,11 +65,18 @@ export class PermisoOficialComponent implements OnInit {
     });
   }
   validarFormulario() {
+    const fechaSeleccionada = new Date(this.fecha);
+    const fechaActual = new Date();
+    
+    // Convertir a formato YYYY-MM-DD para comparar solo fechas
+    const fechaSeleccionadaStr = fechaSeleccionada.toISOString().split('T')[0];
+    const fechaActualStr = fechaActual.toISOString().split('T')[0];
+
     this.camposInvalidos = {
-      fecha: !this.fecha,
+      fecha: !this.fecha || fechaSeleccionadaStr < fechaActualStr,
       motivo: !this.motivo?.trim()
-    }
-   
+    };
+
     this.formInvalido = Object.values(this.camposInvalidos).some(invalid => invalid);
   }
 

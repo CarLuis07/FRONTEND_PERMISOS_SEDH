@@ -31,8 +31,9 @@
                [(ngModel)]="fecha" 
                name="fecha" 
                class="form-control" 
+               [min]="fechaMinima"
                [class.invalido]="camposInvalidos.fecha"
-               (change)="onInputChange()" 
+               (change)="validarFormulario()" 
                required>
         <span class="error-message" *ngIf="camposInvalidos.fecha">
           Seleccione una fecha
