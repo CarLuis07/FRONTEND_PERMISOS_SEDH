@@ -29,7 +29,6 @@ export class MisSolicitudesComponent implements OnInit {
         this.solicitudes = data;
       },
       error: (error) => {
-        console.error('Error:', error);
         this.solicitudes = [];
       }
     });
@@ -41,7 +40,6 @@ export class MisSolicitudesComponent implements OnInit {
         this.solicitudesEmergencia = data;
       },
       error: (error) => {
-        console.error('Error:', error);
         this.solicitudesEmergencia = [];
       }
     });

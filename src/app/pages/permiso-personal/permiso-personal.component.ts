@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-permiso-personal',
@@ -18,7 +19,8 @@ export class PermisoPersonalComponent implements OnInit {
   empleado = {
     nombre: '',
     dependencia: '',
-    cargo: ''
+    cargo: '',
+    horasDisponibles: 0
   };
   
   // Establecer fecha actual en zona horaria de Honduras (UTC-6)
@@ -30,35 +32,41 @@ export class PermisoPersonalComponent implements OnInit {
   }).split('/').reverse().join('-'); // Fecha actual por defecto
 
   horas: number = 3;
+  minutos: number = 0;
   motivo: string = 'Asunto Personal.';
   citaMedica: number = 0; // 0 = No, 1 = Sí
   formInvalido: boolean = true;
   camposInvalidos = {
     fecha: false,
     motivo: false,
-    horas: false
+    horas: false,
+    minutos: false
   };
   modalTitle: string = '';
   modalMessage: string = '';
   @ViewChild('modalContent') modalContent: any;
+  isLoading: boolean = true;
   
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal, private router: Router) {}
   
   ngOnInit() {
     this.obtenerDatosEmpleado();
-    this.validarFormulario();
   }
 
   obtenerDatosEmpleado() {   
-
+    this.isLoading = true;
     this.http.get<any>(this.apiUrl).subscribe({
       next: (data) => {
         this.empleado.nombre = `${data[0].pri_nombre} ${data[0].seg_nombre} ${data[0].pri_apellido} ${data[0].seg_apellido}`;
         this.empleado.dependencia = data[0].nom_dependencia;
         this.empleado.cargo = data[0].nom_cargo;
+        this.empleado.horasDisponibles = data[0].hor_disponibles;
+        this.isLoading = false;
+        this.validarFormulario();
       },
       error: (error) => {
         console.error('Error detallado:', error);
+        this.isLoading = false;
       }
     });
   }
@@ -67,7 +75,8 @@ export class PermisoPersonalComponent implements OnInit {
     this.camposInvalidos = {
       fecha: !this.fecha,
       motivo: !this.motivo?.trim(),
-      horas: this.horas < 1 || this.horas > 9
+      horas: this.horas < 1 || this.horas > 9,
+      minutos: this.minutos < 0 || this.minutos > 59
     };
 
     this.formInvalido = Object.values(this.camposInvalidos).some(invalid => invalid) || 
@@ -78,18 +87,24 @@ export class PermisoPersonalComponent implements OnInit {
     this.validarFormulario();
   }
 
+  formatearHorasMinutos(): string {
+    const horasStr = this.horas.toString().padStart(2, '0');
+    const minutosStr = this.minutos.toString().padStart(2, '0');
+    return `${horasStr}:${minutosStr}`;
+  }
+
   submitForm() {
-
-    const fechaFormateada = new Date(this.fecha).toISOString().split('T')[0];
-
-    const solicitud = {
-      fecha_solicitud: fechaFormateada,
-      horas_solicitadas: this.horas,
-      motivo: this.motivo.trim(),
-      catalogada_emergencia: this.citaMedica
-    };
-
-    this.agregarPermisoPersonal(solicitud);
+    this.validarFormulario();
+    if (!this.formInvalido) {
+      const solicitud = {
+        fecha_solicitud: this.fecha,
+        horas_solicitadas: this.formatearHorasMinutos(),
+        motivo: this.motivo,
+        citaMedica: this.citaMedica
+      };
+      console.log(solicitud)
+      this.agregarPermisoPersonal(solicitud);
+    }
   }
   
   agregarPermisoPersonal(solicitud: any) {
@@ -97,10 +112,15 @@ export class PermisoPersonalComponent implements OnInit {
       next: () => {
         this.openModal('¡Éxito!', 'Solicitud enviada correctamente a su jefe inmediato.');
         this.limpiarFormulario();
+        setTimeout(() => {
+          this.modalService.dismissAll();
+          // Redirigir dentro del menú principal
+          this.router.navigate(['/menu-principal/mis-solicitudes']);
+        }, 2000);
       },
       error: (error) => {
         console.error('Error al enviar la solicitud', error);
-        this.openModal('¡Ups Lo Sentimos!', `Usted No cuenta con ${this.horas} horas disponibles para permisos personales este mes, intente menos horas.`);
+        this.openModal('¡Ups Lo Sentimos!', `Usted No cuenta con ${this.horas}:${this.minutos} horas disponibles para permisos personales este mes, intente menos horas.`);
       }
     });
   }
@@ -126,5 +146,3 @@ export class PermisoPersonalComponent implements OnInit {
     this.citaMedica = 0; // No por defecto
   }
 }
-
-

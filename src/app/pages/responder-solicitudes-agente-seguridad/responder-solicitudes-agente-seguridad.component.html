@@ -20,10 +20,7 @@
            <td>{{solicitud.pri_nombre}} {{solicitud.pri_apellido}}</td>
            <td>{{solicitud.nom_dependencia}}</td>
            <td>
-             <span [class]="'badge ' + (solicitud.nom_estado === 'EN PROCESO' ? 'bg-warning' : 
-                                     solicitud.nom_estado === 'APROBADO' ? 'bg-success' : 'bg-danger')">
-               {{solicitud.nom_estado}}
-             </span>
+             <span [class]="'badge bg-success'">{{solicitud.nom_estado}}</span>
            </td>
            <td>
              <button class="btn btn-warning btn-sm" (click)="openModal(solicitud)">

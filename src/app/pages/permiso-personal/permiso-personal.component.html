@@ -1,4 +1,12 @@
-<div class="form-container">
+<!-- Spinner -->
+<div *ngIf="isLoading" class="loading-container">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+</div>
+
+<!-- Contenido -->
+<div class="form-container" *ngIf="!isLoading">
   <h1>Solicitud De Permiso Personal</h1>
   <form (ngSubmit)="submitForm()">
     <div class="form-group">
@@ -30,20 +38,45 @@
         </span>
       </div>
       <div>
-        <label for="horas">Horas que desea tomar:</label>
-        <input type="number" 
-               id="horas" 
-               [(ngModel)]="horas" 
-               name="horas" 
-               class="form-control" 
-               [class.invalido]="camposInvalidos.horas"
-               (change)="onInputChange()" 
-               min="1" 
-               max="9" 
-               required>
+        <label>Tiempo que desea tomar:</label>
+        <div class="d-flex align-items-center gap-2">
+          <div class="time-input">
+            <input type="number" 
+                   id="horas" 
+                   [(ngModel)]="horas" 
+                   name="horas" 
+                   class="form-control" 
+                   [class.invalido]="camposInvalidos.horas"
+                   (change)="onInputChange()" 
+                   min="1" 
+                   max="9" 
+                   required>
+            <small>Horas</small>
+          </div>
+          <div class="time-input">
+            <input type="number" 
+                   id="minutos" 
+                   [(ngModel)]="minutos" 
+                   name="minutos" 
+                   class="form-control" 
+                   [class.invalido]="camposInvalidos.minutos"
+                   (change)="onInputChange()" 
+                   min="0" 
+                   max="59" 
+                   required>
+            <small>Minutos</small>
+          </div>
+        </div>
         <span class="error-message" *ngIf="camposInvalidos.horas">
-          Seleccione entre 1 y 9 horas
+          Las horas deben estar entre 1 y 9
         </span>
+        <span class="error-message" *ngIf="camposInvalidos.minutos">
+          Los minutos deben estar entre 0 y 59
+        </span>
+      </div>
+      <div class="horas-disponibles">
+        <span class="horas-disponibles-value">{{ empleado.horasDisponibles }}</span>
+        <span class="horas-disponibles-text">Horas Disponibles</span>
       </div>
     </div>
     <div class="form-group">

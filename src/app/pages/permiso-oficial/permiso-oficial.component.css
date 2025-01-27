@@ -80,3 +80,17 @@ button[disabled] {
 .radio-group label {
   margin-right: 20px;
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  color: #296580 !important;
+}

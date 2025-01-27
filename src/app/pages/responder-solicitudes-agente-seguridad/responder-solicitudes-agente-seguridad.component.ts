@@ -52,7 +52,6 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit{
         this.solicitudes = data;
       },
       error: (error) => {
-        console.error('Error al obtener solicitudes:', error);
       }
     });
   }

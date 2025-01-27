@@ -38,6 +38,7 @@ export class PermisoOficialComponent implements OnInit {
   modalTitle: string = '';
   modalMessage: string = '';
   @ViewChild('modalContent') modalContent: any;
+  isLoading: boolean = true;
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal) {}
   
@@ -47,15 +48,18 @@ export class PermisoOficialComponent implements OnInit {
   }
 
   obtenerDatosEmpleado() {   
-
+    this.isLoading = true;
     this.http.get<any>(this.apiUrl).subscribe({
       next: (data) => {
         this.empleado.nombre = `${data[0].pri_nombre} ${data[0].seg_nombre} ${data[0].pri_apellido} ${data[0].seg_apellido}`;
         this.empleado.dependencia = data[0].nom_dependencia;
         this.empleado.cargo = data[0].nom_cargo;
+        this.isLoading = false;
+        this.validarFormulario();
       },
       error: (error) => {
         console.error('Error detallado:', error);
+        this.isLoading = false;
       }
     });
   }
