@@ -4,16 +4,60 @@
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  background: linear-gradient(45deg, #060c0f, #19a7e4);
 }
 
 .login-box {
   margin: auto;
-  background: white;
+  background: rgba(218, 211, 211, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(235, 231, 231, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
   width: 100%;
   max-width: 600px;
+  animation: fadeIn 0.8s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-box::before {
+  content: '';
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 400%;
+  height: 400%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  transform: rotate(30deg);
+  animation: reflejo 10s linear infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reflejo {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(30deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(30deg);
+  }
 }
 
 .login-header {
@@ -23,8 +67,17 @@
 
 .login-logo {
   width: 400px;
-  height: 200px;
-  margin-bottom: 20px;
+  height: 250px;
+  margin: 0 auto;
+  display: block;
+  filter: brightness(120%) contrast(110%);
+  -webkit-filter: brightness(120%) contrast(110%);
+}
+
+.login-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .login-form {
@@ -36,7 +89,8 @@
 h1 {
   text-align: center;
   margin-bottom: 1em;
-  color: #296580;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
   margin: 0;
   font-size: 28px;
 }
@@ -50,7 +104,8 @@ h1 {
 
 .form-group label {
   font-weight: 500;
-  color: #333;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 label {
@@ -60,7 +115,7 @@ label {
 
 input[type="text"],
 input[type="password"] {
-  width: 500px;
+  width: 538px;
   padding: 0.5em;
   font-size: 1em;
   border: 1px solid #ccc;
@@ -73,6 +128,8 @@ input[type="password"] {
   border-radius: 5px;
   font-size: 16px;
   transition: border-color 0.3s;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .form-group input:focus {
@@ -87,17 +144,19 @@ button {
   padding: 0.75em;
   font-size: 1em;
   color: #fff;
-  background-color: #6EC1E4;
-  border: none;
-  border-radius: 4px;
+  background: rgba(110, 193, 228, 0.8) !important;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
+  transition: all 0.3s ease;
 }
-
 
 button:hover {
-  background-color: #296580;
+  background: rgba(41, 101, 128, 0.9) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
 }
-
 
 .password-field {
   position: relative;
@@ -111,24 +170,23 @@ button:hover {
 
 .password-toggle {
   position: absolute;
-  right: 45px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #ffffff;
-  border: none;
+  right: 10px;
+  background: transparent !important;
+  border: none !important;
   width: 40px;
   height: 40px;
-  color: #296580 !important;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: #296580;
+  cursor: pointer;
+  padding: 0;
 }
 
 .password-toggle:hover {
-  color: #0e303f;
-  background: none;
+  color: #296580;
+  background: none !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
+
 
 .password-toggle i {
   font-size: 1.5em;
@@ -146,13 +204,15 @@ input[type="text"] {
 }
 
 .alert-danger {
-  color: #721c24;
+  color: #f3061d;
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
 
 .text-danger {
-  color: #dc3545;
+  color: #0c0707 !important;
   font-size: 0.875rem;
   margin-top: 0.25rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  font-weight: bold;
 }
