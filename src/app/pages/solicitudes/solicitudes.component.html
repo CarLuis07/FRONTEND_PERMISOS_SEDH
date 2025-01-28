@@ -27,7 +27,7 @@
               </span>
             </td>
             <td>
-              <button class="btn btn-warning btn-sm" (click)="openModal(solicitud)">
+              <button class="btn botonAcciones btn-sm" (click)="openModal(solicitud)">
                 Ver Solicitud
               </button>
             </td>
@@ -84,7 +84,7 @@
         </div>
         <div class="form-group">
           <label class="form-label">Motivo de Rechazo:</label>
-          <span class="error-message">*Solo llene este campo sino va ha aprobar la solictud.</span>
+          <span class="error-message">*Solo llene este campo para NO aprobar la solictud.</span>
           <textarea class="form-control" rows="3" [(ngModel)]="mot_rechazo" name="motivoRechazo"></textarea>
         </div>
       </div>

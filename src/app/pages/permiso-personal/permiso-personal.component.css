@@ -17,6 +17,13 @@ h1 {
   margin-bottom: 15px;
 }
 
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #296580;
+}
+
 .form-control {
   width: 100%;
   padding: 10px;
@@ -33,15 +40,28 @@ h1 {
   margin-right: 2px;
 }
 
-.form-date div {
-  width: 33%;
-  padding-right: 22px;
+.fecha-label{
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
+.form-date div {
+  width: 33%;
+  margin-right: 22px;
+}
+
+.tiempo-salida {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.tiempo-salida label {
+  text-align: center;
+  width: 100%;
 }
 
 .time-input {
@@ -71,10 +91,12 @@ h1 {
   align-items: center;
 }
 
-.horas-disponibles{
-  text-align: center;
+.horas-disponibles {
+  position: relative;
+  overflow: hidden;
   width: 100%;
-  padding: 10px;
+  padding-block: 5px;
+  padding-left: 10px;
   border: 1px solid #ccc;
   color: #fff;
   border-radius: 8px;
@@ -83,17 +105,20 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
-.horas-disponibles-value{
-  font-size: 3em !important;
+.horas-disponibles-value {
+  font-size: 2.5em;
   font-weight: bold;
   display: block;
+  padding: 0%;
 }
 
 .horas-disponibles-text {
   font-size: 1em;
-  margin-top: 5px;
+  display: block;
+  padding: 0%;
 }
 
 textarea.form-control {
