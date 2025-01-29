@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-permiso-oficial',
@@ -41,7 +42,8 @@ export class PermisoOficialComponent implements OnInit {
   isLoading: boolean = true;
   fechaMinima: string = new Date().toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal,
+              private router: Router) {}
   
   ngOnInit() {
     this.obtenerDatosEmpleado();
@@ -99,6 +101,10 @@ export class PermisoOficialComponent implements OnInit {
       next: () => {
         this.openModal('¡Éxito!', 'Solicitud enviada correctamente a su jefe inmediato.');
         this.limpiarFormulario();
+        setTimeout(() => {
+          this.modalService.dismissAll();
+          this.router.navigate(['/menu-principal/mis-solicitudes']);
+        }, 2000);
       },
       error: (error) => {
         console.error('Error al enviar la solicitud', error);
@@ -124,5 +130,6 @@ export class PermisoOficialComponent implements OnInit {
       day: '2-digit'
     }).split('/').reverse().join('-');
     this.motivo = '';
+    this.validarFormulario();
   }
 }

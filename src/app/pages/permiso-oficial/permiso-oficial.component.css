@@ -101,3 +101,10 @@ button[disabled] {
   height: 3rem;
   color: #296580 !important;
 }
+
+.modal-body p{
+  color: #000 !important;
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+}
