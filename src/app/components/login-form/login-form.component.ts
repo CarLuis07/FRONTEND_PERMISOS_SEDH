@@ -61,10 +61,8 @@ export class LoginFormComponent {
           console.log('Estado:', error.status);
           console.log('Mensaje:', error.error);
           
-          if (error.status === 422) {
-            this.errorMessage = 'Credenciales inválidas';
-          } else {
-            this.errorMessage = 'Error en el servidor. Intente nuevamente.';
+            if (error.status === 422 || error.status === 401) {
+            this.errorMessage = 'Credenciales inválidas Intente de nuevo';
           }
           console.error('Error en login', error);
           this.showError = true;

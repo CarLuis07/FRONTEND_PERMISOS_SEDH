@@ -14,6 +14,9 @@
          </tr>
        </thead>
        <tbody>
+        <tr *ngIf="solicitudes.length === 0">
+          <td colspan="6" class="text-center">No hay solicitudes pendientes para que usted las apruebe</td>
+        </tr>
          <tr *ngFor="let solicitud of solicitudes">
            <td>{{solicitud.fec_solicitud | date:'dd/MM/yyyy'}}</td>
            <td>{{solicitud.nom_tipo_solicitud}}</td>
@@ -23,7 +26,7 @@
              <span [class]="'badge bg-success'">{{solicitud.nom_estado}}</span>
            </td>
            <td>
-             <button class="btn btn-warning btn-sm" (click)="openModal(solicitud)">
+             <button class="btn botonAcciones btn-sm" (click)="openModal(solicitud)">
                Ver Solicitud
              </button>
            </td>

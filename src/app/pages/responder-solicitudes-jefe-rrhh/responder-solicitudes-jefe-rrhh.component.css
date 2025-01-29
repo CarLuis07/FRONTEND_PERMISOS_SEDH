@@ -18,9 +18,18 @@ h1 {
   .table .table-encabezado th {
     color: white !important;
     font-weight: 500 !important;
-    background-color: #296580 !important;
+    background:#040505 !important;
   }
   
+  .botonAcciones{
+    background:#040505;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
   .badge {
     padding: 8px 12px;
     border-radius: 4px;
@@ -69,7 +78,7 @@ h1 {
   color: #296580;
   justify-content: center !important;
   text-align: center !important;
-  background-color: #296580;
+  background: linear-gradient(270deg, #296580, #1a2727);
   color: white;
 }
 

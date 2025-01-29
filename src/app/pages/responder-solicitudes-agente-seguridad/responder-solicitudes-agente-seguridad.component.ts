@@ -14,8 +14,8 @@ import { FormsModule } from '@angular/forms';
 export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit{
 
   solicitudes: any[] = [];
-  apiUrl = `${environment.apiUrl}/aprobarSolicitudes`;
-  apiUrl2= `${environment.apiUrl}/rechazarSolicitudes`;
+  apiUrl = `${environment.apiUrl}/aprobarSolicitudesAgente/`;
+
 
   empleado = {
     fecha: '',

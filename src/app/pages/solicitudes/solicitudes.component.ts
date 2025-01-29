@@ -81,9 +81,9 @@ export class SolicitudesComponent implements OnInit {
       mot_rechazo: estado === 'RECHAZADO' ? this.mot_rechazo : null,
       hor_rechazadas: estado === 'RECHAZADO' && 
                      this.solicitudSeleccionada.nom_tipo_solicitud === 'PERMISO PERSONAL' ? 
-                     this.solicitudSeleccionada.hor_solicitadas : 0
+                     this.solicitudSeleccionada.hor_solicitadas : '00:00'
     };
-
+    
     const url = estado === 'RECHAZADO' ? this.apiUrl2 : this.apiUrl;
     
     this.http.put(url, payload).subscribe({
