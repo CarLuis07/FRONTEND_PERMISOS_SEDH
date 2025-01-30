@@ -92,6 +92,7 @@ h1 {
   background-color: #e9ecef;
 }
 
+
 .modal-footer {
   justify-content: space-between;
 }
@@ -124,6 +125,25 @@ h1 {
 .btn-primary:hover {
   scale: 1.05;
   background-color: #296580;
+}
+
+.disabled-input {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  background-color: #e9ecef !important;
+  opacity: 0.7 !important;
+  cursor: not-allowed !important;
+}
+
+.disabled-button {
+  pointer-events: none !important;
+  background-color: #cccccc !important;
+  border-color: #cccccc !important;
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
 }
 
 .btn-danger{

@@ -75,34 +75,47 @@
          <textarea class="form-control" rows="2" [value]="solicitudSeleccionada?.motivo" readonly></textarea>
        </div>
        <div class="container mt-4">
-         <div class="row">
-           <div class="col-md-6">
-             <label class="form-label">Hora de Salida</label>
-             <div class="input-group">
-               <input type="time" 
-                      class="form-control" 
-                      [(ngModel)]="horaEntrada"
-                      [ngModelOptions]="{standalone: true}"
-                      placeholder="00:00">
-             </div>
-           </div>
-       
-           <div class="col-md-6">
-             <label class="form-label">Hora de Retorno</label>
-             <div class="input-group">
-               <input type="time" 
-                      class="form-control" 
-                      [(ngModel)]="horaSalida"
-                      [ngModelOptions]="{standalone: true}"
-                      placeholder="00:00">
-             </div>
-           </div>
-         </div>
-       </div>
+        <div class="row">
+          <!-- Hora Salida -->
+          <div class="col-md-6">
+            <label class="form-label">Hora de Salida</label>
+            <div class="input-group">
+              <input type="time" 
+                     class="form-control" 
+                     [(ngModel)]="solicitudSeleccionada.hor_salida"
+                     [disabled]="solicitudSeleccionada.horaSalidaBloqueada">
+            </div>
+          </div>
+          
+          <!-- Hora Retorno -->
+          <div class="col-md-6">
+            <label class="form-label">Hora de Retorno</label>
+            <div class="input-group">
+              <input type="time" 
+                     class="form-control" 
+                     [(ngModel)]="solicitudSeleccionada.hor_retorno"
+                     [disabled]="solicitudSeleccionada.horaRetornoBloqueada">
+          </div>
+        </div>
       </div>
+    </div>
    </div>
    <div class="modal-footer">
-     <button type="button" class="btn btn-primary" (click)="aprobarSolicitud()">REGISTRAR HORA SALIDA</button>
-     <button type="button" class="btn btn-primary" (click)="aprobarSolicitud()">ENVIAR ESTE PERMISO A RRHH</button>
-   </div>
+    <!-- Botón Registrar Hora Salida -->
+    <button type="button" 
+            class="btn btn-primary" 
+            [disabled]="solicitudSeleccionada.horaSalidaBloqueada"
+            (click)="enviarHoraSalida()">
+      REGISTRAR HORA SALIDA
+    </button>
+  
+    <!-- Botón Enviar a RRHH -->
+    <button type="button" 
+            class="btn btn-primary"
+            [disabled]="solicitudSeleccionada.horaRetornoBloqueada"
+            (click)="enviarHoraRetorno()">
+      ENVIAR ESTE PERMISO A RRHH
+    </button>
+  </div>
+ </div>
  </ng-template>
