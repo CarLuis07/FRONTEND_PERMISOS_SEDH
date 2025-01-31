@@ -1,1 +1,35 @@
-<p>reporte-empleados works!</p>
+<div class="container mt-4">
+  <h2>Reporte de Permisos de Empleados</h2>
+  
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre de Empleado</th>
+          <th>Dependencia</th>
+          <th>Fecha de Permisos</th>
+          <th>Tipo de Permiso</th>
+          <th>Hora de Salida</th>
+          <th>Hora de Retorno</th>
+          <th>Horas de Permiso</th>
+          <th>Horas Disponibles</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="empleados?.length === 0">
+          <td colspan="8" class="text-center">No hay registros disponibles</td>
+        </tr>
+        <tr *ngFor="let empleado of empleados">
+          <td>{{empleado.nombre}}</td>
+          <td>{{empleado.dependencia}}</td>
+          <td>{{empleado.fecha_permiso | date:'dd/MM/yyyy'}}</td>
+          <td>{{empleado.tipo_permiso}}</td>
+          <td>{{empleado.hora_salida}}</td>
+          <td>{{empleado.hora_retorno}}</td>
+          <td>{{empleado.horas_permiso}}</td>
+          <td>{{empleado.horas_disponibles}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
