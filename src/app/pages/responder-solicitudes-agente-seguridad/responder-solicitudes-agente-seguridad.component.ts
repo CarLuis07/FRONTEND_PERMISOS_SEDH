@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { Console } from 'node:console';
 
 @Component({
   selector: 'app-responder-solicitudes-agente-seguridad',
@@ -15,7 +14,8 @@ import { Console } from 'node:console';
 export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit{
 
   solicitudes: any[] = [];
-  apiUrl = `${environment.apiUrl}/aprobarSolicitudesAgente/`;
+  apiUrl = `${environment.apiUrl}/aprobarSolicitudesAgenteSalida/`;
+  apiUrl2= `${environment.apiUrl}/aprobarSolicitudesAgenteRetorno/`;
 
   empleado = {
     fecha: '',
@@ -125,11 +125,10 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit{
       id_permiso: this.solicitudSeleccionada.id_permiso,
       tipo_permiso: this.solicitudSeleccionada.nom_tipo_solicitud,
       agente_aprobacion: userEmail,
-      hor_retorno: this.horaRetorno
+      hor_retorno: this.solicitudSeleccionada.hor_retorno 
     };
     
-    // TODO: Agregar endpoint para hora retorno
-    this.http.put(`${this.apiUrl}/retorno`, payload).subscribe({
+    this.http.put(this.apiUrl2, payload).subscribe({
       next: (response) => {
         this.obtenerTodasLasSolicitudes();
         this.modalService.dismissAll();
