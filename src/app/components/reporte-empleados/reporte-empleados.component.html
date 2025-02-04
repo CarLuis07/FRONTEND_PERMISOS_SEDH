@@ -16,18 +16,6 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngIf="empleados?.length === 0">
-          <td colspan="8" class="text-center">No hay registros disponibles</td>
-        </tr>
-        <tr *ngFor="let empleado of empleados">
-          <td>{{empleado.nombre}}</td>
-          <td>{{empleado.dependencia}}</td>
-          <td>{{empleado.tipo_permiso}}</td>
-          <td>{{empleado.hora_salida}}</td>
-          <td>{{empleado.hora_retorno}}</td>
-          <td>{{empleado.horas_permiso}}</td>
-          <td>{{empleado.horas_disponibles}}</td>
-        </tr>
       </tbody>
     </table>
   </div>
