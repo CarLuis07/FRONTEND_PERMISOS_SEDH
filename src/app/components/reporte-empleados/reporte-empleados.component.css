@@ -1,0 +1,93 @@
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #296580;
+}
+  
+.table {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .table .table-encabezado,
+  .table thead tr,
+  .table-hover thead tr {
+    background-color: #296580 !important;
+  }
+  
+  .table thead th,
+  .table .table-encabezado th {
+    color: white !important;
+    font-weight: 500 !important;
+    background:  #040505;
+  }
+
+
+  .table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 400px;  /* Altura para mostrar ~5 filas */
+    overflow-y: auto;
+  }
+
+
+ .table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .table thead th {
+    color: white !important;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .table tbody {
+    height: 100%;
+    text-align: center;
+  }
+
+  .table tbody tr {
+    background-color: transparent !important;
+  }
+
+  .row-even {
+    background-color: #f8f9fa !important;
+  }
+
+  .row-odd {
+    background-color: #ffffff !important;
+  }
+
+  .table td {
+    vertical-align: middle !important;
+    padding: 12px !important;
+  }
+
+  .td-center {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  .table tbody tr:hover {
+    background-color: rgba(41, 101, 128, 0.1) !important;
+  }
+
+.empleado-par {
+  background-color: #f8f9fa !important;
+}
+
+.empleado-impar {
+  background-color: #ffffff !important;
+}
+
+.container {
+text-align: center;
+  margin-top: 60px !important;
+}
+
+h2 {
+  color: #296580;
+  margin-bottom: 20px;
+}
