@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './solicitudes.component.css'
 })
 
-export class SolicitudesComponent implements OnInit {
+export class SolicitudesComponent implements OnInit, OnDestroy {
   solicitudes: any[] = [];
   apiUrl = `${environment.apiUrl}/aprobarSolicitudes`;
   apiUrl2= `${environment.apiUrl}/rechazarSolicitudes`;
@@ -39,9 +39,17 @@ export class SolicitudesComponent implements OnInit {
 
   solicitudSeleccionada: any = null;
   mot_rechazo: string = '';
+  intervalId: any;
 
   ngOnInit() {
     this.obtenerTodasLasSolicitudes();
+    this.iniciarActualizacionAutomatica();
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   obtenerTodasLasSolicitudes() {
@@ -53,6 +61,12 @@ export class SolicitudesComponent implements OnInit {
         console.error('Error al obtener solicitudes:', error);
       }
     });
+  }
+
+  iniciarActualizacionAutomatica() {
+    this.intervalId = setInterval(() => {
+      this.obtenerTodasLasSolicitudes();
+    }, 10000);
   }
 
   openModal(solicitud: any) {

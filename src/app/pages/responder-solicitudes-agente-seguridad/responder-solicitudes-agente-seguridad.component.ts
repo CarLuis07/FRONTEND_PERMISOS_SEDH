@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild , OnDestroy} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -11,13 +11,14 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './responder-solicitudes-agente-seguridad.component.html',
   styleUrl: './responder-solicitudes-agente-seguridad.component.css'
 })
-export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit{
+export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit, OnDestroy {
 
   solicitudes: any[] = [];
   apiUrl = `${environment.apiUrl}/aprobarSolicitudesAgenteSalida/`;
   apiUrl2= `${environment.apiUrl}/aprobarSolicitudesAgenteRetorno/`;
   horaInvalida: boolean = false;
   mensajeError: string = '';
+  private intervalId: any;
 
   empleado = {
     fecha: '',
@@ -50,6 +51,19 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit{
 
   ngOnInit() {
     this.obtenerTodasLasSolicitudes();
+    this.iniciarActualizacionAutomatica();
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }  
+  
+  iniciarActualizacionAutomatica() {
+    this.intervalId = setInterval(() => {
+      this.obtenerTodasLasSolicitudes();
+    }, 10000); // 10 segundos
   }
 
   obtenerTodasLasSolicitudes() {
