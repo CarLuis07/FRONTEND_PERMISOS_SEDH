@@ -1,6 +1,5 @@
-
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -13,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './responder-solicitudes-jefe-rrhh.component.html',
   styleUrl: './responder-solicitudes-jefe-rrhh.component.css'
 })
-export class ResponderSolicitudesJefeRrhhComponent implements OnInit {
+export class ResponderSolicitudesJefeRrhhComponent implements OnInit, OnDestroy {
   solicitudes: any[] = [];
   apiUrl = `${environment.apiUrl}/aprobarSolicitudesRRHH`;
   apiUrl2= `${environment.apiUrl}/rechazarSolicitudesRRHH`;
@@ -40,11 +39,19 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit {
 
   solicitudSeleccionada: any = null;
   mot_rechazo: string = '';
+  intervalId: any;
 
   ngOnInit() {
     this.obtenerTodasLasSolicitudes();
+    this.iniciarActualizacionAutomatica();
   }
-  
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
   obtenerTodasLasSolicitudes() {
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
@@ -54,6 +61,12 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit {
         console.error('Error al obtener solicitudes:', error);
       }
     });
+  }
+
+  iniciarActualizacionAutomatica() {
+    this.intervalId = setInterval(() => {
+      this.obtenerTodasLasSolicitudes();
+    }, 10000);
   }
 
   openModal(solicitud: any) {
@@ -115,4 +128,3 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit {
     this.mot_rechazo = '';
   }
 }
-

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -9,21 +9,27 @@ import { environment } from '../../../environments/environment';
   templateUrl: './reporte-empleados.component.html',
   styleUrl: './reporte-empleados.component.css'
 })
-export class ReporteEmpleadosComponent implements OnInit {
+export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
   reportes: any[] = [];
   apiUrl = `${environment.apiUrl}/reportePermisos`;
+  intervalId: any;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.obtenerReporte();
+    this.iniciarActualizacionAutomatica();
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   obtenerReporte() {
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
-        let currentDep = '';
-        let currentEmp = '';
         let rowspanDep = 1;
         let rowspanEmp = 1;
         let employeeCount = 0;
@@ -60,5 +66,11 @@ export class ReporteEmpleadosComponent implements OnInit {
         console.error('Error:', error);
       }
     });
+  }
+
+  iniciarActualizacionAutomatica() {
+    this.intervalId = setInterval(() => {
+      this.obtenerReporte();
+    }, 10000);
   }
 }
