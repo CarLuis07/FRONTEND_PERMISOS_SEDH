@@ -94,9 +94,14 @@
               <input type="time" 
                      class="form-control" 
                      [(ngModel)]="solicitudSeleccionada.hor_retorno"
-                     [disabled]="solicitudSeleccionada.horaRetornoBloqueada">
+                     [disabled]="solicitudSeleccionada.horaRetornoBloqueada"
+                     (change)="validarHoraRetorno()"
+                     [class.is-invalid]="horaInvalida">
+            </div>
+            <div class="invalid-feedback" *ngIf="horaInvalida">
+              {{mensajeError}}
+            </div>
           </div>
-        </div>
       </div>
     </div>
    </div>
@@ -111,10 +116,10 @@
   
     <!-- Botón Enviar a RRHH -->
     <button type="button" 
-            class="btn btn-primary"
-            [disabled]="solicitudSeleccionada.horaRetornoBloqueada"
-            (click)="enviarHoraRetorno()">
-      ENVIAR ESTE PERMISO A RRHH
+        class="btn btn-primary"
+        [disabled]="solicitudSeleccionada.horaRetornoBloqueada || horaInvalida"
+        (click)="enviarHoraRetorno()">
+        ENVIAR ESTE PERMISO A RRHH
     </button>
   </div>
  </div>

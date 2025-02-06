@@ -16,6 +16,8 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit{
   solicitudes: any[] = [];
   apiUrl = `${environment.apiUrl}/aprobarSolicitudesAgenteSalida/`;
   apiUrl2= `${environment.apiUrl}/aprobarSolicitudesAgenteRetorno/`;
+  horaInvalida: boolean = false;
+  mensajeError: string = '';
 
   empleado = {
     fecha: '',
@@ -145,5 +147,18 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit{
 
   getHoraCompleta(hora: string, periodo: string): string {
     return `${hora} ${periodo}`;
+  }
+
+  validarHoraRetorno() {
+    if (this.solicitudSeleccionada.hor_salida && this.solicitudSeleccionada.hor_retorno) {
+      const [horaSalida, minutosSalida] = this.solicitudSeleccionada.hor_salida.split(':');
+      const [horaRetorno, minutosRetorno] = this.solicitudSeleccionada.hor_retorno.split(':');
+      
+      const minutosTotalesSalida = parseInt(horaSalida) * 60 + parseInt(minutosSalida);
+      const minutosTotalesRetorno = parseInt(horaRetorno) * 60 + parseInt(minutosRetorno);
+      
+      this.horaInvalida = minutosTotalesRetorno <= minutosTotalesSalida;
+      this.mensajeError = this.horaInvalida ? 'La hora de retorno debe ser posterior a la hora de salida' : '';
+    }
   }
 }
