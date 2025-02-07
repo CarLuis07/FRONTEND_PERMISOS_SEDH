@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -10,17 +9,25 @@ import { combineLatest } from 'rxjs';
   templateUrl: './mis-solicitudes.component.html',
   styleUrl: './mis-solicitudes.component.css'
 })
-export class MisSolicitudesComponent implements OnInit {
+export class MisSolicitudesComponent implements OnInit, OnDestroy {
   solicitudes: any[] = [];
   solicitudesEmergencia: any[] = [];
   apiUrl = `${environment.apiUrl}/misSolicitudes`;
   apiUrl2 = `${environment.apiUrl}/misSolicitudesEmergencia`;
+  intervalId: any;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.obtenerTodasLasSolicitudes();
     this.obtenerSolicitudesEmergencia();
+    this.iniciarActualizacionAutomatica();
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   obtenerTodasLasSolicitudes() {
@@ -43,5 +50,12 @@ export class MisSolicitudesComponent implements OnInit {
         this.solicitudesEmergencia = [];
       }
     });
+  }
+
+  iniciarActualizacionAutomatica() {
+    this.intervalId = setInterval(() => {
+      this.obtenerTodasLasSolicitudes();
+      this.obtenerSolicitudesEmergencia();
+    }, 10000);
   }
 }

@@ -24,7 +24,7 @@ export const routes: Routes = [
     { 
       path: 'solicitudes', 
       component: SolicitudesComponent,
-      data: { roles: [2] } // roles jefeInmediato a RRHH
+      data: { roles: [2, 3] } //  roles jefeInmediato y jefe RRHH
     },
     { 
       path: 'responder-solicitudes-jefe-rrhh', 
