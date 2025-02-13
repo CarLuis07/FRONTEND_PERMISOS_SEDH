@@ -30,35 +30,36 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
   obtenerReporte() {
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
-        let rowspanDep = 1;
-        let rowspanEmp = 1;
-        let employeeCount = 0;
+        // Procesar los datos para calcular rowspans
+        let currentDep = '';
+        let currentEmp = '';
+        let rowspanDep = 0;
+        let rowspanEmp = 0;
         
-        this.reportes = data.map((item, index) => {
-          if (index > 0) {
-            if (item.nom_dependencia === data[index - 1].nom_dependencia) {
-              item.showDep = false;
-              data[index - 1].rowspanDep = rowspanDep += 1;
-            } else {
-              rowspanDep = 1;
-              item.showDep = true;
-            }
-            
-            if (item.empleado === data[index - 1].empleado) {
-              item.showEmp = false;
-              data[index - 1].rowspanEmp = rowspanEmp += 1;
-              item.empleadoClass = data[index - 1].empleadoClass;
-            } else {
-              rowspanEmp = 1;
-              item.showEmp = true;
-              employeeCount++;
-              item.empleadoClass = employeeCount % 2 === 0 ? 'empleado-par' : 'empleado-impar';
-            }
-          } else {
+        // Primer paso: calcular rowspans
+        this.reportes = data.map((item, index, array) => {
+          if (item.nom_dependencia !== currentDep) {
+            currentDep = item.nom_dependencia;
+            rowspanDep = array.filter(x => x.nom_dependencia === currentDep).length;
             item.showDep = true;
-            item.showEmp = true;
-            item.empleadoClass = 'empleado-impar';
+            item.rowspanDep = rowspanDep;
+          } else {
+            item.showDep = false;
           }
+
+          if (item.empleado !== currentEmp) {
+            currentEmp = item.empleado;
+            rowspanEmp = array.filter(x => 
+              x.nom_dependencia === currentDep && 
+              x.empleado === currentEmp
+            ).length;
+            item.showEmp = true;
+            item.rowspanEmp = rowspanEmp;
+            item.empleadoClass = 'empleado-' + (index % 2 === 0 ? 'par' : 'impar');
+          } else {
+            item.showEmp = false;
+          }
+
           return item;
         });
       },

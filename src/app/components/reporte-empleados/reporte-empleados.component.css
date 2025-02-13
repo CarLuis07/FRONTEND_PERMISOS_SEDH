@@ -24,8 +24,9 @@ h1 {
 
 .table-responsive {
     border-radius: 8px;
-    overflow: hidden;
-    max-height: 400px;  /* Altura para mostrar ~5 filas */
+    overflow: auto;
+    max-height: 600px; /* Aumentado para mejor visualización */
+    overflow-x: auto;
     overflow-y: auto;
 }
 
@@ -63,6 +64,8 @@ h1 {
   .table td {
     vertical-align: middle !important;
     padding: 12px !important;
+    float: none;
+    position: relative;
   }
 
   .td-center {
@@ -90,4 +93,113 @@ text-align: center;
 h2 {
   color: #296580;
   margin-bottom: 20px;
+}
+
+/* Ajustes base de la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  height: 100%;
+}
+
+/* Ajustes para todas las celdas */
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+/* Ajustes específicos para celdas con rowspan */
+td[rowspan] {
+  vertical-align: middle !important;
+  position: sticky;
+  height: auto;
+  background-clip: padding-box;
+  display: table-cell;
+}
+
+/* Ajustes para todas las columnas de datos */
+td:nth-child(3),  /* Fecha Solicitud */
+td:nth-child(4),  /* Tipo Permiso */
+td:nth-child(5),  /* Hora Salida */
+td:nth-child(6),  /* Hora Retorno */
+td:nth-child(7)   /* Tiempo Permiso */ {
+  text-align: center !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ajustes específicos para Dependencia y Empleado */
+td:nth-child(1), 
+td:nth-child(2) {
+  white-space: normal;
+  word-wrap: break-word;
+  height: 100%;
+  vertical-align: middle !important;
+}
+
+/* Mantener colores de fondo consistentes */
+.empleado-par td[rowspan],
+.empleado-impar td[rowspan] {
+  background-color: inherit;
+}
+
+/* Definir anchos específicos para cada columna */
+th:nth-child(1), td:nth-child(1) { width: 15%; } /* Dependencia */
+th:nth-child(2), td:nth-child(2) { width: 15%; } /* Empleado */
+th:nth-child(3), td:nth-child(3) { width: 10%; } /* Fecha Solicitud */
+th:nth-child(4), td:nth-child(4) { width: 12%; } /* Tipo Permiso */
+th:nth-child(5), td:nth-child(5) { width: 8%; }  /* Hora Salida */
+th:nth-child(6), td:nth-child(6) { width: 8%; }  /* Hora Retorno */
+th:nth-child(7), td:nth-child(7) { width: 8%; }  /* Tiempo Permiso */
+th:nth-child(8), td:nth-child(8) { width: 24%; } /* Motivo */
+
+/* Evitar que el texto se desborde */
+td {
+  height: 100%;
+  line-height: 1.5;
+  padding: 12px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Para el texto largo en la columna de motivo */
+td:last-child {
+  white-space: normal;
+  text-align: left;
+}
+
+/* Mantener la alineación del rowspan */
+[rowspan] {
+  vertical-align: middle;
+  height: 100%;
+  position: relative;
+  background-clip: padding-box;
+}
+
+/* Ajustes específicos para Dependencia y Empleado */
+td:nth-child(1), 
+td:nth-child(2) {
+  white-space: normal;
+  word-wrap: break-word;
+  min-height: 100%;
+}
+
+/* Mantener el fondo consistente en celdas combinadas */
+.empleado-par [rowspan],
+.empleado-impar [rowspan] {
+  background-color: inherit;
+}
+
+/* Alternar colores para empleados */
+.empleado-par {
+  background-color: #f9f9f9;
+}
+
+.empleado-impar {
+  background-color: #ffffff;
 }
