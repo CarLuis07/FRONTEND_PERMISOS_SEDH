@@ -28,6 +28,8 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit, OnDestroy 
   modalMessage: string = '';
   @ViewChild('modalContent') modalContent: any;
 
+  private notificationPermission: boolean = false;
+
   constructor(private http: HttpClient, private modalService: NgbModal) {}
 
   fecha: string = new Date().toLocaleString('es-HN', { 
@@ -41,7 +43,37 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit, OnDestroy 
   mot_rechazo: string = '';
   intervalId: any;
 
+  async solicitarPermisoNotificaciones() {
+    if (!('Notification' in window)) return;
+  
+    try {
+      const permiso = await Notification.requestPermission();
+      this.notificationPermission = permiso === 'granted';
+    } catch (error) {}
+  }
+  
+  mostrarNotificacion(mensaje: string) {
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  
+    try {
+      const notification = new Notification('SISTEMA DE PERMISOS SEDH', {
+        body: mensaje.toUpperCase(),
+        icon: 'LogoSedhEscudo.png',
+        tag: 'nueva-solicitud',
+        requireInteraction: true,
+        silent: false
+      });
+  
+      notification.onclick = () => {
+        window.focus();
+        window.location.href = window.location.href;
+        notification.close();
+      };
+    } catch (error) {}
+  }
+
   ngOnInit() {
+    this.solicitarPermisoNotificaciones();
     this.obtenerTodasLasSolicitudes();
     this.iniciarActualizacionAutomatica();
   }
@@ -56,6 +88,9 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit, OnDestroy 
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
         this.solicitudes = data;
+        if (data.length > 0) {
+          this.mostrarNotificacion(`Ud tiene ${data.length} ${data.length === 1 ? 'solicitud pendiente' : 'solicitudes pendientes'} de revisión`);
+        }
       },
       error: (error) => {
         console.error('Error al obtener solicitudes:', error);

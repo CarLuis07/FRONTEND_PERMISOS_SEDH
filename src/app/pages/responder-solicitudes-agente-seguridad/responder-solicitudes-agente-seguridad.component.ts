@@ -19,6 +19,7 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit, OnD
   horaInvalida: boolean = false;
   mensajeError: string = '';
   private intervalId: any;
+  private notificationPermission: boolean = false;
 
   empleado = {
     fecha: '',
@@ -49,7 +50,37 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit, OnD
 
   mot_rechazo: string = '';
 
+  async solicitarPermisoNotificaciones() {
+    if (!('Notification' in window)) return;
+  
+    try {
+      const permiso = await Notification.requestPermission();
+      this.notificationPermission = permiso === 'granted';
+    } catch (error) {}
+  }
+  
+  mostrarNotificacion(mensaje: string) {
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  
+    try {
+      const notification = new Notification('SISTEMA DE PERMISOS SEDH', {
+        body: mensaje.toUpperCase(),
+        icon: 'LogoSedhEscudo.png', // Imagen de 256x256 píxeles
+        tag: 'nueva-solicitud',
+        requireInteraction: true,
+        silent: false
+      });
+  
+      notification.onclick = () => {
+        window.focus();
+        window.location.href = window.location.href; // Refresca la página
+        notification.close();
+      };
+    } catch (error) {}
+  }
+
   ngOnInit() {
+    this.solicitarPermisoNotificaciones();
     this.obtenerTodasLasSolicitudes();
     this.iniciarActualizacionAutomatica();
   }
@@ -70,10 +101,11 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit, OnD
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
         this.solicitudes = data;
-        console.log(this.solicitudes);
+        if (data.length > 0) {
+          this.mostrarNotificacion(`Ud tiene ${data.length} ${data.length === 1 ? 'solicitud pendiente' : 'solicitudes pendiente'} de revisión`);
+        }
       },
-      error: (error) => {
-      }
+      error: (error) => console.error('Error:', error)
     });
   }
   openModal(solicitud: any) {
