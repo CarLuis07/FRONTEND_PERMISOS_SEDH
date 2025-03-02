@@ -77,13 +77,13 @@
           <textarea class="form-control" rows="2" [value]="solicitudSeleccionada?.motivo" readonly></textarea>
         </div>
         <div class="form-group" *ngIf="solicitudSeleccionada?.nom_tipo_solicitud !== 'PERMISO OFICIAL'">
-            <label class="form-label emergencia" *ngIf="solicitudSeleccionada?.cat_emergencia === 'True'">
-                Este Permiso SI es considerado una emergencia médica.
-            </label>
-            <label class="form-label emergencia" *ngIf="solicitudSeleccionada?.cat_emergencia === 'False'">
-                Este Permiso NO es considerado una emergencia médica.
-            </label>
-        </div>
+          <label class="form-label emergencia" *ngIf="solicitudSeleccionada?.cat_emergencia === true">
+              Este Permiso SI es considerado una emergencia médica.
+          </label>
+          <label class="form-label emergencia" *ngIf="solicitudSeleccionada?.cat_emergencia === false">
+              Este Permiso NO es considerado una emergencia médica.
+          </label>
+      </div>
         <div class="form-group">
           <label class="form-label">Motivo de Rechazo:</label>
           <span class="error-message">*Solo llene este campo sino va ha aprobar la solictud.</span>
