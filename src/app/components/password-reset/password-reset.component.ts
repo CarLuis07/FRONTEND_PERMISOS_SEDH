@@ -38,8 +38,8 @@ export class PasswordResetComponent {
     this.loading = true;
     const formData = new FormData();
     formData.append('email', this.email); 
-    formData.append('currentPassword', this.currentPassword);
-    formData.append('newPassword', this.newPassword);
+    formData.append('current_password', this.currentPassword);
+    formData.append('new_password', this.newPassword);
 
     this.http.post<any>(this.apiUrl, formData)
       .subscribe({
