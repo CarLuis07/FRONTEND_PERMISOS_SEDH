@@ -11,10 +11,12 @@ import { ResponderSolicitudesJefeRrhhComponent } from './pages/responder-solicit
 import { ResponderSolicitudesAgenteSeguridadComponent } from './pages/responder-solicitudes-agente-seguridad/responder-solicitudes-agente-seguridad.component';
 import { AdministracionSistemaRrhhComponent } from './pages/administracion-sistema-rrhh/administracion-sistema-rrhh.component';
 import { ADMINISTRACION_ROUTES } from './pages/administracion-sistema-rrhh/administracion-sistema-rrhh-routes';
-
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 export const routes: Routes = [
-  { path: '', component: LoginFormComponent },
+  { path: 'login', component: LoginFormComponent },
+  { path: 'password-reset', component: PasswordResetComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'menu-principal', component: MenuPrincipalComponent,
     canActivate: [authGuard], children: [
     { path: 'permiso-personal', component: PermisoPersonalComponent },
