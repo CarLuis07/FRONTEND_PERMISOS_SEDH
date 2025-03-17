@@ -12,7 +12,7 @@
       </div>
       <div class="form-group">
         <label for="pri_nombre">Primer Nombre:</label>
-        <input type="text" id="pri_nombre" [(ngModel)]="empleado.pri_nombre" name="pri_nombre" class="form-control" required>
+        <input type="text" id="pri_nombre" [(ngModel)]="empleado.pri_nombre" name="pri_nombre" class="form-control">
       </div>
     </div>
     <div class="form-row">
@@ -22,7 +22,7 @@
       </div>
       <div class="form-group">
         <label for="pri_apellido">Primer Apellido:</label>
-        <input type="text" id="pri_apellido" [(ngModel)]="empleado.pri_apellido" name="pri_apellido" class="form-control" required>
+        <input type="text" id="pri_apellido" [(ngModel)]="empleado.pri_apellido" name="pri_apellido" class="form-control">
       </div>
       <div class="form-group">
         <label for="seg_apellido">Segundo Apellido:</label>
@@ -110,6 +110,28 @@
         <input type="text" id="id_jefe_inmediato" [(ngModel)]="empleado.id_jefe_inmediato" name="id_jefe_inmediato" class="form-control" required>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="isFormValid()">Agregar Empleado</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">Agregar Empleado</button>
   </form>
 </div>
+
+<!-- Modal de notificación -->
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true" [ngClass]="{'show': showModal}" [style.display]="showModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" [ngClass]="{'bg-success': isSuccess, 'bg-danger': !isSuccess, 'text-white': true}">
+        <h5 class="modal-title" id="notificationModalLabel">{{ modalTitle }}</h5>
+        <button type="button" class="close" (click)="cerrarModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ modalMessage }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" [ngClass]="{'btn-success': isSuccess, 'btn-danger': !isSuccess}" (click)="cerrarModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>

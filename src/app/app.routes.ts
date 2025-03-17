@@ -31,7 +31,7 @@ export const routes: Routes = [
     { 
       path: 'responder-solicitudes-jefe-rrhh', 
       component: ResponderSolicitudesJefeRrhhComponent,
-      data: { roles: [3] } // solo rol jefe RRHH
+      data: { roles: [3, 5] } // solo rol jefe RRHH
     },
     { 
       path: 'responder-solicitudes-agente-seguridad', 
