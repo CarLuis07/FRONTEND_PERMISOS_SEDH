@@ -54,3 +54,9 @@ button.btn {
 button.btn:hover {
   background-color: #1a4d66;
 }
+
+.message{
+  color: #1a4d66;
+  font-size: 12px;
+  margin-top: 5px;
+}

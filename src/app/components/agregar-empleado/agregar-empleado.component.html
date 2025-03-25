@@ -4,29 +4,29 @@
     <div class="form-row">
       <div class="form-group">
         <label for="email">Correo Institucional:</label>
-        <input type="email" id="email" [(ngModel)]="empleado.email_institucional_empleado" name="email" class="form-control" required>
+        <input type="email" id="email" [(ngModel)]="empleado.email_institucional_empleado" name="email" class="form-control" required placeholder="ejemplo@sedh.gob.hn">
       </div>
       <div class="form-group">
         <label for="contrasena">Contraseña:</label>
-        <input type="password" id="contrasena" [(ngModel)]="empleado.contrasena" name="contrasena" class="form-control" required>
+        <input type="password" id="contrasena" [(ngModel)]="empleado.contrasena" name="contrasena" class="form-control" required placeholder="Contraseña">
       </div>
       <div class="form-group">
         <label for="pri_nombre">Primer Nombre:</label>
-        <input type="text" id="pri_nombre" [(ngModel)]="empleado.pri_nombre" name="pri_nombre" class="form-control">
+        <input type="text" id="pri_nombre" [(ngModel)]="empleado.pri_nombre" name="pri_nombre" class="form-control" required placeholder="EN MAYUSCULA">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="seg_nombre">Segundo Nombre:</label>
-        <input type="text" id="seg_nombre" [(ngModel)]="empleado.seg_nombre" name="seg_nombre" class="form-control">
+        <input type="text" id="seg_nombre" [(ngModel)]="empleado.seg_nombre" name="seg_nombre" class="form-control" placeholder="EN MAYUSCULA">
       </div>
       <div class="form-group">
         <label for="pri_apellido">Primer Apellido:</label>
-        <input type="text" id="pri_apellido" [(ngModel)]="empleado.pri_apellido" name="pri_apellido" class="form-control">
+        <input type="text" id="pri_apellido" [(ngModel)]="empleado.pri_apellido" name="pri_apellido" class="form-control" required placeholder="EN MAYUSCULA">
       </div>
       <div class="form-group">
         <label for="seg_apellido">Segundo Apellido:</label>
-        <input type="text" id="seg_apellido" [(ngModel)]="empleado.seg_apellido" name="seg_apellido" class="form-control">
+        <input type="text" id="seg_apellido" [(ngModel)]="empleado.seg_apellido" name="seg_apellido" class="form-control" placeholder="EN MAYUSCULA">
       </div>
     </div>
     <div class="form-row">
@@ -43,13 +43,13 @@
       </div>
       <div class="form-group">
         <label for="num_identidad">Número de Identidad:</label>
-        <input type="text" id="num_identidad" [(ngModel)]="empleado.num_identidad" name="num_identidad" class="form-control" required>
+        <input type="text" id="num_identidad" [(ngModel)]="empleado.num_identidad" name="num_identidad" class="form-control" required placeholder="XXXX-XXXX-XXXXX">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="num_telefono">Número de Teléfono:</label>
-        <input type="text" id="num_telefono" [(ngModel)]="empleado.num_telefono" name="num_telefono" class="form-control" required>
+        <input type="text" id="num_telefono" [(ngModel)]="empleado.num_telefono" name="num_telefono" class="form-control" required placeholder="XXXX-XXXX">
       </div>
       <div class="form-group">
         <label for="id_tipo_contratacion">Tipo de Contratación:</label>
@@ -107,31 +107,23 @@
     <div class="form-row">
       <div class="form-group">
         <label for="id_jefe_inmediato">Id Jefe Inmediato:</label>
-        <input type="text" id="id_jefe_inmediato" [(ngModel)]="empleado.id_jefe_inmediato" name="id_jefe_inmediato" class="form-control" required>
+        <input type="text" id="id_jefe_inmediato" [(ngModel)]="empleado.id_jefe_inmediato" name="id_jefe_inmediato" class="form-control" required placeholder="XXXX-XXXX-XXXXX">
       </div>
     </div>
     <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">Agregar Empleado</button>
   </form>
 </div>
 
-<!-- Modal de notificación -->
-<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true" [ngClass]="{'show': showModal}" [style.display]="showModal ? 'block' : 'none'">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header" [ngClass]="{'bg-success': isSuccess, 'bg-danger': !isSuccess, 'text-white': true}">
-        <h5 class="modal-title" id="notificationModalLabel">{{ modalTitle }}</h5>
-        <button type="button" class="close" (click)="cerrarModal()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{ modalMessage }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn" [ngClass]="{'btn-success': isSuccess, 'btn-danger': !isSuccess}" (click)="cerrarModal()">Cerrar</button>
-      </div>
-    </div>
+<!-- Template para el modal -->
+<ng-template #modalContent let-modal>
+  <div class="modal-header" [ngClass]="{'bg-success text-white': isSuccess, 'bg-danger text-white': !isSuccess}">
+    <h4 class="modal-title">{{ modalTitle }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
-</div>
-
-<div class="modal-backdrop fade show" *ngIf="showModal"></div>
+  <div class="modal-body text-center">
+    <p class="message">{{ modalMessage }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" [ngClass]="{'btn-success': isSuccess, 'btn-danger': !isSuccess}" (click)="modal.close()">Cerrar</button>
+  </div>
+</ng-template>

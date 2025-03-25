@@ -3,16 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-agregar-empleado',
   templateUrl: './agregar-empleado.component.html',
   styleUrls: ['./agregar-empleado.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, NgbModule]
 })
 export class AgregarEmpleadoComponent implements OnInit {
   @ViewChild('empleadoForm') empleadoForm!: NgForm;
+  @ViewChild('modalContent') modalContent: any;
   
   apiUrl = `${environment.apiUrl}/empleados`;
   datosUrl = `${environment.apiUrl}/datos-sedh`;
@@ -43,7 +45,6 @@ export class AgregarEmpleadoComponent implements OnInit {
   modalTitle: string = '';
   modalMessage: string = '';
   isSuccess: boolean = true;
-  showModal: boolean = false;
 
   tiposContrataciones: any[] = [];
   dependencias: any[] = [];
@@ -56,14 +57,16 @@ export class AgregarEmpleadoComponent implements OnInit {
 
   filteredMunicipios: any[] = [];
   filteredCargos: any[] = [];
+  isLoading: boolean = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private modalService: NgbModal) {}
 
   ngOnInit() {
     this.cargarDatos();
   }
 
   cargarDatos() {
+    this.isLoading = true;
     this.http.get(this.datosUrl).subscribe({
       next: (response: any) => {
         this.tiposContrataciones = response.tipos_contrataciones;
@@ -74,10 +77,12 @@ export class AgregarEmpleadoComponent implements OnInit {
         this.departamentos = response.departamentos;
         this.municipios = response.municipios;
         this.roles = response.roles;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error al obtener datos', error);
-        this.mostrarModal('Error', 'No se pudieron cargar los datos necesarios', false);
+        this.openModal('Error', 'No se pudieron cargar los datos necesarios', false);
+        this.isLoading = false;
       }
     });
   }
@@ -95,9 +100,9 @@ export class AgregarEmpleadoComponent implements OnInit {
       email_institucional_empleado: this.empleado.email_institucional_empleado,
       contrasena: this.empleado.contrasena,
       pri_nombre: this.empleado.pri_nombre,
-      seg_nombre: this.empleado.seg_nombre,
+      seg_nombre: this.empleado.seg_nombre || '',
       pri_apellido: this.empleado.pri_apellido,
-      seg_apellido: this.empleado.seg_apellido,
+      seg_apellido: this.empleado.seg_apellido || '',
       fech_ingreso_laboral: this.empleado.fech_ingreso_laboral,
       act_laboral: this.empleado.act_laboral,
       num_identidad: this.empleado.num_identidad,
@@ -114,27 +119,24 @@ export class AgregarEmpleadoComponent implements OnInit {
     this.http.post(this.apiUrl, empleadoData).subscribe({
       next: (response) => {
         console.log('Empleado agregado exitosamente', response);
-        this.mostrarModal('¡Éxito!', 'Empleado agregado exitosamente', true);
+        this.openModal('¡Éxito!', 'Empleado agregado exitosamente', true);
         this.resetForm();
       },
       error: (error) => {
         console.error('Error al agregar empleado', error);
-        this.mostrarModal('Error', 'No se pudo agregar el empleado. Pruebe otra vez o valide el correo y DNI del Empleado', false);
+        this.openModal('Error', 'No se pudo agregar el empleado. Valide el correo institucional y su DNI.', false);
       }
     });
   }
 
-  mostrarModal(titulo: string, mensaje: string, exito: boolean) {
-    this.modalTitle = titulo;
-    this.modalMessage = mensaje;
-    this.isSuccess = exito;
-    this.showModal = true;
-    document.body.classList.add('modal-open');
-  }
-
-  cerrarModal() {
-    this.showModal = false;
-    document.body.classList.remove('modal-open');
+  openModal(title: string, message: string, success: boolean = true) {
+    this.modalTitle = title;
+    this.modalMessage = message;
+    this.isSuccess = success;
+    this.modalService.open(this.modalContent, {
+      centered: true,
+      backdrop: 'static'
+    });
   }
 
   resetForm() {
