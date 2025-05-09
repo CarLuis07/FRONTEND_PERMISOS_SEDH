@@ -3,25 +3,37 @@
 }
 
 .card {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .card-header {
-    background-color: #296580;
-    color: white;
-  }
-  
-  .form-control:disabled {
-    background-color: #f8f9fa;
-    opacity: 1;
-  }
-  
-  .btn-primary {
-    background-color: #296580;
-    border-color: #296580;
-  }
-  
-  .btn-primary:hover {
-    background-color: #1a4d66;
-    border-color: #1a4d66;
-  }
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.card-header {
+  background-color: #296580;
+  color: white;
+}
+
+.form-control:disabled {
+  background-color: #f8f9fa;
+  opacity: 1;
+}
+
+.btn-primary {
+  background-color: #296580;
+  border-color: #296580;
+}
+
+.btn-primary:hover {
+  background-color: #1a4d66;
+  border-color: #1a4d66;
+}
+
+.alert {
+  font-size: 14px;
+  padding: 8px 15px;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
