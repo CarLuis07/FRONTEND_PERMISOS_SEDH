@@ -41,7 +41,7 @@ export const routes: Routes = [
     { 
       path: 'administracion-sistema-rrhh', 
       component: AdministracionSistemaRrhhComponent,
-      data: { roles: [5] }, // solo rol agente de asistente de RRHH
+      data: { roles: [3, 5] }, // solo rol agente de asistente de RRHH
       children: ADMINISTRACION_ROUTES
     },
     
