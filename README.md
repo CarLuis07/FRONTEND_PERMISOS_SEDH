@@ -43,6 +43,11 @@ export const environment = {
 ng serve
 ```
 
+6. para desplegar el proyecto en producccion:
+```
+ng build --configuration production
+```
+
 ## Importante
 * *este proyecto usa javascript con el framework Angular versión 19.0.6*
 * *este proyecto usa variables de entorno obligatorias para ejecutar el proyecto.*
