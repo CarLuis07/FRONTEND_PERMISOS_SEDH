@@ -35,11 +35,7 @@ export class PerfilEmpleadoComponent {
     this.isLoading = true;
     this.errorMessage = '';
     
-    const payload = {
-      email_institucional: this.searchQuery
-    };
-    
-    this.http.post(`${environment.apiUrl}/empleados/buscar`, payload)
+    this.http.post(`${environment.apiUrl}/buscarEmpleadoPorEmail/${this.searchQuery}`, {})
       .subscribe({
         next: (data: any) => {
           this.empleado = this.mapearDatosEmpleado(data);
