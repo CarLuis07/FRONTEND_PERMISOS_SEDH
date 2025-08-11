@@ -7,10 +7,12 @@
   margin-bottom: 30px;
 }
 
-.card-header {
+.card-header, .modal-header{
   background-color: #296580;
   color: white;
+  border-radius: 5px 5px 0 0;
 }
+
 
 .form-control:disabled {
   background-color: #f8f9fa;

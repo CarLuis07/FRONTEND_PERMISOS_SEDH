@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <!-- Perfil del Empleado (Primer formulario) -->
+  <!-- Perfil del Empleado -->
   <div class="card" *ngIf="empleado">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h3>Perfil del Empleado</h3>
@@ -119,6 +119,19 @@
             </select>
           </div>
           <div class="form-group mb-3">
+            <label>Horas Disponibles:</label>
+            <div class="input-group">
+              <input type="text" 
+                     class="form-control" 
+                     [(ngModel)]="empleado.horasDisponibles" 
+                     disabled>
+              <button class="btn btn-secondary" 
+                      (click)="abrirModalHoras()">
+                <i class="bi bi-pencil"></i> Editar Horas
+              </button>
+            </div>
+          </div>
+          <div class="form-group mb-3">
             <label>Municipio:</label>
             <input type="text" 
                    class="form-control" 
@@ -129,54 +142,47 @@
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Formulario para Horas Disponibles (Segundo formulario) -->
-  <div class="card mt-4" *ngIf="empleado">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h3>Horas Disponibles del Empleado</h3>
-      <button 
-        class="btn btn-primary"
-        *ngIf="!editandoHoras"
-        (click)="activarEdicionHoras()">
-        <i class="bi bi-pencil"></i> Editar Horas
-      </button>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group mb-3">
-            <label>Empleado:</label>
-            <input type="text" 
-                   class="form-control" 
-                   [value]="empleado.nombre" 
-                   disabled>
-          </div>
-          <div class="form-group mb-3">
-            <label>Correo Institucional:</label>
-            <input type="text" 
-                   class="form-control" 
-                   [value]="empleado.emailInstitucional" 
-                   disabled>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group mb-3">
-            <label>Horas Disponibles:</label>
-            <input type="number" 
-                   class="form-control" 
-                   [(ngModel)]="nuevasHoras" 
-                   [disabled]="!editandoHoras"
-                   min="0"
-                   step="0.5">
-          </div>
-          <div *ngIf="editandoHoras" class="d-flex justify-content-end mt-3">
-            <button class="btn btn-secondary me-2" (click)="cancelarEdicionHoras()">
-              Cancelar
-            </button>
-            <button class="btn btn-primary" (click)="guardarHoras()" [disabled]="actualizandoHoras">
-              <span *ngIf="actualizandoHoras" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-              Guardar Cambios
-            </button>
+<!-- Modal para editar horas disponibles -->
+<div class="modal fade" id="modalEditarHoras" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" [class.show]="mostrarModal" [style.display]="mostrarModal ? 'block' : 'none'" [class.modal-open]="mostrarModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <h5 class="modal-title" id="modalLabel">Editar Horas Disponibles</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModalHoras()"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="empleado" class="card">
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Empleado:</label>
+              <input type="text" class="form-control" [value]="empleado.nombre" disabled>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Horas Disponibles Actuales:</label>
+              <input type="text" class="form-control" [value]="empleado.horasDisponibles" disabled>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Nuevas Horas Disponibles:</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevasHoras" >
+            </div>
+            <div *ngIf="mensajeHoras" class="alert" [ngClass]="{'alert-success': !errorHoras, 'alert-danger': errorHoras}">
+              {{ mensajeHoras }}
+            </div>
           </div>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalHoras()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="actualizarHoras()" [disabled]="actualizandoHoras">
+          <span *ngIf="actualizandoHoras" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay para el modal -->
+<div class="modal-backdrop fade" [class.show]="mostrarModal" *ngIf="mostrarModal"></div>

@@ -17,8 +17,8 @@ export class PerfilEmpleadoComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
   
-  // Variables para edición de horas
-  editandoHoras: boolean = false;
+  // Variables para el modal de edición de horas
+  mostrarModal: boolean = false;
   nuevasHoras: number | null = null;
   mensajeHoras: string = '';
   errorHoras: boolean = false;
@@ -35,11 +35,14 @@ export class PerfilEmpleadoComponent {
     this.isLoading = true;
     this.errorMessage = '';
     
-    this.http.post(`${environment.apiUrl}/buscarEmpleadoPorEmail/${this.searchQuery}`, {})
+    const payload = {
+      email_institucional: this.searchQuery
+    };
+    
+    this.http.post(`${environment.apiUrl}/empleados/buscar`, payload)
       .subscribe({
         next: (data: any) => {
           this.empleado = this.mapearDatosEmpleado(data);
-          this.nuevasHoras = this.empleado.horasDisponibles;
           this.isLoading = false;
         },
         error: (error) => {
@@ -97,19 +100,20 @@ export class PerfilEmpleadoComponent {
       });
   }
   
-  // Métodos para edición de horas en el segundo formulario
-  activarEdicionHoras() {
-    this.editandoHoras = true;
-    this.mensajeHoras = '';
-  }
-  
-  cancelarEdicionHoras() {
-    this.editandoHoras = false;
+  // Métodos para el modal de edición de horas
+  abrirModalHoras() {
+    this.mostrarModal = true;
     this.nuevasHoras = this.empleado.horasDisponibles;
     this.mensajeHoras = '';
+    document.body.classList.add('modal-open');
   }
   
-  guardarHoras() {
+  cerrarModalHoras() {
+    this.mostrarModal = false;
+    document.body.classList.remove('modal-open');
+  }
+  
+  actualizarHoras() {
     if (this.nuevasHoras === null) {
       this.mensajeHoras = 'Por favor ingrese un valor para las horas disponibles';
       this.errorHoras = true;
@@ -131,7 +135,11 @@ export class PerfilEmpleadoComponent {
           this.mensajeHoras = 'Horas disponibles actualizadas correctamente';
           this.errorHoras = false;
           this.empleado.horasDisponibles = this.nuevasHoras;
-          this.editandoHoras = false;
+          
+          // Cerrar el modal después de 1.5 segundos
+          setTimeout(() => {
+            this.cerrarModalHoras();
+          }, 1500);
         },
         error: (error) => {
           console.error('Error al actualizar horas:', error);
