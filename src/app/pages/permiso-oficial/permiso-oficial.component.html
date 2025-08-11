@@ -25,18 +25,19 @@
         </div>
 
         <div class="form-date">
-            <label for="fecha">Fecha de solicitud:</label>
+            <label for="fecha">Fecha de salida:</label>
             <input type="date" 
                id="fecha" 
                [(ngModel)]="fecha" 
                name="fecha" 
                class="form-control" 
                [min]="fechaMinima"
+               [max]="fechaMaxima"
                [class.invalido]="camposInvalidos.fecha"
                (change)="validarFormulario()" 
                required>
         <span class="error-message" *ngIf="camposInvalidos.fecha">
-          Seleccione una fecha
+          Seleccione una fecha válida (máximo dos semanas a partir de hoy)
         </span>
         </div>
         

@@ -41,9 +41,15 @@ export class PermisoOficialComponent implements OnInit {
   @ViewChild('modalContent') modalContent: any;
   isLoading: boolean = true;
   fechaMinima: string = new Date().toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
+  fechaMaxima: string; // Nueva propiedad para la fecha máxima
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private modalService: NgbModal,
-              private router: Router) {}
+              private router: Router) {
+    // Calcular fecha máxima (dos semanas después de hoy)
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 7); // Añadir 14 días
+    this.fechaMaxima = maxDate.toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
+  }
   
   ngOnInit() {
     this.obtenerDatosEmpleado();
@@ -69,13 +75,18 @@ export class PermisoOficialComponent implements OnInit {
   validarFormulario() {
     const fechaSeleccionada = new Date(this.fecha);
     const fechaActual = new Date();
+    const fechaMaxima = new Date();
+    fechaMaxima.setDate(fechaActual.getDate() + 14); // 14 días después de hoy
     
     // Convertir a formato YYYY-MM-DD para comparar solo fechas
     const fechaSeleccionadaStr = fechaSeleccionada.toISOString().split('T')[0];
     const fechaActualStr = fechaActual.toISOString().split('T')[0];
+    const fechaMaximaStr = fechaMaxima.toISOString().split('T')[0];
 
     this.camposInvalidos = {
-      fecha: !this.fecha || fechaSeleccionadaStr < fechaActualStr,
+      fecha: !this.fecha || 
+             fechaSeleccionadaStr < fechaActualStr || 
+             fechaSeleccionadaStr > fechaMaximaStr, // Validar que no exceda 2 semanas
       motivo: !this.motivo?.trim()
     };
 

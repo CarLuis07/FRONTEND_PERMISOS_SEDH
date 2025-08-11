@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-reporte-empleados',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './reporte-empleados.component.html',
   styleUrl: './reporte-empleados.component.css'
 })
@@ -13,6 +15,12 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
   reportes: any[] = [];
   apiUrl = `${environment.apiUrl}/reportePermisos`;
   intervalId: any;
+  mesBusqueda: number | null = null;
+  esMesValido: boolean = true;
+  nombresMeses: string[] = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ];
 
   constructor(private http: HttpClient) {}
 
@@ -27,8 +35,15 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
     }
   }
 
-  obtenerReporte() {
-    this.http.get<any[]>(this.apiUrl).subscribe({
+  obtenerReporte(mes?: number) {
+    let url = this.apiUrl;
+    
+    // Si se proporciona un mes, añadir como parámetro de consulta
+    if (mes) {
+      url += `?mes=${mes}`;
+    }
+
+    this.http.get<any[]>(url).subscribe({
       next: (data) => {
         // Procesar los datos para calcular rowspans
         let currentDep = '';
@@ -69,9 +84,50 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
     });
   }
 
-  iniciarActualizacionAutomatica() {
-    this.intervalId = setInterval(() => {
+  validarMes(): void {
+    if (this.mesBusqueda === null) {
+      this.esMesValido = true;
+      return;
+    }
+    
+    this.esMesValido = this.mesBusqueda >= 1 && this.mesBusqueda <= 12;
+  }
+
+  buscarPorMes(): void {
+    if (!this.esMesValido) {
+      return;
+    }
+    
+    // Detener la actualización automática durante la búsqueda
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+    
+    // Si no hay mes o es 0, obtener todos los reportes
+    if (!this.mesBusqueda) {
       this.obtenerReporte();
+    } else {
+      // Obtener reportes por mes
+      this.obtenerReporte(this.mesBusqueda);
+    }
+    
+    // Reiniciar la actualización automática después de la búsqueda
+    this.iniciarActualizacionAutomatica();
+  }
+
+  iniciarActualizacionAutomatica() {
+    // Solo iniciar actualización si no hay una búsqueda por mes activa
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    
+    this.intervalId = setInterval(() => {
+      if (!this.mesBusqueda) {
+        this.obtenerReporte();
+      } else {
+        this.obtenerReporte(this.mesBusqueda);
+      }
     }, 10000);
   }
 }

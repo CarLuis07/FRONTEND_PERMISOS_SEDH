@@ -17,6 +17,13 @@ export class PerfilEmpleadoComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
   
+  // Variables para edición de horas
+  editandoHoras: boolean = false;
+  nuevasHoras: number | null = null;
+  mensajeHoras: string = '';
+  errorHoras: boolean = false;
+  actualizandoHoras: boolean = false;
+  
   constructor(private http: HttpClient) {}
 
   buscarEmpleado() {
@@ -36,6 +43,7 @@ export class PerfilEmpleadoComponent {
       .subscribe({
         next: (data: any) => {
           this.empleado = this.mapearDatosEmpleado(data);
+          this.nuevasHoras = this.empleado.horasDisponibles;
           this.isLoading = false;
         },
         error: (error) => {
@@ -89,6 +97,51 @@ export class PerfilEmpleadoComponent {
         error: (error) => {
           console.error('Error al guardar cambios:', error);
           // Mostrar mensaje de error
+        }
+      });
+  }
+  
+  // Métodos para edición de horas en el segundo formulario
+  activarEdicionHoras() {
+    this.editandoHoras = true;
+    this.mensajeHoras = '';
+  }
+  
+  cancelarEdicionHoras() {
+    this.editandoHoras = false;
+    this.nuevasHoras = this.empleado.horasDisponibles;
+    this.mensajeHoras = '';
+  }
+  
+  guardarHoras() {
+    if (this.nuevasHoras === null) {
+      this.mensajeHoras = 'Por favor ingrese un valor para las horas disponibles';
+      this.errorHoras = true;
+      return;
+    }
+    
+    this.actualizandoHoras = true;
+    this.mensajeHoras = '';
+    
+    const payload = {
+      email_institucional: this.empleado.emailInstitucional,
+      hor_disponibles: this.nuevasHoras
+    };
+    
+    this.http.put(`${environment.apiUrl}/empleados/actualizar-horas`, payload)
+      .subscribe({
+        next: (response: any) => {
+          this.actualizandoHoras = false;
+          this.mensajeHoras = 'Horas disponibles actualizadas correctamente';
+          this.errorHoras = false;
+          this.empleado.horasDisponibles = this.nuevasHoras;
+          this.editandoHoras = false;
+        },
+        error: (error) => {
+          console.error('Error al actualizar horas:', error);
+          this.actualizandoHoras = false;
+          this.mensajeHoras = 'Error al actualizar las horas disponibles';
+          this.errorHoras = true;
         }
       });
   }
