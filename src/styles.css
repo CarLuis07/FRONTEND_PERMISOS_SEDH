@@ -114,9 +114,9 @@
 
 /* ============================================================
    Tokens de tema — Dark mode
-   Se activan cuando ThemeService pone la clase .dark en <body>
+   Se activan cuando ThemeService pone la clase .dark en <html>
    ============================================================ */
-body.dark {
+:root.dark {
   --theme-bg:             var(--sedh-gray-800);
   --theme-surface:        var(--sedh-gray-750);
   --theme-surface-2:      var(--sedh-gray-700);

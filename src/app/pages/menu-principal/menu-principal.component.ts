@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-menu-principal',
@@ -13,7 +12,7 @@ import { ThemeService } from '../../services/theme.service';
 export class MenuPrincipalComponent {
   userRole: number = 1;
 
-  constructor(private router: Router, public themeService: ThemeService) {
+  constructor(private router: Router) {
     const token = localStorage.getItem('token');
     if (token) {
       const tokenData = JSON.parse(atob(token.split('.')[1]));

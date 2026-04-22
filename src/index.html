@@ -77,6 +77,14 @@
     </style>
 </head>
 <body>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('sedh-theme');
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
     <div class="preloader">
         <div class="loader">
           <img src="/Perfil_Redes_1.jpg-removebg-preview.png" alt="SEDH Logo" class="login-logo">

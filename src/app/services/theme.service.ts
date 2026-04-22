@@ -1,23 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   private readonly STORAGE_KEY = 'sedh-theme';
   isDarkMode = false;
 
-  constructor() {
-    const saved = localStorage.getItem(this.STORAGE_KEY);
-    this.isDarkMode = saved === 'dark';
-    this.applyTheme();
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      const saved = localStorage.getItem(this.STORAGE_KEY);
+      this.isDarkMode = saved === 'dark';
+      this.applyTheme();
+    }
   }
 
   toggle() {
     this.isDarkMode = !this.isDarkMode;
-    localStorage.setItem(this.STORAGE_KEY, this.isDarkMode ? 'dark' : 'light');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.STORAGE_KEY, this.isDarkMode ? 'dark' : 'light');
+    }
     this.applyTheme();
   }
 
   private applyTheme() {
-    document.body.classList.toggle('dark', this.isDarkMode);
+    this.document.documentElement.classList.toggle('dark', this.isDarkMode);
   }
 }

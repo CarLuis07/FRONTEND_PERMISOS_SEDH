@@ -2,15 +2,16 @@
     max-width: 900px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--theme-card-bg);
+    border: 1px solid var(--theme-card-border);
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--theme-card-shadow);
   }
   
   h1 {
     text-align: center;
     margin-bottom: 20px;
-    color: #296580;
+    color: var(--theme-text-title);
   }
   
   .form-group {
@@ -21,7 +22,7 @@
     display: block;
     margin-bottom: 5px;
     font-weight: 500;
-    color: #296580;
+    color: var(--theme-text-label);
   }
   
   .form-date {
@@ -40,8 +41,14 @@
   .form-control {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--theme-input-border);
     border-radius: 4px;
+    background-color: var(--theme-input-bg);
+    color: var(--theme-input-text);
+  }
+
+  .form-control::placeholder {
+    color: var(--theme-placeholder);
   }
   
   textarea.form-control {
@@ -49,9 +56,9 @@
   }
 
   .btn-primary {
-    background-color: #296580;
-    border-color: #296580;
-    color: white;
+    background-color: var(--theme-btn-bg);
+    border-color: var(--theme-btn-bg);
+    color: var(--theme-btn-text);
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
@@ -60,7 +67,8 @@
   
   .btn-primary:hover {
     scale: 1.05;
-    background-color: #082933;
+    background-color: var(--theme-btn-hover);
+    border-color: var(--theme-btn-hover);
   }
 
   
@@ -99,11 +107,11 @@ button[disabled] {
 .spinner-border {
   width: 3rem;
   height: 3rem;
-  color: #296580 !important;
+  color: var(--theme-btn-bg) !important;
 }
 
 .modal-body p{
-  color: #000 !important;
+  color: var(--theme-text) !important;
   opacity: 1 !important;
   animation: none !important;
   transition: none !important;

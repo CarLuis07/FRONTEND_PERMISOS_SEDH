@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { ThemeService } from '../../services/theme.service';
+
 
 @Component({
   selector: 'app-login-form',
@@ -27,8 +27,7 @@ export class LoginFormComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private http: HttpClient,
-    public themeService: ThemeService
+    private http: HttpClient
   ) {}
 
   togglePassword() {

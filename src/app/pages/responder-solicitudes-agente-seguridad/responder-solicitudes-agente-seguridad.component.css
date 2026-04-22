@@ -1,97 +1,122 @@
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #296580;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--theme-text-title);
 }
-  
-.table {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .table .table-encabezado,
-  .table thead tr,
-  .table-hover thead tr {
-    background-color: #296580 !important;
-  }
-  
-  .table thead th,
-  .table .table-encabezado th {
-    color: white !important;
-    font-weight: 500 !important;
-    background:#040505 !important;
-  }
 
-  .botonAcciones{
-    background:#040505;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .badge {
-    padding: 8px 12px;
-    border-radius: 4px;
-  }
-  
-  .table-responsive {
-    border-radius: 8px;
-    overflow: hidden;
-    max-height: 800px;  /* Altura para mostrar ~5 filas */
-    overflow-y: auto;
-  }
-  
-  .table-responsive2 {
-    border-radius: 8px;
-    overflow: hidden;
-    max-height: 180px;  /* Altura para mostrar ~2 filas */
-    overflow-y: auto;
-  }
-  .table thead {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    text-align: center;
-  }
-  
-  .table tbody {
-    height: 100%;
-    text-align: center;
-  }
-  
-  .table tbody tr {
-    height: 40px; /* Altura aproximada para cada fila */
-  }
-  
-  .table-dark {
-    background-color: #296580 !important;
-  }
-  
-  .table-dark th {
-    background-color: #296580 !important;
-    color: white !important;
-  }
+.table {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--theme-surface);
+  color: var(--theme-text);
+}
+
+.table td,
+.table th {
+  border-color: var(--theme-border);
+  color: var(--theme-text);
+  background-color: inherit;
+}
+
+.table .table-encabezado,
+.table thead tr,
+.table-hover thead tr {
+  background-color: var(--sedh-primary-700) !important;
+}
+
+.table thead th,
+.table .table-encabezado th {
+  color: var(--sedh-white) !important;
+  font-weight: 500 !important;
+  background: var(--sedh-primary-700) !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: var(--theme-surface-2) !important;
+  color: var(--theme-text) !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+  background-color: var(--theme-surface) !important;
+  color: var(--theme-text) !important;
+}
+
+.table-hover > tbody > tr:hover > * {
+  background-color: var(--theme-border) !important;
+  color: var(--theme-text) !important;
+}
+
+.botonAcciones {
+  background: var(--sedh-primary-800);
+  color: var(--sedh-white);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.badge {
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.table-responsive {
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+.table-responsive2 {
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-align: center;
+}
+
+.table tbody {
+  height: 100%;
+  text-align: center;
+}
+
+.table tbody tr {
+  height: 40px;
+}
+
+.table-dark {
+  background-color: var(--sedh-primary-700) !important;
+}
+
+.table-dark th {
+  background-color: var(--sedh-primary-700) !important;
+  color: var(--sedh-white) !important;
+}
 
 .modal-header {
-    text-align: center;
-  color: #296580;
   justify-content: center !important;
   text-align: center !important;
-  background: linear-gradient(270deg, #296580, #1a2727);
-  color: white;
+  background: linear-gradient(270deg, var(--sedh-primary-500), var(--sedh-primary-800));
+  color: var(--sedh-white);
 }
 
 .modal-body input.form-control,
 .modal-body textarea.form-control {
-  background-color: #f8f9fa;
+  background-color: var(--theme-input-bg);
+  color: var(--theme-input-text);
+  border-color: var(--theme-input-border);
 }
 
 .modal-body input[readonly],
 .modal-body textarea[readonly] {
-  background-color: #e9ecef;
+  background-color: var(--theme-surface-2);
+  color: var(--theme-text-muted);
 }
-
 
 .modal-footer {
   justify-content: space-between;
@@ -108,14 +133,14 @@ h1 {
   display: block;
 }
 
-.form-label{
-  color: #296580;
+.form-label {
+  color: var(--theme-text-label);
 }
 
 .btn-primary {
-  background-color: #296580;
-  border-color: #296580;
-  color: white;
+  background-color: var(--theme-btn-bg);
+  border-color: var(--theme-btn-bg);
+  color: var(--theme-btn-text);
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
@@ -124,7 +149,8 @@ h1 {
 
 .btn-primary:hover {
   scale: 1.05;
-  background-color: #296580;
+  background-color: var(--theme-btn-hover);
+  border-color: var(--theme-btn-hover);
 }
 
 .disabled-input {
@@ -133,20 +159,20 @@ h1 {
   -webkit-user-select: none !important;
   -moz-user-select: none !important;
   -ms-user-select: none !important;
-  background-color: #e9ecef !important;
+  background-color: var(--theme-surface-2) !important;
   opacity: 0.7 !important;
   cursor: not-allowed !important;
 }
 
 .disabled-button {
   pointer-events: none !important;
-  background-color: #cccccc !important;
-  border-color: #cccccc !important;
+  background-color: var(--theme-border) !important;
+  border-color: var(--theme-border) !important;
   opacity: 0.6 !important;
   cursor: not-allowed !important;
 }
 
-.btn-danger{
+.btn-danger {
   background-color: #dc3545;
   border-color: #dc3545;
   color: white;
@@ -155,10 +181,10 @@ h1 {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .btn-danger:hover {
   scale: 1.05;
 }
-
 
 .is-invalid {
   border-color: #dc3545;
