@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -9,53 +10,42 @@ import { environment } from '../../../environments/environment';
   templateUrl: './mis-solicitudes.component.html',
   styleUrl: './mis-solicitudes.component.css'
 })
-export class MisSolicitudesComponent implements OnInit, OnDestroy {
+export class MisSolicitudesComponent implements OnInit {
   solicitudes: any[] = [];
   solicitudesEmergencia: any[] = [];
+  isActualizando = false;
   apiUrl = `${environment.apiUrl}/misSolicitudes`;
   apiUrl2 = `${environment.apiUrl}/misSolicitudesEmergencia`;
-  intervalId: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {
-    this.obtenerTodasLasSolicitudes();
-    this.obtenerSolicitudesEmergencia();
-    this.iniciarActualizacionAutomatica();
-  }
-
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
+    if (isPlatformBrowser(this.platformId)) {
+      this.cargarSolicitudes();
     }
   }
 
-  obtenerTodasLasSolicitudes() {
-    this.http.get<any[]>(this.apiUrl).subscribe({
-      next: (data) => {
-        this.solicitudes = data;
+  cargarSolicitudes() {
+    if (this.isActualizando) return;
+    this.isActualizando = true;
+    forkJoin([
+      this.http.get<any[]>(this.apiUrl),
+      this.http.get<any[]>(this.apiUrl2)
+    ]).subscribe({
+      next: ([solicitudes, emergencia]) => {
+        this.solicitudes = solicitudes;
+        this.solicitudesEmergencia = emergencia;
+        this.isActualizando = false;
       },
-      error: (error) => {
+      error: () => {
         this.solicitudes = [];
-      }
-    });
-  }
-
-  obtenerSolicitudesEmergencia() {
-    this.http.get<any[]>(this.apiUrl2).subscribe({
-      next: (data) => {
-        this.solicitudesEmergencia = data;
-      },
-      error: (error) => {
         this.solicitudesEmergencia = [];
+        this.isActualizando = false;
       }
     });
   }
 
-  iniciarActualizacionAutomatica() {
-    this.intervalId = setInterval(() => {
-      this.obtenerTodasLasSolicitudes();
-      this.obtenerSolicitudesEmergencia();
-    }, 10000);
+  actualizarSolicitudes() {
+    this.cargarSolicitudes();
   }
 }

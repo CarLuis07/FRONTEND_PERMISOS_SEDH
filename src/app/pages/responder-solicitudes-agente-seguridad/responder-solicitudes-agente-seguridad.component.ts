@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild , OnDestroy} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -11,14 +11,14 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './responder-solicitudes-agente-seguridad.component.html',
   styleUrl: './responder-solicitudes-agente-seguridad.component.css'
 })
-export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit, OnDestroy {
+export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit {
 
   solicitudes: any[] = [];
   apiUrl = `${environment.apiUrl}/aprobarSolicitudesAgenteSalida/`;
   apiUrl2= `${environment.apiUrl}/aprobarSolicitudesAgenteRetorno/`;
   horaInvalida: boolean = false;
   mensajeError: string = '';
-  private intervalId: any;
+  isActualizando = false;
   private notificationPermission: boolean = false;
 
   empleado = {
@@ -37,7 +37,7 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit, OnD
   @ViewChild('modalContent') modalContent: any;
   modalRef: any;
 
-  constructor(private http: HttpClient, private modalService: NgbModal) {}
+  constructor(private http: HttpClient, private modalService: NgbModal, @Inject(PLATFORM_ID) private platformId: Object) {}
   
   fecha: string = new Date().toLocaleString('es-HN', { 
     timeZone: 'America/Tegucigalpa',
@@ -80,33 +80,36 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit, OnD
   }
 
   ngOnInit() {
-    this.solicitarPermisoNotificaciones();
-    this.obtenerTodasLasSolicitudes();
-    this.iniciarActualizacionAutomatica();
-  }
-
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
+    if (isPlatformBrowser(this.platformId)) {
+      this.solicitarPermisoNotificaciones();
+      this.cargarSolicitudes();
     }
-  }  
-  
-  iniciarActualizacionAutomatica() {
-    this.intervalId = setInterval(() => {
-      this.obtenerTodasLasSolicitudes();
-    }, 10000); // 10 segundos
   }
 
-  obtenerTodasLasSolicitudes() {
+  cargarSolicitudes() {
+    if (this.isActualizando) return;
+    this.isActualizando = true;
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
         this.solicitudes = data;
+        this.isActualizando = false;
         if (data.length > 0) {
           this.mostrarNotificacion(`Ud tiene ${data.length} ${data.length === 1 ? 'solicitud pendiente' : 'solicitudes pendiente'} de revisión`);
         }
       },
-      error: (error) => console.error('Error:', error)
+      error: (error) => {
+        console.error('Error:', error);
+        this.isActualizando = false;
+      }
     });
+  }
+
+  obtenerTodasLasSolicitudes() {
+    this.cargarSolicitudes();
+  }
+
+  actualizarSolicitudes() {
+    this.cargarSolicitudes();
   }
   openModal(solicitud: any) {
     this.solicitudSeleccionada = solicitud;

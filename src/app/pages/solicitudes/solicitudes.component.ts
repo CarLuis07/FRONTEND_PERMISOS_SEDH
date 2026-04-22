@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './solicitudes.component.css'
 })
 
-export class SolicitudesComponent implements OnInit, OnDestroy {
+export class SolicitudesComponent implements OnInit {
   solicitudes: any[] = [];
   apiUrl = `${environment.apiUrl}/aprobarSolicitudes`;
   apiUrl2= `${environment.apiUrl}/rechazarSolicitudes`;
@@ -28,7 +28,7 @@ export class SolicitudesComponent implements OnInit, OnDestroy {
   modalMessage: string = '';
   @ViewChild('modalContent') modalContent: any;
     
-  constructor(private http: HttpClient, private modalService: NgbModal) {}
+  constructor(private http: HttpClient, private modalService: NgbModal, @Inject(PLATFORM_ID) private platformId: Object) {}
     
   fecha: string = new Date().toLocaleString('es-HN', { 
     timeZone: 'America/Tegucigalpa',
@@ -39,7 +39,7 @@ export class SolicitudesComponent implements OnInit, OnDestroy {
 
   solicitudSeleccionada: any = null;
   mot_rechazo: string = '';
-  intervalId: any;
+  isActualizando = false;
   private notificationPermission: boolean = false;
 
   async solicitarPermisoNotificaciones() {
@@ -72,35 +72,36 @@ export class SolicitudesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.solicitarPermisoNotificaciones();
-    this.obtenerTodasLasSolicitudes();
-    this.iniciarActualizacionAutomatica();
-  }
-
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
+    if (isPlatformBrowser(this.platformId)) {
+      this.solicitarPermisoNotificaciones();
+      this.cargarSolicitudes();
     }
   }
 
-  obtenerTodasLasSolicitudes() {
+  cargarSolicitudes() {
+    if (this.isActualizando) return;
+    this.isActualizando = true;
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
         this.solicitudes = data;
+        this.isActualizando = false;
         if (data.length > 0) {
           this.mostrarNotificacion(`Ud tiene ${data.length} ${data.length === 1 ? 'solicitud pendiente' : 'solicitudes pendientes'} de revisión`);
         }
       },
       error: (error) => {
         console.error('Error al obtener solicitudes:', error);
+        this.isActualizando = false;
       }
     });
   }
 
-  iniciarActualizacionAutomatica() {
-    this.intervalId = setInterval(() => {
-      this.obtenerTodasLasSolicitudes();
-    }, 10000);
+  obtenerTodasLasSolicitudes() {
+    this.cargarSolicitudes();
+  }
+
+  actualizarSolicitudes() {
+    this.cargarSolicitudes();
   }
 
   openModal(solicitud: any) {
