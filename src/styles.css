@@ -108,8 +108,8 @@
   --theme-card-bg:        var(--sedh-gray-50);
   --theme-card-border:    var(--sedh-primary-100);
   --theme-card-shadow:    0 20px 60px rgba(38, 77, 160, 0.12);
-  /* Filtro logo: azul institucional #264DA0 */
-  --logo-filter: brightness(0) saturate(100%) invert(27%) sepia(50%) saturate(956%) hue-rotate(196deg) brightness(90%);
+  /* Filtro logo: sin filtro en light (se muestra en colores originales) */
+  --logo-filter: none;
 }
 
 /* ============================================================

@@ -139,9 +139,17 @@
   padding-right: 3rem;
 }
 
+/* Ocultar el botón nativo de revelar contraseña en Edge/IE */
+.password-input-wrapper .form-control::-ms-reveal,
+.password-input-wrapper .form-control::-ms-clear {
+  display: none;
+}
+
 .password-toggle {
   position: absolute;
   right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -153,13 +161,10 @@
   color: var(--theme-input-focus);
   cursor: pointer;
   padding: 0;
-  transform: none !important;
 }
 
 .password-toggle:hover {
   opacity: 0.75;
-  transform: none !important;
-  box-shadow: none !important;
 }
 
 .password-toggle i {
@@ -242,11 +247,15 @@
 }
 
 .forgot-password a {
-  color: var(--theme-link);
+  color: var(--sedh-primary-700);
   text-decoration: none;
   font-size: 0.88rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 0.25s;
+}
+
+:host-context(.dark) .forgot-password a {
+  color: var(--sedh-secondary-300);
 }
 
 .forgot-password a:hover {
@@ -275,442 +284,4 @@
   .login-box {
     padding: 1.5rem 1rem;
   }
-}
-
-.login-page {
-  --bg:           var(--sedh-white);
-  --card-bg:      var(--sedh-gray-50);
-  --card-border:  var(--sedh-primary-100);
-  --card-shadow:  0 20px 60px rgba(38, 77, 160, 0.12);
-  --text-title:   var(--sedh-primary-600);
-  --text-label:   var(--sedh-primary-500);
-  --input-bg:     var(--sedh-white);
-  --input-border: var(--sedh-primary-200);
-  --input-focus:  var(--sedh-primary);
-  --input-text:   var(--sedh-gray-800);
-  --placeholder:  var(--sedh-gray-400);
-  --btn-bg:       var(--sedh-primary);
-  --btn-hover:    var(--sedh-primary-600);
-  --btn-text:     var(--sedh-white);
-  --btn-shadow:   rgba(38, 77, 160, 0.3);
-  --link-color:   var(--sedh-primary);
-  --error-bg:     #fef2f2;
-  --error-text:   #dc2626;
-  --error-border: #fca5a5;
-  --field-error:  #b91c1c;
-  --toggle-bg:    var(--sedh-white);
-  --toggle-color: var(--sedh-primary);
-  --toggle-shadow: 0 2px 12px rgba(38, 77, 160, 0.18);
-}
-
-/* =============================================
-   CSS Variables — Modo Oscuro
-   ============================================= */
-.login-page.dark {
-  --bg:           var(--sedh-gray-800);
-  --card-bg:      var(--sedh-gray-750);
-  --card-border:  var(--sedh-gray-650);
-  --card-shadow:  0 20px 60px rgba(0, 0, 0, 0.55);
-  --text-title:   var(--sedh-secondary-200);
-  --text-label:   var(--sedh-secondary-300);
-  --input-bg:     var(--sedh-gray-800);
-  --input-border: var(--sedh-gray-600);
-  --input-focus:  var(--sedh-secondary-400);
-  --input-text:   var(--sedh-gray-100);
-  --placeholder:  var(--sedh-gray-500);
-  --btn-bg:       var(--sedh-secondary);
-  --btn-hover:    var(--sedh-secondary-400);
-  --btn-text:     var(--sedh-white);
-  --btn-shadow:   rgba(173, 132, 17, 0.35);
-  --link-color:   var(--sedh-secondary-300);
-  --error-bg:     #3b0a0a;
-  --error-text:   #fca5a5;
-  --error-border: #7f1d1d;
-  --field-error:  #fca5a5;
-  --toggle-bg:    var(--sedh-gray-700);
-  --toggle-color: var(--sedh-secondary-300);
-  --toggle-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-}
-
-/* =============================================
-   Página
-   ============================================= */
-.login-page {
-  position: relative;
-  min-height: 100vh;
-  background: var(--bg);
-  transition: background 0.35s ease;
-}
-
-/* =============================================
-   Botón toggle tema
-   ============================================= */
-.theme-toggle {
-  position: fixed;
-  top: 1.25rem;
-  right: 1.25rem;
-  z-index: 100;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid var(--card-border);
-  cursor: pointer;
-  background: var(--toggle-bg);
-  color: var(--toggle-color);
-  box-shadow: var(--toggle-shadow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  transition: background 0.3s, color 0.3s, transform 0.2s, border-color 0.3s;
-}
-
-.theme-toggle:hover {
-  transform: scale(1.12);
-}
-
-/* =============================================
-   Contenedor central
-   ============================================= */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1.5rem;
-}
-
-/* =============================================
-   Tarjeta
-   ============================================= */
-.login-box {
-  background: var(--card-bg);
-  border: 1.5px solid var(--card-border);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: var(--card-shadow);
-  animation: fadeUp 0.5s ease-out;
-  transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* =============================================
-   Logo
-   ============================================= */
-.login-header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.login-logo {
-  width: 100%;
-  max-width: 320px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  object-fit: contain;
-  filter: brightness(0) invert(1) sepia(1) saturate(0) brightness(100);
-}
-
-/* =============================================
-   Título
-   ============================================= */
-.welcome-title {
-  text-align: center;
-  color: var(--text-title);
-  font-size: clamp(1.05rem, 3vw, 1.35rem);
-  font-weight: 700;
-  margin: 0 0 1.75rem;
-  transition: color 0.35s;
-}
-
-/* =============================================
-   Formulario
-   ============================================= */
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.form-group label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-label);
-  transition: color 0.35s;
-}
-
-.form-control {
-  width: 100%;
-  padding: 0.7rem 1rem;
-  font-size: 0.95rem;
-  border-radius: 10px;
-  border: 1.5px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--input-text);
-  outline: none;
-  box-sizing: border-box;
-  transition: border-color 0.25s, background 0.35s, color 0.35s;
-}
-
-.form-control:focus {
-  border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-focus) 20%, transparent);
-}
-
-.form-control::placeholder {
-  color: var(--placeholder);
-  font-size: 0.88rem;
-}
-
-/* =============================================
-   Campo contraseña
-   ============================================= */
-.password-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.password-input-wrapper .form-control {
-  padding-right: 3rem;
-}
-
-.password-toggle {
-  position: absolute;
-  right: 0.6rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--input-focus);
-  cursor: pointer;
-  padding: 0;
-}
-
-.password-toggle:hover {
-  opacity: 0.75;
-}
-
-.password-toggle i {
-  font-size: 1.1rem;
-}
-
-/* =============================================
-   Errores de campo
-   ============================================= */
-.field-error {
-  font-size: 0.8rem;
-  color: var(--field-error);
-  font-weight: 500;
-}
-
-/* =============================================
-   Alerta de error general
-   ============================================= */
-.error-alert {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1rem;
-  border-radius: 10px;
-  background: var(--error-bg);
-  color: var(--error-text);
-  border: 1px solid var(--error-border);
-  font-size: 0.9rem;
-  transition: background 0.35s, color 0.35s;
-}
-
-/* =============================================
-   Botón principal
-   ============================================= */
-.btn-submit {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  cursor: pointer;
-  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.btn-submit:hover:not(:disabled) {
-  background: var(--btn-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--btn-shadow);
-}
-
-.btn-submit:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-/* Spinner de carga */
-.spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  flex-shrink: 0;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* =============================================
-   Enlace primer ingreso
-   ============================================= */
-.forgot-password {
-  text-align: center;
-  margin-top: 1.25rem;
-}
-
-.forgot-password a {
-  color: var(--link-color);
-  text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 500;
-  transition: color 0.25s;
-}
-
-.forgot-password a:hover {
-  text-decoration: underline;
-}
-
-/* =============================================
-   Responsive
-   ============================================= */
-@media (max-width: 480px) {
-  .login-box {
-    padding: 2rem 1.25rem;
-    border-radius: 16px;
-  }
-
-  .login-logo {
-    max-width: 220px;
-  }
-
-  .btn-submit {
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .login-box {
-    padding: 1.5rem 1rem;
-  }
-}
-}
-
-.login-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #fff;
-  margin: -32px -36px 14px -36px;
-  padding: 10px 36px;
-  border-radius: 15px 15px 0 0;
-}
-
-.login-logo {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  display: block;
-}
-
-.login-header h1 {
-  margin-top: 8px;
-  color: #19438c;
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.form-group label {
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.form-control {
-  border-radius: 8px;
-  border: none;
-  padding: 12px 14px;
-}
-
-.password-input-wrapper {
-  position: relative;
-}
-
-.password-input-wrapper .form-control {
-  padding-right: 45px;
-}
-
-.password-toggle {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  background: transparent;
-  color: #666;
-}
-
-.btn.btn-primary.w-100 {
-  background: #ad8411;
-  border-color: #ad8411;
-  border-radius: 8px;
-  font-weight: 600;
-}
-
-.btn.btn-primary.w-100:hover {
-  filter: brightness(.95);
-}
-
-.forgot-password {
-  text-align: center;
-}
-
-.forgot-password a {
-  color: #d8e6ff;
-  text-decoration: none;
-}
-
-.forgot-password a:hover {
-  text-decoration: underline;
-}
-
-.text-danger {
-  color: #ffd6d6 !important;
 }
