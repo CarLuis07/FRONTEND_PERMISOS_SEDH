@@ -1,12 +1,154 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+/* ============================================================
+   SEDH — Variables de color globales
+   Úsalas en cualquier componente con var(--sedh-*)
+   ============================================================ */
 :root {
-    --color-primario: #6EC1E4;
-    --color-secundario: #f2f2f2;
-    --color-terciario: #296580;
+  /* ── Azul institucional (primario) ── */
+  --sedh-primary:      #264DA0;
+  --sedh-primary-50:   #F1F4FB;
+  --sedh-primary-100:  #DEE6F6;
+  --sedh-primary-150:  #CCD7F1;
+  --sedh-primary-200:  #BCCDEE;
+  --sedh-primary-250:  #A9BCE7;
+  --sedh-primary-300:  #8FA8E0;
+  --sedh-primary-350:  #778FCD;
+  --sedh-primary-400:  #5F7FD0;
+  --sedh-primary-450:  #4A67BD;
+  --sedh-primary-500:  #264DA0;
+  --sedh-primary-550:  #22458F;
+  --sedh-primary-600:  #1F3E82;
+  --sedh-primary-650:  #1B366F;
+  --sedh-primary-700:  #182F63;
+  --sedh-primary-750:  #142654;
+  --sedh-primary-800:  #101F41;
+  --sedh-primary-850:  #0C1733;
+  --sedh-primary-900:  #080F21;
+  --sedh-primary-950:  #050814;
+
+  /* ── Dorado institucional (secundario) ── */
+  --sedh-secondary:      #AD8411;
+  --sedh-secondary-50:   #FDF8EB;
+  --sedh-secondary-100:  #FAEDC7;
+  --sedh-secondary-150:  #F7E3A6;
+  --sedh-secondary-200:  #F4DB8F;
+  --sedh-secondary-250:  #F1D274;
+  --sedh-secondary-300:  #EABF44;
+  --sedh-secondary-350:  #E5AE2F;
+  --sedh-secondary-400:  #D39A20;
+  --sedh-secondary-450:  #C9A227;
+  --sedh-secondary-500:  #AD8411;
+  --sedh-secondary-550:  #9A770F;
+  --sedh-secondary-600:  #8B6A0E;
+  --sedh-secondary-650:  #775C0C;
+  --sedh-secondary-700:  #684F0A;
+  --sedh-secondary-750:  #564208;
+  --sedh-secondary-800:  #453406;
+  --sedh-secondary-850:  #332705;
+  --sedh-secondary-900:  #221903;
+  --sedh-secondary-950:  #140F02;
+
+  /* ── Grises neutros ── */
+  --sedh-white:     #FFFFFF;
+  --sedh-black:     #000000;
+  --sedh-gray-50:   #FAFAFA;
+  --sedh-gray-100:  #F4F4F5;
+  --sedh-gray-150:  #EAEAEC;
+  --sedh-gray-200:  #E0E0E2;
+  --sedh-gray-250:  #D4D4D7;
+  --sedh-gray-300:  #C4C4C8;
+  --sedh-gray-350:  #B0B0B5;
+  --sedh-gray-400:  #9A9AA0;
+  --sedh-gray-450:  #84848B;
+  --sedh-gray-500:  #6E6E76;
+  --sedh-gray-550:  #5A5A61;
+  --sedh-gray-600:  #48484E;
+  --sedh-gray-650:  #38383D;
+  --sedh-gray-700:  #2C2C30;
+  --sedh-gray-750:  #222225;
+  --sedh-gray-800:  #1A1A1D;
+  --sedh-gray-850:  #121214;
+  --sedh-gray-900:  #0C0C0E;
+/* ── Tokens de tema — Light (defecto) ── */
+  --theme-bg:             var(--sedh-white);
+  --theme-surface:        var(--sedh-gray-50);
+  --theme-surface-2:      var(--sedh-gray-100);
+  --theme-border:         var(--sedh-primary-100);
+  --theme-text:           var(--sedh-gray-800);
+  --theme-text-muted:     var(--sedh-gray-500);
+  --theme-text-title:     var(--sedh-primary-600);
+  --theme-text-label:     var(--sedh-primary-500);
+  --theme-input-bg:       var(--sedh-white);
+  --theme-input-border:   var(--sedh-primary-200);
+  --theme-input-focus:    var(--sedh-primary);
+  --theme-input-text:     var(--sedh-gray-800);
+  --theme-placeholder:    var(--sedh-gray-400);
+  --theme-btn-bg:         var(--sedh-primary);
+  --theme-btn-hover:      var(--sedh-primary-600);
+  --theme-btn-text:       var(--sedh-white);
+  --theme-btn-shadow:     rgba(38, 77, 160, 0.3);
+  --theme-link:           var(--sedh-primary);
+  --theme-sidebar-bg:     var(--sedh-primary-800);
+  --theme-sidebar-text:   var(--sedh-white);
+  --theme-sidebar-label:  var(--sedh-primary-200);
+  --theme-sidebar-hover:  var(--sedh-primary-400);
+  --theme-sidebar-border: var(--sedh-primary-700);
+  --theme-navbar-bg:      var(--sedh-primary-700);
+  --theme-footer-bg:      var(--sedh-white);
+  --theme-footer-text:    var(--sedh-primary-500);
+  --theme-toggle-bg:      var(--sedh-white);
+  --theme-toggle-color:   var(--sedh-primary);
+  --theme-toggle-border:  var(--sedh-primary-200);
+  --theme-card-bg:        var(--sedh-gray-50);
+  --theme-card-border:    var(--sedh-primary-100);
+  --theme-card-shadow:    0 20px 60px rgba(38, 77, 160, 0.12);
+  /* Filtro logo: azul institucional #264DA0 */
+  --logo-filter: brightness(0) saturate(100%) invert(27%) sepia(50%) saturate(956%) hue-rotate(196deg) brightness(90%);
+}
+
+/* ============================================================
+   Tokens de tema — Dark mode
+   Se activan cuando ThemeService pone la clase .dark en <body>
+   ============================================================ */
+body.dark {
+  --theme-bg:             var(--sedh-gray-800);
+  --theme-surface:        var(--sedh-gray-750);
+  --theme-surface-2:      var(--sedh-gray-700);
+  --theme-border:         var(--sedh-gray-650);
+  --theme-text:           var(--sedh-gray-100);
+  --theme-text-muted:     var(--sedh-gray-400);
+  --theme-text-title:     var(--sedh-secondary-200);
+  --theme-text-label:     var(--sedh-secondary-300);
+  --theme-input-bg:       var(--sedh-gray-800);
+  --theme-input-border:   var(--sedh-gray-600);
+  --theme-input-focus:    var(--sedh-secondary-400);
+  --theme-input-text:     var(--sedh-gray-100);
+  --theme-placeholder:    var(--sedh-gray-500);
+  --theme-btn-bg:         var(--sedh-secondary);
+  --theme-btn-hover:      var(--sedh-secondary-400);
+  --theme-btn-text:       var(--sedh-white);
+  --theme-btn-shadow:     rgba(173, 132, 17, 0.35);
+  --theme-link:           var(--sedh-secondary-300);
+  --theme-sidebar-bg:     var(--sedh-gray-850);
+  --theme-sidebar-text:   var(--sedh-gray-100);
+  --theme-sidebar-label:  var(--sedh-gray-400);
+  --theme-sidebar-hover:  var(--sedh-secondary-300);
+  --theme-sidebar-border: var(--sedh-gray-700);
+  --theme-navbar-bg:      var(--sedh-gray-800);
+  --theme-footer-bg:      var(--sedh-gray-800);
+  --theme-footer-text:    var(--sedh-gray-400);
+  --theme-toggle-bg:      var(--sedh-gray-700);
+  --theme-toggle-color:   var(--sedh-secondary-300);
+  --theme-toggle-border:  var(--sedh-gray-600);
+  --theme-card-bg:        var(--sedh-gray-750);
+  --theme-card-border:    var(--sedh-gray-650);
+  --theme-card-shadow:    0 20px 60px rgba(0, 0, 0, 0.55);
+  /* Filtro logo: blanco */
+  --logo-filter: brightness(0) invert(1);
 }

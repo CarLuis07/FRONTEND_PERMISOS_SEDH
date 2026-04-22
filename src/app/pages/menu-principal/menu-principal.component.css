@@ -4,10 +4,9 @@
   box-sizing: border-box;
 }
 
-
 .menu-lateral {
   width: 200px;
-  background: linear-gradient(45deg, #296580, #040505);
+  background: var(--theme-sidebar-bg);
   height: 100vh;
   float: left;
   position: fixed;
@@ -15,6 +14,10 @@
   left: 0;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.35s ease;
+  z-index: 10;
 }
 
 .logo-img {
@@ -22,19 +25,24 @@
   height: 140px;
   margin-block: 30px;
   display: block;
+  filter: var(--logo-filter);
+  transition: filter 0.35s ease;
 }
 
 .menu-lateral ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .menu {
-  color: rgb(139, 135, 135);
+  color: var(--theme-sidebar-label);
   text-decoration: none;
   margin-bottom: 10px;
   font-size: 1.2em;
+  transition: color 0.35s;
 }
 
 .submenu {
@@ -45,49 +53,83 @@
 }
 
 .submenu a {
-  color: #ffffff;
+  color: var(--theme-sidebar-text);
   text-decoration: none;
   padding: 5px 0;
   font-size: 0.9em;
+  transition: color 0.25s;
 }
 
 .submenu a:hover {
-  color: #5FC3DB;
-  text-decoration: none;
+  color: var(--theme-sidebar-hover);
+}
+
+/* ── Botón flotante de tema (top-right) ── */
+.theme-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 200;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--theme-toggle-border);
+  cursor: pointer;
+  background: var(--theme-toggle-bg);
+  color: var(--theme-toggle-color);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  transition: background 0.3s, color 0.3s, transform 0.2s, border-color 0.3s;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.12);
+}
+
+/* ── Footer del sidebar ── */
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 10px 16px;
+  border-top: 1px solid var(--theme-sidebar-border);
 }
 
 .button {
-  background-color: #000000;
-  color: #6EC1E4;
+  background: var(--sedh-gray-900);
+  color: var(--sedh-secondary-300);
   padding: 10px;
   text-align: center;
   text-decoration: none;
   display: block;
-  margin-top: 320px;
-  margin-left: 15px;
+  width: 100%;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.88rem;
+  transition: background 0.25s, color 0.25s;
 }
 
-button:hover {
-  background-color: #6EC1E4;
-  color: #000000;
-  padding: 10px;
+.button:hover {
+  background: var(--sedh-secondary);
+  color: var(--sedh-white);
+  transform: none;
+  box-shadow: none;
 }
-
-
 
 footer p {
-  color: #296580;
+  color: var(--theme-footer-text);
   text-align: center;
   padding: 10px;
   position: fixed;
   bottom: 0;
   width: calc(100% - 200px);
   margin-left: 200px;
-  background-color: white;
+  background-color: var(--theme-footer-bg);
   z-index: 1;
-  opacity: 1 !important;
-  animation: none !important;
-  transition: none !important;
+  transition: background 0.35s, color 0.35s;
 }
 
 .contenido {
@@ -95,6 +137,8 @@ footer p {
   height: 100vh;
   position: relative;
   overflow: hidden;
+  background: var(--theme-bg);
+  transition: background 0.35s;
 }
 
 .contenido::after {
@@ -105,36 +149,10 @@ footer p {
   transform: translateY(-50%);
   width: 1200px;
   height: 1200px;
-  background-image: url('/Escudo HN.png');
+  background-image: url('/LogoOficialSEDH.png');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: right ;
-  opacity: 0.5;
-  z-index: -1;
-}
-
-@keyframes reflejo {
-  0% {
-    transform: translateX(-100%) translateY(-100%) rotate(30deg);
-  }
-  100% {
-    transform: translateX(100%) translateY(100%) rotate(30deg);
-  }
-}
-
-.menu-lateral::before {
-  content: '';
-  position: absolute;
-  top: -150%;
-  left: -150%;
-  width: 400%;
-  height: 400%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 20%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  transform: rotate(30deg);
-  animation: reflejo 20s linear infinite;
+  background-position: right;
+  opacity: 0.04;
+  z-index: 0;
 }

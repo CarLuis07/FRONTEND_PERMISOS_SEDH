@@ -5,12 +5,13 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
-import { RouterModule } from '@angular/router'; // Importa RouterModule
+import { RouterModule } from '@angular/router';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule], // Asegúrate de importar RouterModule aquí
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
@@ -23,7 +24,12 @@ export class LoginFormComponent {
   showPassword: boolean = false;
   loading: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private http: HttpClient,
+    public themeService: ThemeService
+  ) {}
 
   togglePassword() {
     this.showPassword = !this.showPassword;

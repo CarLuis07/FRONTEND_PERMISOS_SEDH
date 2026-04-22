@@ -1,8 +1,10 @@
+<button class="theme-toggle" type="button" (click)="themeService.toggle()" [title]="themeService.isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+  <i class="bi" [ngClass]="themeService.isDarkMode ? 'bi-sun-fill' : 'bi-moon-fill'"></i>
+</button>
 
-  
 <div class="menu-lateral">
     <div class="logo">
-      <img src="Escudo HN.png" alt="Logo" class="logo-img">
+      <img src="LogoOficialSEDH.png" alt="Logo SEDH" class="logo-img">
     </div>
     <ul>
       <li class="menu">Solicitar
@@ -41,7 +43,7 @@
         </div>
       </li>
     </ul>
-    <div>
+    <div class="sidebar-footer">
       <button class="btn button" (click)="logout()">Cerrar Sesión</button>
     </div>
   </div>
