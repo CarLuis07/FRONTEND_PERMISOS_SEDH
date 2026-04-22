@@ -65,7 +65,7 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit, OnD
     try {
       const notification = new Notification('SISTEMA DE PERMISOS SEDH', {
         body: mensaje.toUpperCase(),
-        icon: 'LogoSedhEscudo.png', // Imagen de 256x256 píxeles
+        icon: 'Escudo HN.png', // Imagen de 256x256 píxeles
         tag: 'nueva-solicitud',
         requireInteraction: true,
         silent: false

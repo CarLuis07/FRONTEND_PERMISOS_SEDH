@@ -57,7 +57,7 @@ export class SolicitudesComponent implements OnInit, OnDestroy {
     try {
       const notification = new Notification('SISTEMA DE PERMISOS SEDH', {
         body: mensaje.toUpperCase(),
-        icon: 'LogoSedhEscudo.png',
+        icon: 'Escudo HN.png',
         tag: 'nueva-solicitud',
         requireInteraction: true,
         silent: false

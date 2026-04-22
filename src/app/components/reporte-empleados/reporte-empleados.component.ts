@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -25,7 +25,9 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.obtenerReporte();
+    // Iniciar con el mes actual
+    const mesActual = new Date().getMonth() + 1; // getMonth() devuelve 0-11
+    this.obtenerReporte(mesActual);
     this.iniciarActualizacionAutomatica();
   }
 
@@ -36,14 +38,20 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
   }
 
   obtenerReporte(mes?: number) {
-    let url = this.apiUrl;
+    // Crear un objeto HttpParams para enviar el parámetro mes de forma segura
+    let params = new HttpParams();
     
-    // Si se proporciona un mes, añadir como parámetro de consulta
-    if (mes) {
-      url += `?mes=${mes}`;
+    // Si se proporciona un mes específico, usarlo
+    if (mes && mes >= 1 && mes <= 12) {
+      params = params.set('Mes', mes.toString());
+    } else {
+      // Si no se especifica mes o es inválido, usar el mes actual
+      const mesActual = new Date().getMonth() + 1;
+      params = params.set('Mes', mesActual.toString());
     }
 
-    this.http.get<any[]>(url).subscribe({
+    // Usar HttpParams en la petición
+    this.http.get<any[]>(this.apiUrl, { params }).subscribe({
       next: (data) => {
         // Procesar los datos para calcular rowspans
         let currentDep = '';
@@ -79,7 +87,7 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
         });
       },
       error: (error) => {
-        console.error('Error:', error);
+        console.error('Error al obtener reporte:', error);
       }
     });
   }
@@ -104,12 +112,13 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
       this.intervalId = null;
     }
     
-    // Si no hay mes o es 0, obtener todos los reportes
-    if (!this.mesBusqueda) {
-      this.obtenerReporte();
-    } else {
-      // Obtener reportes por mes
+    // Si hay un mes válido seleccionado, usarlo para la búsqueda
+    if (this.mesBusqueda && this.mesBusqueda >= 1 && this.mesBusqueda <= 12) {
       this.obtenerReporte(this.mesBusqueda);
+    } else {
+      // Si no hay mes seleccionado o es inválido, usar el mes actual
+      const mesActual = new Date().getMonth() + 1;
+      this.obtenerReporte(mesActual);
     }
     
     // Reiniciar la actualización automática después de la búsqueda
@@ -123,10 +132,11 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
     }
     
     this.intervalId = setInterval(() => {
-      if (!this.mesBusqueda) {
-        this.obtenerReporte();
-      } else {
+      if (this.mesBusqueda && this.mesBusqueda >= 1 && this.mesBusqueda <= 12) {
         this.obtenerReporte(this.mesBusqueda);
+      } else {
+        const mesActual = new Date().getMonth() + 1;
+        this.obtenerReporte(mesActual);
       }
     }, 10000);
   }
