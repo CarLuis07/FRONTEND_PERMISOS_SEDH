@@ -51,6 +51,7 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit {
   mot_rechazo: string = '';
 
   async solicitarPermisoNotificaciones() {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (!('Notification' in window)) return;
   
     try {
@@ -60,6 +61,7 @@ export class ResponderSolicitudesAgenteSeguridadComponent implements OnInit {
   }
   
   mostrarNotificacion(mensaje: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
   
     try {

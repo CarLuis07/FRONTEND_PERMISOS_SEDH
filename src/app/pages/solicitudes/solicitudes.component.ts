@@ -43,6 +43,7 @@ export class SolicitudesComponent implements OnInit {
   private notificationPermission: boolean = false;
 
   async solicitarPermisoNotificaciones() {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (!('Notification' in window)) return;
   
     try {
@@ -52,6 +53,7 @@ export class SolicitudesComponent implements OnInit {
   }
   
   mostrarNotificacion(mensaje: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
   
     try {

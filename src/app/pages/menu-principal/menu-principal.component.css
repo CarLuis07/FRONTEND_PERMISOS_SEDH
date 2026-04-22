@@ -74,8 +74,8 @@
 }
 
 .button {
-  background: var(--sedh-gray-900);
-  color: var(--sedh-secondary-300);
+  background: var(--sedh-secondary-600);
+  color: var(--sedh-white);
   padding: 10px;
   text-align: center;
   text-decoration: none;

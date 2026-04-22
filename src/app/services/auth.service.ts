@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -11,7 +12,11 @@ import { Router } from '@angular/router';
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/token`;
   
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) { }
 
   login(username: string, password: string): Observable<any> {
     const formData = new FormData();
@@ -21,6 +26,8 @@ export class AuthService {
   }
   
   isTokenValid(): boolean {
+    if (!isPlatformBrowser(this.platformId)) return false;
+
     const token = localStorage.getItem('token');
     if (!token) return false;
 
@@ -36,7 +43,9 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('token');
+    }
     this.router.navigate(['/']);
   }
 }

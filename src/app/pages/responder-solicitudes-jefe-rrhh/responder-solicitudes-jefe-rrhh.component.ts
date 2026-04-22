@@ -44,6 +44,7 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit {
   isActualizando = false;
 
   async solicitarPermisoNotificaciones() {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (!('Notification' in window)) return;
   
     try {
@@ -53,6 +54,7 @@ export class ResponderSolicitudesJefeRrhhComponent implements OnInit {
   }
   
   mostrarNotificacion(mensaje: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
   
     try {

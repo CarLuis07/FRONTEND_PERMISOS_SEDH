@@ -1,9 +1,97 @@
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: var(--theme-text-title);
+/* =============================================
+   Dark/Light: gestionado por ThemeService
+   (.dark en <html> activa tokens --theme-*)
+   ============================================= */
+:host {
+  display: block;
+  min-height: 100vh;
 }
 
+/* ── Fondo de página ── */
+.ms-page {
+  min-height: 100vh;
+  background: var(--theme-bg);
+  transition: background 0.35s ease;
+}
+
+.ms-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ── Encabezado ── */
+.ms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.ms-title {
+  color: var(--theme-text-title);
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 700;
+  text-align: left;
+  margin: 0;
+  transition: color 0.35s;
+}
+
+/* ── Botón Actualizar ── */
+.btn-actualizar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: var(--theme-btn-bg);
+  color: var(--theme-btn-text);
+  box-shadow: 0 2px 8px var(--theme-btn-shadow);
+  transition: background 0.25s, box-shadow 0.25s, opacity 0.25s;
+}
+
+.btn-actualizar:hover:not(:disabled) {
+  background: var(--theme-btn-hover);
+  box-shadow: 0 4px 14px var(--theme-btn-shadow);
+}
+
+.btn-actualizar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Spinner dentro del botón ── */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Alerta de error ── */
+.ms-error-alert {
+  background: color-mix(in srgb, #dc3545 12%, transparent);
+  color: #dc3545;
+  border: 1px solid color-mix(in srgb, #dc3545 35%, transparent);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Tablas ── */
 .table {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: var(--theme-surface);
@@ -17,14 +105,12 @@ h1 {
   background-color: inherit;
 }
 
-.table .table-encabezado,
 .table thead tr,
 .table-hover thead tr {
   background-color: var(--sedh-primary-700) !important;
 }
 
-.table thead th,
-.table .table-encabezado th {
+.table thead th {
   color: var(--sedh-white) !important;
   font-weight: 500 !important;
   background: var(--sedh-primary-700) !important;
@@ -78,13 +164,4 @@ h1 {
 
 .table tbody tr {
   height: 40px;
-}
-
-.table-dark {
-  background-color: var(--sedh-primary-700) !important;
-}
-
-.table-dark th {
-  background-color: var(--sedh-primary-700) !important;
-  color: var(--sedh-white) !important;
 }
