@@ -1,13 +1,9 @@
 <div class="ms-page">
   <div class="ms-container">
 
-    <!-- Encabezado: título + botón Actualizar -->
+    <!-- Encabezado -->
     <div class="ms-header">
       <h1 class="ms-title">Mis Solicitudes</h1>
-      <button class="btn-actualizar" (click)="cargarSolicitudes()" [disabled]="isActualizando">
-        <span *ngIf="isActualizando" class="spinner"></span>
-        {{ isActualizando ? 'Cargando...' : 'Actualizar' }}
-      </button>
     </div>
 
     <!-- Mensaje de error -->
