@@ -4,6 +4,32 @@ h1 {
   color: var(--theme-text-title);
 }
 
+.btn-actualizar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: var(--theme-btn-bg);
+  color: var(--theme-btn-text);
+  box-shadow: 0 2px 8px var(--theme-btn-shadow);
+  transition: background 0.25s, box-shadow 0.25s, opacity 0.25s;
+}
+
+.btn-actualizar:hover:not(:disabled) {
+  background: var(--theme-btn-hover);
+  box-shadow: 0 4px 14px var(--theme-btn-shadow);
+}
+
+.btn-actualizar:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 .table {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: var(--theme-surface);

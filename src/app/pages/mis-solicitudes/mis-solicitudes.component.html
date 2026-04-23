@@ -4,6 +4,14 @@
     <!-- Encabezado -->
     <div class="ms-header">
       <h1 class="ms-title">Mis Solicitudes</h1>
+      <button
+        class="btn-actualizar"
+        (click)="cargarSolicitudes()"
+        [disabled]="isActualizando"
+        title="Actualizar solicitudes">
+        <span *ngIf="!isActualizando">&#x21BB; Actualizar</span>
+        <span *ngIf="isActualizando">Cargando...</span>
+      </button>
     </div>
 
     <!-- Mensaje de error -->
