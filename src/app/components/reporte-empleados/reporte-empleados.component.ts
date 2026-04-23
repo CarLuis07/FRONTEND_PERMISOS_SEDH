@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -11,12 +11,12 @@ import { environment } from '../../../environments/environment';
   templateUrl: './reporte-empleados.component.html',
   styleUrl: './reporte-empleados.component.css'
 })
-export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
+export class ReporteEmpleadosComponent implements OnInit {
   reportes: any[] = [];
   apiUrl = `${environment.apiUrl}/reportePermisos`;
-  intervalId: any;
-  mesBusqueda: number | null = null;
-  esMesValido: boolean = true;
+  mesBusqueda: number = new Date().getMonth() + 1;
+  anioBusqueda: number = 2026;
+  anios: number[] = [2026];
   nombresMeses: string[] = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
@@ -25,33 +25,13 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    // Iniciar con el mes actual
-    const mesActual = new Date().getMonth() + 1; // getMonth() devuelve 0-11
-    this.obtenerReporte(mesActual);
-    this.iniciarActualizacionAutomatica();
+    this.obtenerReporte(this.mesBusqueda, this.anioBusqueda);
   }
 
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
+  obtenerReporte(mes: number, anio: number) {
+    const body = { Mes: mes, Anio: anio };
 
-  obtenerReporte(mes?: number) {
-    // Crear un objeto HttpParams para enviar el parámetro mes de forma segura
-    let params = new HttpParams();
-    
-    // Si se proporciona un mes específico, usarlo
-    if (mes && mes >= 1 && mes <= 12) {
-      params = params.set('Mes', mes.toString());
-    } else {
-      // Si no se especifica mes o es inválido, usar el mes actual
-      const mesActual = new Date().getMonth() + 1;
-      params = params.set('Mes', mesActual.toString());
-    }
-
-    // Usar HttpParams en la petición
-    this.http.get<any[]>(this.apiUrl, { params }).subscribe({
+    this.http.post<any[]>(this.apiUrl, body).subscribe({
       next: (data) => {
         // Procesar los datos para calcular rowspans
         let currentDep = '';
@@ -92,52 +72,7 @@ export class ReporteEmpleadosComponent implements OnInit, OnDestroy {
     });
   }
 
-  validarMes(): void {
-    if (this.mesBusqueda === null) {
-      this.esMesValido = true;
-      return;
-    }
-    
-    this.esMesValido = this.mesBusqueda >= 1 && this.mesBusqueda <= 12;
-  }
-
   buscarPorMes(): void {
-    if (!this.esMesValido) {
-      return;
-    }
-    
-    // Detener la actualización automática durante la búsqueda
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-    }
-    
-    // Si hay un mes válido seleccionado, usarlo para la búsqueda
-    if (this.mesBusqueda && this.mesBusqueda >= 1 && this.mesBusqueda <= 12) {
-      this.obtenerReporte(this.mesBusqueda);
-    } else {
-      // Si no hay mes seleccionado o es inválido, usar el mes actual
-      const mesActual = new Date().getMonth() + 1;
-      this.obtenerReporte(mesActual);
-    }
-    
-    // Reiniciar la actualización automática después de la búsqueda
-    this.iniciarActualizacionAutomatica();
-  }
-
-  iniciarActualizacionAutomatica() {
-    // Solo iniciar actualización si no hay una búsqueda por mes activa
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-    
-    this.intervalId = setInterval(() => {
-      if (this.mesBusqueda && this.mesBusqueda >= 1 && this.mesBusqueda <= 12) {
-        this.obtenerReporte(this.mesBusqueda);
-      } else {
-        const mesActual = new Date().getMonth() + 1;
-        this.obtenerReporte(mesActual);
-      }
-    }, 10000);
+    this.obtenerReporte(this.mesBusqueda, this.anioBusqueda);
   }
 }

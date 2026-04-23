@@ -8,6 +8,4 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar-admin.component.html',
   styleUrl: './navbar-admin.component.css'
 })
-export class NavbarAdminComponent {
-
-}
+export class NavbarAdminComponent {}

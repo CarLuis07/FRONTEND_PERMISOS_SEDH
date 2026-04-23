@@ -152,3 +152,86 @@
   /* Filtro logo: blanco */
   --logo-filter: brightness(0) invert(1);
 }
+
+/* ============================================================
+   Modales NgBootstrap — soporte dark / light
+   (los modales se renderizan en el body, fuera del componente)
+   ============================================================ */
+
+.modal-content {
+  background-color: var(--theme-surface) !important;
+  color: var(--theme-text) !important;
+  border: 1px solid var(--theme-border) !important;
+  transition: background-color 0.35s, color 0.35s, border-color 0.35s;
+}
+
+.modal-header {
+  background-color: var(--sedh-primary-700) !important;
+  border-bottom: 1px solid var(--theme-border) !important;
+}
+
+.modal-title {
+  color: var(--sedh-white) !important;
+  font-weight: 600;
+}
+
+.modal-body {
+  background-color: var(--theme-surface) !important;
+  color: var(--theme-text) !important;
+}
+
+.modal-footer {
+  background-color: var(--theme-surface) !important;
+  border-top: 1px solid var(--theme-border) !important;
+}
+
+/* Etiquetas dentro del modal */
+.modal-body .form-label {
+  color: var(--theme-text-label) !important;
+  font-weight: 500;
+}
+
+/* Inputs y textareas dentro del modal */
+.modal-body .form-control {
+  background-color: var(--theme-input-bg) !important;
+  color: var(--theme-input-text) !important;
+  border-color: var(--theme-input-border) !important;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.modal-body .form-control:focus {
+  border-color: var(--theme-input-focus) !important;
+  box-shadow: 0 0 0 0.2rem rgba(38, 77, 160, 0.2) !important;
+}
+
+.modal-body .form-control[readonly] {
+  background-color: var(--theme-surface-2) !important;
+  color: var(--theme-text-muted) !important;
+}
+
+/* Placeholder */
+.modal-body .form-control::placeholder {
+  color: var(--theme-placeholder) !important;
+}
+
+/* Botón cerrar (X) */
+.modal-header .btn-close {
+  filter: var(--modal-close-filter, none);
+}
+
+:root.dark .modal-header .btn-close {
+  filter: invert(1) grayscale(1) brightness(2);
+}
+
+/* Mensajes de error / emergencia dentro del modal */
+.modal-body .error-message {
+  color: var(--sedh-secondary-400) !important;
+  font-size: 0.82rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.modal-body .emergencia {
+  color: var(--theme-text-muted) !important;
+  font-style: italic;
+}

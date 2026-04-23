@@ -1,25 +1,16 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Reporte de Permisos de Empleados</h2>
-    <div class="d-flex">
-      <div class="input-group me-2" style="width: 200px;">
-        <input 
-          type="number" 
-          class="form-control" 
-          placeholder="Mes (1-12)" 
-          min="1" 
-          max="12" 
-          [(ngModel)]="mesBusqueda" 
-          (keyup)="validarMes()"
-          [class.is-invalid]="!esMesValido">
-        <div *ngIf="!esMesValido" class="invalid-feedback">
-          Ingrese un mes válido (1-12)
-        </div>
-      </div>
-      <button 
-        class="btn btn-primary" 
-        [disabled]="!esMesValido" 
-        (click)="buscarPorMes()">
+    <div class="d-flex align-items-center gap-2">
+      <select class="form-select" style="width: 150px;" [(ngModel)]="mesBusqueda">
+        <option *ngFor="let nombre of nombresMeses; let i = index" [value]="i + 1">
+          {{ nombre }}
+        </option>
+      </select>
+      <select class="form-select" style="width: 110px;" [(ngModel)]="anioBusqueda">
+        <option *ngFor="let anio of anios" [value]="anio">{{ anio }}</option>
+      </select>
+      <button class="btn btn-primary" (click)="buscarPorMes()">
         <i class="bi bi-search me-1"></i> Buscar
       </button>
     </div>
