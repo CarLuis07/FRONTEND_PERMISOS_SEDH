@@ -169,7 +169,7 @@ h1 {
 
 .emergencia {
   background-color: var(--sedh-gray-500);
-  color: var(--sedh-white);
+  color: var(--sedh-white) !important;
   padding: 10px 20px;
   border-radius: 4px;
 }

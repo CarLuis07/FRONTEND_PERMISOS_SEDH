@@ -17,8 +17,9 @@ export const ADMINISTRACION_ROUTES: Routes = [
     path: 'reporte-empleados',
     component: ReporteEmpleadosComponent
   },
-  {
-    path: 'solicitudes-pendientes',
-    component: SolicitudesPendientesComponent
-  }
+  // Temporalmente inhabilitado
+  // {
+  //   path: 'solicitudes-pendientes',
+  //   component: SolicitudesPendientesComponent
+  // }
 ];
