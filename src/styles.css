@@ -129,8 +129,7 @@
   --theme-input-border:   var(--sedh-gray-600);
   --theme-input-focus:    var(--sedh-secondary-400);
   --theme-input-text:     var(--sedh-gray-100);
-  --theme-placeholder:    var(--sedh-gray-500);
-  --theme-btn-bg:         var(--sedh-secondary);
+  --theme-placeholder:    var(--sedh-gray-350);  --theme-btn-bg:         var(--sedh-secondary);
   --theme-btn-hover:      var(--sedh-secondary-400);
   --theme-btn-text:       var(--sedh-white);
   --theme-btn-shadow:     rgba(173, 132, 17, 0.35);

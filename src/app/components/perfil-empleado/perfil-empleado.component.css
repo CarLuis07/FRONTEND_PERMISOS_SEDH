@@ -1,56 +1,127 @@
-.buscarEmpleado{
+/* =============================================
+   Dark/Light: gestionado por ThemeService
+   (.dark en <html> activa tokens --theme-*)
+   ============================================= */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--theme-bg);
+  transition: background 0.35s ease;
+}
+
+.buscarEmpleado {
   margin-block: 50px !important;
 }
 
+/* ── Card ── */
 .card {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: var(--theme-surface);
+  border: 1px solid var(--theme-border);
+  box-shadow: var(--theme-card-shadow);
   margin-bottom: 30px;
+  transition: background-color 0.35s, border-color 0.35s, box-shadow 0.35s;
 }
 
-.card-header, .modal-header{
-  background-color: #296580;
-  color: white;
+.card-header {
+  background-color: var(--sedh-primary-700) !important;
+  color: var(--sedh-white) !important;
   border-radius: 5px 5px 0 0;
+  border-bottom: 1px solid var(--sedh-primary-600) !important;
 }
 
+.card-body {
+  background-color: var(--theme-surface);
+  color: var(--theme-text);
+  transition: background-color 0.35s, color 0.35s;
+}
 
-.form-control:disabled {
-  background-color: #f8f9fa;
+/* ── Inputs ── */
+.form-control {
+  background-color: var(--theme-input-bg) !important;
+  color: var(--theme-input-text) !important;
+  border-color: var(--theme-input-border) !important;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.form-control::placeholder {
+  color: var(--theme-placeholder) !important;
   opacity: 1;
 }
 
-.btn-primary {
-  background-color: #296580;
-  border-color: #296580;
+.form-control:focus {
+  border-color: var(--theme-input-focus) !important;
+  box-shadow: 0 0 0 0.2rem var(--theme-btn-shadow) !important;
 }
 
-.btn-primary:hover {
-  background-color: #1a4d66;
-  border-color: #1a4d66;
+.form-control:disabled,
+.form-control[disabled] {
+  background-color: var(--theme-surface-2) !important;
+  color: var(--theme-text-muted) !important;
+  opacity: 1;
+}
+
+select.form-control option {
+  background-color: var(--theme-input-bg);
+  color: var(--theme-input-text);
+}
+
+/* ── Labels ── */
+.form-group label,
+.form-label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--theme-text-label);
+  transition: color 0.35s;
+}
+
+/* ── Botones ── */
+.btn-primary {
+  background-color: var(--theme-btn-bg) !important;
+  border-color: var(--theme-btn-bg) !important;
+  color: var(--theme-btn-text) !important;
+  box-shadow: 0 2px 8px var(--theme-btn-shadow);
+  transition: background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--theme-btn-hover) !important;
+  border-color: var(--theme-btn-hover) !important;
+  box-shadow: 0 4px 14px var(--theme-btn-shadow);
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  border-color: #6c757d;
+  background-color: var(--sedh-gray-500) !important;
+  border-color: var(--sedh-gray-500) !important;
+  color: var(--sedh-white) !important;
+  transition: background-color 0.25s, border-color 0.25s;
 }
 
-.btn-secondary:hover {
-  background-color: #5a6268;
-  border-color: #545b62;
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--sedh-gray-600) !important;
+  border-color: var(--sedh-gray-600) !important;
 }
 
+.btn-sedh-secondary {
+  background-color: var(--sedh-secondary) !important;
+  border-color: var(--sedh-secondary) !important;
+  color: var(--sedh-white) !important;
+  box-shadow: 0 2px 8px rgba(173, 132, 17, 0.3);
+  transition: background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.btn-sedh-secondary:hover:not(:disabled) {
+  background-color: var(--sedh-secondary-600) !important;
+  border-color: var(--sedh-secondary-600) !important;
+  box-shadow: 0 4px 14px rgba(173, 132, 17, 0.4);
+}
+
+/* ── Alert ── */
 .alert {
   font-size: 14px;
   padding: 8px 15px;
 }
 
-.form-group label {
-  font-weight: 500;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-/* Estilos para el modal */
+/* ── Modal inline ── */
 .modal {
   position: fixed;
   top: 0;
@@ -65,7 +136,6 @@
 .modal-dialog {
   position: relative;
   width: auto;
-  margin: 0.5rem;
   pointer-events: none;
   max-width: 500px;
   margin: 1.75rem auto;
@@ -77,11 +147,12 @@
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid rgba(0,0,0,0.2);
+  background-color: var(--theme-surface) !important;
+  color: var(--theme-text) !important;
+  border: 1px solid var(--theme-border) !important;
   border-radius: 0.3rem;
   outline: 0;
+  transition: background-color 0.35s, color 0.35s, border-color 0.35s;
 }
 
 .modal-header {
@@ -89,15 +160,32 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid #dee2e6;
+  background-color: var(--sedh-primary-700) !important;
+  color: var(--sedh-white) !important;
+  border-bottom: 1px solid var(--sedh-primary-600) !important;
   border-top-left-radius: calc(0.3rem - 1px);
   border-top-right-radius: calc(0.3rem - 1px);
+}
+
+.modal-title {
+  color: var(--sedh-white) !important;
+}
+
+.modal-header .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+  opacity: 0.85;
+}
+
+.modal-header .btn-close:hover {
+  opacity: 1;
 }
 
 .modal-body {
   position: relative;
   flex: 1 1 auto;
   padding: 1rem;
+  background-color: var(--theme-surface) !important;
+  color: var(--theme-text) !important;
 }
 
 .modal-footer {
@@ -106,7 +194,8 @@
   align-items: center;
   justify-content: flex-end;
   padding: 0.75rem;
-  border-top: 1px solid #dee2e6;
+  background-color: var(--theme-surface) !important;
+  border-top: 1px solid var(--theme-border) !important;
   border-bottom-right-radius: calc(0.3rem - 1px);
   border-bottom-left-radius: calc(0.3rem - 1px);
 }

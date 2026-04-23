@@ -1,17 +1,31 @@
+/* =============================================
+   Dark/Light: gestionado por ThemeService
+   (.dark en <html> activa tokens --theme-*)
+   ============================================= */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--theme-bg);
+  transition: background 0.35s ease;
+}
+
 .form-container {
   max-width: 1500px;
   margin: 0 auto;
   margin-top: 75px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: var(--theme-surface);
+  border: 1px solid var(--theme-border);
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--theme-card-shadow);
+  transition: background-color 0.35s, border-color 0.35s, box-shadow 0.35s;
 }
 
 h1 {
   text-align: center;
   margin-bottom: 20px;
-  color: #296580;
+  color: var(--theme-text-title);
+  transition: color 0.35s;
 }
 
 .form-row {
@@ -29,34 +43,66 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
   font-size: 12px;
+  color: var(--theme-text-label);
+  transition: color 0.35s;
 }
 
-input.form-control, select.form-control {
+input.form-control,
+select.form-control {
   width: 100%;
   padding: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--theme-input-border);
   border-radius: 4px;
   font-size: 12px;
+  background-color: var(--theme-input-bg);
+  color: var(--theme-input-text);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-button.btn {
+input.form-control:focus,
+select.form-control:focus {
+  border-color: var(--theme-input-focus);
+  box-shadow: 0 0 0 0.2rem var(--theme-btn-shadow);
+  outline: none;
+}
+
+input.form-control::placeholder {
+  color: var(--theme-placeholder);
+}
+
+/* Opciones del <select> en dark mode */
+select.form-control option {
+  background-color: var(--theme-input-bg);
+  color: var(--theme-input-text);
+}
+
+button.btn.btn-primary {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #296580;
-  color: white;
-  border: none;
+  background-color: var(--theme-btn-bg) !important;
+  border-color: var(--theme-btn-bg) !important;
+  color: var(--theme-btn-text) !important;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  box-shadow: 0 2px 8px var(--theme-btn-shadow);
+  transition: background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
 
-button.btn:hover {
-  background-color: #1a4d66;
+button.btn.btn-primary:hover:not(:disabled) {
+  background-color: var(--theme-btn-hover) !important;
+  border-color: var(--theme-btn-hover) !important;
+  box-shadow: 0 4px 14px var(--theme-btn-shadow);
 }
 
-.message{
-  color: #1a4d66;
+button.btn.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.message {
+  color: var(--theme-text);
   font-size: 12px;
   margin-top: 5px;
 }

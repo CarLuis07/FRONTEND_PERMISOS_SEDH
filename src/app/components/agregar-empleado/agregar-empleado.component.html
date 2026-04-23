@@ -118,7 +118,7 @@
 <ng-template #modalContent let-modal>
   <div class="modal-header" [ngClass]="{'bg-success text-white': isSuccess, 'bg-danger text-white': !isSuccess}">
     <h4 class="modal-title">{{ modalTitle }}</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body text-center">
     <p class="message">{{ modalMessage }}</p>
