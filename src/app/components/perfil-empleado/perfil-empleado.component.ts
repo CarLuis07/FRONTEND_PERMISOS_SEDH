@@ -75,7 +75,7 @@ export class PerfilEmpleadoComponent {
       idCargo: data.id_cargo,
       dependencia: data.nom_dependencia,
       idDependencia: data.id_dependencia,
-      jefeInmediato: data.id_sup_inmediato,
+      jefeInmediato: data.jefe_inmediato,
       sexo: data.sexo === 'Masculino' ? 'M' : 'F',
       estadoCivil: data.estado_civil,
       departamento: data.departamento,
