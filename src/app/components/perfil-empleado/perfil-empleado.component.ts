@@ -19,6 +19,12 @@ export class PerfilEmpleadoComponent {
   guardandoCambios: boolean = false;
   mensajeEdicion: string = '';
   errorEdicion: boolean = false;
+
+  // Datos para selects de edición
+  datosUrl = `${environment.apiUrl}/datos-sedh`;
+  dependencias: any[] = [];
+  cargos: any[] = [];
+  filteredCargosEdicion: any[] = [];
   
   // Variables para el modal de edición de horas
   mostrarModal: boolean = false;
@@ -44,7 +50,7 @@ export class PerfilEmpleadoComponent {
     
     this.http.post(`${environment.apiUrl}/empleados/buscar`, payload)
       .subscribe({
-        next: (data: any) => {
+      next: (data: any) => {
           this.empleado = this.mapearDatosEmpleado(data);
           this.isLoading = false;
         },
@@ -66,12 +72,13 @@ export class PerfilEmpleadoComponent {
       telefono: data.num_telefono,
       tipoContrato: data.tipo_contratacion,
       cargo: data.cargo,
+      idCargo: data.id_cargo,
       dependencia: data.nom_dependencia,
+      idDependencia: data.id_dependencia,
       jefeInmediato: data.id_sup_inmediato,
       sexo: data.sexo === 'Masculino' ? 'M' : 'F',
       estadoCivil: data.estado_civil,
       departamento: data.departamento,
-      municipio: data.municipio,
       horasDisponibles: data.hor_disponibles
     };
   }
@@ -82,7 +89,34 @@ export class PerfilEmpleadoComponent {
     } else {
       this.mensajeEdicion = '';
       this.modoEdicion = true;
+      this.cargarDatosEdicion();
     }
+  }
+
+  cargarDatosEdicion() {
+    if (this.dependencias.length > 0) {
+      this.filtrarCargos();
+      return;
+    }
+    this.http.get<any>(this.datosUrl).subscribe({
+      next: (response) => {
+        this.dependencias = response.dependencias;
+        this.cargos = response.cargos;
+        this.filtrarCargos();
+      },
+      error: (error) => console.error('Error al cargar datos:', error)
+    });
+  }
+
+  filtrarCargos() {
+    this.filteredCargosEdicion = this.cargos.filter(
+      c => c.id_dependencia === +this.empleado.idDependencia
+    );
+  }
+
+  onDependenciaChangeEdicion() {
+    this.empleado.idCargo = null;
+    this.filtrarCargos();
   }
 
   cancelarEdicion() {
@@ -98,8 +132,8 @@ export class PerfilEmpleadoComponent {
 
     const body = {
       email_institucional: this.empleado.emailInstitucional,
-      cargo: this.empleado.cargo,
-      nom_dependencia: this.empleado.dependencia,
+      id_dependencia: this.empleado.idDependencia,
+      id_cargo: this.empleado.idCargo,
       id_sup_inmediato: this.empleado.jefeInmediato,
       num_telefono: this.empleado.telefono,
       estado_civil: this.empleado.estadoCivil,
