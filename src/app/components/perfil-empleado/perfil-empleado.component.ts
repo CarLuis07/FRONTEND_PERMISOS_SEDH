@@ -25,6 +25,8 @@ export class PerfilEmpleadoComponent {
   dependencias: any[] = [];
   cargos: any[] = [];
   filteredCargosEdicion: any[] = [];
+  tiposContrataciones: any[] = [];
+  estadosCiviles: any[] = [];
   
   // Variables para el modal de edición de horas
   mostrarModal: boolean = false;
@@ -71,13 +73,16 @@ export class PerfilEmpleadoComponent {
       dni: data.num_identidad,
       telefono: data.num_telefono,
       tipoContrato: data.tipo_contratacion,
+      idTipoContrato: null,
       cargo: data.cargo,
-      idCargo: data.id_cargo,
+      idCargo: null,
       dependencia: data.nom_dependencia,
-      idDependencia: data.id_dependencia,
+      idDependencia: null,
       jefeInmediato: data.jefe_inmediato,
       sexo: data.sexo === 'Masculino' ? 'M' : 'F',
       estadoCivil: data.estado_civil,
+      idEstadoCivil: null,
+      actLaboral: data.act_laboral,
       departamento: data.departamento,
       horasDisponibles: data.hor_disponibles
     };
@@ -95,17 +100,31 @@ export class PerfilEmpleadoComponent {
 
   cargarDatosEdicion() {
     if (this.dependencias.length > 0) {
-      this.filtrarCargos();
+      this.preSeleccionarCatalogos();
       return;
     }
     this.http.get<any>(this.datosUrl).subscribe({
       next: (response) => {
         this.dependencias = response.dependencias;
         this.cargos = response.cargos;
-        this.filtrarCargos();
+        this.tiposContrataciones = response.tipos_contrataciones;
+        this.estadosCiviles = response.estados_civiles;
+        this.preSeleccionarCatalogos();
       },
       error: (error) => console.error('Error al cargar datos:', error)
     });
+  }
+
+  preSeleccionarCatalogos() {
+    const dep = this.dependencias.find(d => d.descripcion === this.empleado.dependencia);
+    this.empleado.idDependencia = dep?.id ?? null;
+    this.filtrarCargos();
+    const cargo = this.filteredCargosEdicion.find(c => c.descripcion === this.empleado.cargo);
+    this.empleado.idCargo = cargo?.id ?? null;
+    const tipo = this.tiposContrataciones.find(t => t.descripcion === this.empleado.tipoContrato);
+    this.empleado.idTipoContrato = tipo?.id ?? null;
+    const estado = this.estadosCiviles.find(e => e.descripcion === this.empleado.estadoCivil);
+    this.empleado.idEstadoCivil = estado?.id ?? null;
   }
 
   filtrarCargos() {
@@ -132,21 +151,35 @@ export class PerfilEmpleadoComponent {
 
     const body = {
       email_institucional: this.empleado.emailInstitucional,
-      id_dependencia: this.empleado.idDependencia,
-      id_cargo: this.empleado.idCargo,
-      id_sup_inmediato: this.empleado.jefeInmediato,
+      act_laboralmente: this.empleado.actLaboral,
       num_telefono: this.empleado.telefono,
-      estado_civil: this.empleado.estadoCivil,
-      tipo_contratacion: this.empleado.tipoContrato
+      id_tipo_contratacion: this.empleado.idTipoContrato,
+      id_cargo: this.empleado.idCargo,
+      nombre_jefe: this.empleado.jefeInmediato,
+      id_estado_civil: this.empleado.idEstadoCivil
     };
 
-    this.http.put(`${environment.apiUrl}/empleados/${this.empleado.emailInstitucional}`, body)
+    this.http.put(`${environment.apiUrl}/empleados/actualizar`, body)
       .subscribe({
         next: () => {
           this.guardandoCambios = false;
           this.mensajeEdicion = 'Cambios guardados correctamente';
           this.errorEdicion = false;
           this.modoEdicion = false;
+
+          // Actualizar textos visibles con los valores seleccionados
+          const dep = this.dependencias.find(d => d.id === +this.empleado.idDependencia);
+          if (dep) this.empleado.dependencia = dep.descripcion;
+
+          const cargo = this.filteredCargosEdicion.find(c => c.id === +this.empleado.idCargo);
+          if (cargo) this.empleado.cargo = cargo.descripcion;
+
+          const tipo = this.tiposContrataciones.find(t => t.id === +this.empleado.idTipoContrato);
+          if (tipo) this.empleado.tipoContrato = tipo.descripcion;
+
+          const estado = this.estadosCiviles.find(e => e.id === +this.empleado.idEstadoCivil);
+          if (estado) this.empleado.estadoCivil = estado.descripcion;
+
           setTimeout(() => { this.mensajeEdicion = ''; }, 3000);
         },
         error: (error) => {
