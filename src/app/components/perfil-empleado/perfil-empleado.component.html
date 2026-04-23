@@ -25,10 +25,15 @@
   <div class="card" *ngIf="empleado">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h3>Perfil del Empleado</h3>
-      <button class="btn btn-primary" 
-              (click)="toggleEdicion()">
-        {{ modoEdicion ? 'Guardar Cambios' : 'Editar Perfil' }}
-      </button>
+      <div class="d-flex gap-2 align-items-center">
+        <span *ngIf="mensajeEdicion" class="alert py-1 px-2 mb-0" [ngClass]="{'alert-success': !errorEdicion, 'alert-danger': errorEdicion}">{{ mensajeEdicion }}</span>
+        <button class="btn" [ngClass]="modoEdicion ? 'btn-success' : 'btn-primary'"
+                (click)="toggleEdicion()" [disabled]="guardandoCambios">
+          <span *ngIf="guardandoCambios" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          {{ modoEdicion ? 'Guardar Cambios' : 'Editar Perfil' }}
+        </button>
+        <button *ngIf="modoEdicion" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+      </div>
     </div>
     <div class="card-body">
       <div class="row">
@@ -45,21 +50,21 @@
             <input type="text" 
                    class="form-control" 
                    [(ngModel)]="empleado.nombre" 
-                   [disabled]="!modoEdicion">
+                   [disabled]="true">
           </div>
           <div class="form-group mb-3">
             <label>Fecha de Ingreso:</label>
             <input type="date" 
                    class="form-control" 
                    [(ngModel)]="empleado.fechaIngreso" 
-                   [disabled]="!modoEdicion">
+                   [disabled]="true">
           </div>
           <div class="form-group mb-3">
             <label>DNI:</label>
             <input type="text" 
                    class="form-control" 
                    [(ngModel)]="empleado.dni" 
-                   [disabled]="!modoEdicion">
+                   [disabled]="true">
           </div>
           <div class="form-group mb-3">
             <label>Teléfono:</label>
@@ -102,7 +107,7 @@
             <label>Sexo:</label>
             <select class="form-control" 
                     [(ngModel)]="empleado.sexo" 
-                    [disabled]="!modoEdicion">
+                    [disabled]="true">
               <option value="M">Masculino</option>
               <option value="F">Femenino</option>
             </select>
@@ -130,13 +135,6 @@
                 <i class="bi bi-pencil"></i> Editar Horas
               </button>
             </div>
-          </div>
-          <div class="form-group mb-3">
-            <label>Municipio:</label>
-            <input type="text" 
-                   class="form-control" 
-                   [(ngModel)]="empleado.municipio" 
-                   [disabled]="!modoEdicion">
           </div>
         </div>
       </div>

@@ -16,6 +16,9 @@ export class PerfilEmpleadoComponent {
   modoEdicion: boolean = false;
   errorMessage: string = '';
   isLoading: boolean = false;
+  guardandoCambios: boolean = false;
+  mensajeEdicion: string = '';
+  errorEdicion: boolean = false;
   
   // Variables para el modal de edición de horas
   mostrarModal: boolean = false;
@@ -76,26 +79,47 @@ export class PerfilEmpleadoComponent {
   toggleEdicion() {
     if (this.modoEdicion) {
       this.guardarCambios();
+    } else {
+      this.mensajeEdicion = '';
+      this.modoEdicion = true;
     }
-    this.modoEdicion = !this.modoEdicion;
+  }
+
+  cancelarEdicion() {
+    this.modoEdicion = false;
+    this.mensajeEdicion = '';
+    // Re-cargar datos originales
+    this.buscarEmpleado();
   }
 
   guardarCambios() {
-    // Aquí necesitaríamos mapear de vuelta los datos para el API
-    const datosActualizados = {
+    this.guardandoCambios = true;
+    this.mensajeEdicion = '';
+
+    const body = {
       email_institucional: this.empleado.emailInstitucional,
-      // Agregar los demás campos según sea necesario
+      cargo: this.empleado.cargo,
+      nom_dependencia: this.empleado.dependencia,
+      id_sup_inmediato: this.empleado.jefeInmediato,
+      num_telefono: this.empleado.telefono,
+      estado_civil: this.empleado.estadoCivil,
+      tipo_contratacion: this.empleado.tipoContrato
     };
-    
-    this.http.put(`${environment.apiUrl}/empleados/${this.empleado.emailInstitucional}`, datosActualizados)
+
+    this.http.put(`${environment.apiUrl}/empleados/${this.empleado.emailInstitucional}`, body)
       .subscribe({
         next: () => {
-          console.log('Cambios guardados');
-          // Mostrar mensaje de éxito
+          this.guardandoCambios = false;
+          this.mensajeEdicion = 'Cambios guardados correctamente';
+          this.errorEdicion = false;
+          this.modoEdicion = false;
+          setTimeout(() => { this.mensajeEdicion = ''; }, 3000);
         },
         error: (error) => {
           console.error('Error al guardar cambios:', error);
-          // Mostrar mensaje de error
+          this.guardandoCambios = false;
+          this.mensajeEdicion = 'Error al guardar los cambios';
+          this.errorEdicion = true;
         }
       });
   }
