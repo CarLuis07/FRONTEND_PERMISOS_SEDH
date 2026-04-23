@@ -1,18 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../environments/environment';
+
+interface DepGroup {
+  nom_dependencia: string;
+  totalEmpleados: number;
+  totalPermisos: number;
+  registros: any[];
+}
 
 @Component({
   selector: 'app-reporte-empleados',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgbModule],
   templateUrl: './reporte-empleados.component.html',
   styleUrl: './reporte-empleados.component.css'
 })
 export class ReporteEmpleadosComponent implements OnInit {
-  reportes: any[] = [];
+  dependencias: DepGroup[] = [];
+  depSeleccionada: DepGroup | null = null;
+
   apiUrl = `${environment.apiUrl}/reportePermisos`;
   mesBusqueda: number = new Date().getMonth() + 1;
   anioBusqueda: number = 2026;
@@ -22,7 +32,9 @@ export class ReporteEmpleadosComponent implements OnInit {
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
   ];
 
-  constructor(private http: HttpClient) {}
+  @ViewChild('modalDetalle') modalDetalle: any;
+
+  constructor(private http: HttpClient, private modalService: NgbModal) {}
 
   ngOnInit() {
     this.obtenerReporte(this.mesBusqueda, this.anioBusqueda);
@@ -35,43 +47,31 @@ export class ReporteEmpleadosComponent implements OnInit {
 
     this.http.get<any[]>(this.apiUrl, { params }).subscribe({
       next: (data) => {
-        // Procesar los datos para calcular rowspans
-        let currentDep = '';
-        let currentEmp = '';
-        let rowspanDep = 0;
-        let rowspanEmp = 0;
-        
-        // Primer paso: calcular rowspans
-        this.reportes = data.map((item, index, array) => {
-          if (item.nom_dependencia !== currentDep) {
-            currentDep = item.nom_dependencia;
-            rowspanDep = array.filter(x => x.nom_dependencia === currentDep).length;
-            item.showDep = true;
-            item.rowspanDep = rowspanDep;
-          } else {
-            item.showDep = false;
+        // Agrupar por dependencia
+        const map = new Map<string, any[]>();
+        for (const item of data) {
+          if (!map.has(item.nom_dependencia)) {
+            map.set(item.nom_dependencia, []);
           }
+          map.get(item.nom_dependencia)!.push(item);
+        }
 
-          if (item.empleado !== currentEmp) {
-            currentEmp = item.empleado;
-            rowspanEmp = array.filter(x => 
-              x.nom_dependencia === currentDep && 
-              x.empleado === currentEmp
-            ).length;
-            item.showEmp = true;
-            item.rowspanEmp = rowspanEmp;
-            item.empleadoClass = 'empleado-' + (index % 2 === 0 ? 'par' : 'impar');
-          } else {
-            item.showEmp = false;
-          }
-
-          return item;
-        });
+        this.dependencias = Array.from(map.entries()).map(([nom, registros]) => ({
+          nom_dependencia: nom,
+          totalEmpleados: new Set(registros.map(r => r.empleado)).size,
+          totalPermisos: registros.length,
+          registros
+        }));
       },
       error: (error) => {
         console.error('Error al obtener reporte:', error);
       }
     });
+  }
+
+  abrirModal(dep: DepGroup) {
+    this.depSeleccionada = dep;
+    this.modalService.open(this.modalDetalle, { size: 'xl', centered: true, scrollable: true });
   }
 
   buscarPorMes(): void {

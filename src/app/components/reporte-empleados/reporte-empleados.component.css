@@ -1,262 +1,246 @@
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #296580;
-}
-  
-.table {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-  
-.table .table-encabezado,
-.table thead tr,
-.table-hover thead tr {
-  background-color: #296580 !important;
-}
-  
-.table thead th,
-.table .table-encabezado th {
-  color: white !important;
-  font-weight: 500 !important;
-  background:  #040505;
+﻿/* =============================================
+   Dark/Light: gestionado por ThemeService
+   (.dark en <html> activa tokens --theme-*)
+   ============================================= */
+:host {
+  display: block;
+  min-height: 100vh;
 }
 
-
-.table-responsive {
-    border-radius: 8px;
-    overflow: auto;
-    max-height: 600px; /* Aumentado para mejor visualización */
-    overflow-x: auto;
-    overflow-y: auto;
+.re-page {
+  min-height: 100vh;
+  background: var(--theme-bg);
+  transition: background 0.35s ease;
 }
 
-
-.table thead {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    text-align: center;
+.re-container {
+  padding: 2rem 1.5rem;
 }
 
-  .table thead th {
-    color: white !important;
-    text-align: center;
-    vertical-align: middle;
-  }
-  
-  .table tbody {
-    height: 100%;
-    text-align: center;
-  }
-
-  .table tbody tr {
-    background-color: transparent !important;
-  }
-
-  .row-even {
-    background-color: #f8f9fa !important;
-  }
-
-  .row-odd {
-    background-color: #ffffff !important;
-  }
-
-  .table td {
-    vertical-align: middle !important;
-    padding: 12px !important;
-    float: none;
-    position: relative;
-  }
-
-  .td-center {
-    text-align: center !important;
-    vertical-align: middle !important;
-  }
-
-  .table tbody tr:hover {
-    background-color: rgba(41, 101, 128, 0.1) !important;
-  }
-
-.empleado-par {
-  background-color: #f8f9fa !important;
+/* ── Encabezado ── */
+.re-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 15px;
+  margin-bottom: 2rem;
 }
 
-.empleado-impar {
-  background-color: #ffffff !important;
-}
-
-.container {
-text-align: center;
-  margin-top: 60px !important;
-}
-
-h2 {
-  color: #296580;
-  margin-bottom: 20px;
-}
-
-/* Ajustes base de la tabla */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  height: 100%;
-}
-
-/* Ajustes para todas las celdas */
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center !important;
-  vertical-align: middle !important;
-}
-
-/* Ajustes específicos para celdas con rowspan */
-td[rowspan] {
-  vertical-align: middle !important;
-  position: sticky;
-  height: auto;
-  background-clip: padding-box;
-  display: table-cell;
-}
-
-/* Ajustes para todas las columnas de datos */
-td:nth-child(3),  /* Fecha Solicitud */
-td:nth-child(4),  /* Tipo Permiso */
-td:nth-child(5),  /* Hora Salida */
-td:nth-child(6),  /* Hora Retorno */
-td:nth-child(7)   /* Tiempo Permiso */ {
-  text-align: center !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Ajustes específicos para Dependencia y Empleado */
-td:nth-child(1), 
-td:nth-child(2) {
-  white-space: normal;
-  word-wrap: break-word;
-  height: 100%;
-  vertical-align: middle !important;
-}
-
-/* Mantener colores de fondo consistentes */
-.empleado-par td[rowspan],
-.empleado-impar td[rowspan] {
-  background-color: inherit;
-}
-
-/* Definir anchos específicos para cada columna */
-th:nth-child(1), td:nth-child(1) { width: 15%; } /* Dependencia */
-th:nth-child(2), td:nth-child(2) { width: 15%; } /* Empleado */
-th:nth-child(3), td:nth-child(3) { width: 10%; } /* Fecha Solicitud */
-th:nth-child(4), td:nth-child(4) { width: 12%; } /* Tipo Permiso */
-th:nth-child(5), td:nth-child(5) { width: 8%; }  /* Hora Salida */
-th:nth-child(6), td:nth-child(6) { width: 8%; }  /* Hora Retorno */
-th:nth-child(7), td:nth-child(7) { width: 8%; }  /* Tiempo Permiso */
-th:nth-child(8), td:nth-child(8) { width: 24%; } /* Motivo */
-
-/* Evitar que el texto se desborde */
-td {
-  height: 100%;
-  line-height: 1.5;
-  padding: 12px 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Para el texto largo en la columna de motivo */
-td:last-child {
-  white-space: normal;
-  text-align: left;
-}
-
-/* Mantener la alineación del rowspan */
-[rowspan] {
-  vertical-align: middle;
-  height: 100%;
-  position: relative;
-  background-clip: padding-box;
-}
-
-/* Ajustes específicos para Dependencia y Empleado */
-td:nth-child(1), 
-td:nth-child(2) {
-  white-space: normal;
-  word-wrap: break-word;
-  min-height: 100%;
-}
-
-/* Mantener el fondo consistente en celdas combinadas */
-.empleado-par [rowspan],
-.empleado-impar [rowspan] {
-  background-color: inherit;
-}
-
-/* Alternar colores para empleados */
-.empleado-par {
-  background-color: #f9f9f9;
-}
-
-.empleado-impar {
-  background-color: #ffffff;
-}
-
-/* Estilos para el campo de búsqueda y botón */
-.input-group {
-  max-width: 200px;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
+.re-header h2 {
+  color: var(--theme-text-title);
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 700;
   margin: 0;
+  transition: color 0.35s;
 }
 
-input[type="number"] {
-  -moz-appearance: textfield;
+.re-filtros {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Selects y botón ── */
+.form-select {
+  background-color: var(--theme-input-bg) !important;
+  color: var(--theme-input-text) !important;
+  border-color: var(--theme-input-border) !important;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.form-select:focus {
+  border-color: var(--theme-input-focus) !important;
+  box-shadow: 0 0 0 0.2rem var(--theme-btn-shadow) !important;
 }
 
 .btn-primary {
-  background-color: #296580;
-  border-color: #296580;
+  background-color: var(--theme-btn-bg) !important;
+  border-color: var(--theme-btn-bg) !important;
+  color: var(--theme-btn-text) !important;
+  box-shadow: 0 2px 8px var(--theme-btn-shadow);
+  transition: background 0.25s, box-shadow 0.25s;
 }
 
-.btn-primary:hover, .btn-primary:focus {
-  background-color: #1e4f63;
-  border-color: #1e4f63;
+.btn-primary:hover {
+  background-color: var(--theme-btn-hover) !important;
+  border-color: var(--theme-btn-hover) !important;
+  box-shadow: 0 4px 14px var(--theme-btn-shadow);
 }
 
-.btn-primary:disabled {
-  background-color: #6c757d;
-  border-color: #6c757d;
+/* ── Sin resultados ── */
+.re-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--theme-text-muted);
 }
 
-.invalid-feedback {
+.re-empty-icon {
+  font-size: 3rem;
   display: block;
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  margin-top: 0.25rem;
-  font-size: 0.875em;
-  color: #dc3545;
+  margin-bottom: 1rem;
+  opacity: 0.4;
 }
 
-/* Ajustes para dispositivos móviles */
-@media (max-width: 768px) {
-  .d-flex {
+/* ── Grid de cards ── */
+.re-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+  gap: 0.6rem;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* ── Card ── */
+.re-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 1rem;
+  background: var(--theme-card-bg);
+  border: 1px solid var(--theme-card-border);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.re-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+  border-color: var(--sedh-primary-400);
+}
+
+.re-card:focus-visible {
+  outline: 2px solid var(--sedh-primary-400);
+  outline-offset: 3px;
+}
+
+.re-card-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--sedh-primary-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sedh-white);
+  font-size: 1rem;
+}
+
+.re-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.re-card-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--theme-text);
+  margin: 0 0 0.2rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.re-card-stats {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  font-size: 0.74rem;
+  color: var(--theme-text-muted);
+}
+
+.re-card-arrow {
+  flex-shrink: 0;
+  color: var(--theme-text-muted);
+  font-size: 0.9rem;
+  transition: transform 0.18s;
+}
+
+.re-card:hover .re-card-arrow {
+  transform: translateX(4px);
+  color: var(--sedh-primary-400);
+}
+
+/* ── Tabla dentro del modal ── */
+.re-modal-body {
+  padding: 0 !important;
+}
+
+.re-modal-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.re-modal-table {
+  width: 100%;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.re-modal-table td,
+.re-modal-table th {
+  border-color: var(--theme-border);
+  vertical-align: middle;
+  text-align: center;
+  padding: 8px 10px;
+}
+
+.re-modal-table thead tr {
+  background-color: var(--sedh-primary-700) !important;
+}
+
+.re-modal-table thead th {
+  color: var(--sedh-white) !important;
+  font-weight: 500 !important;
+  background: var(--sedh-primary-700) !important;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.re-modal-table .emp-par > td,
+.re-modal-table tr.emp-par td {
+  background-color: var(--theme-surface-2) !important;
+  color: var(--theme-text) !important;
+}
+
+.re-modal-table .emp-impar > td,
+.re-modal-table tr.emp-impar td {
+  background-color: var(--theme-surface) !important;
+  color: var(--theme-text) !important;
+}
+
+.re-modal-table tbody tr:hover td {
+  filter: brightness(0.94);
+}
+
+/* ── Footer del modal ── */
+.re-modal-resumen {
+  font-size: 0.85rem;
+  color: var(--theme-text-muted);
+  margin-right: auto;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .re-header {
     flex-direction: column;
-    align-items: stretch !important;
+    align-items: stretch;
   }
-  
-  .input-group {
-    max-width: 100%;
-    margin-bottom: 10px;
+
+  .re-filtros {
+    justify-content: flex-end;
   }
-  
-  h2 {
-    margin-bottom: 15px;
+
+  .re-grid {
+    grid-template-columns: 1fr;
   }
 }
