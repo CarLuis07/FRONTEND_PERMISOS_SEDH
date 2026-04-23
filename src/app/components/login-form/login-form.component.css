@@ -14,7 +14,7 @@
 .login-page {
   position: relative;
   min-height: 100vh;
-  background: var(--theme-bg);
+  background: var(--theme-bg-login);
   transition: background 0.35s ease;
 }
 
@@ -62,8 +62,8 @@
 }
 
 .card-ghost-right {
-  opacity: 0.45;
-  transform: rotate(6deg) translateX(38px) translateY(4px);
+  opacity: 0.32;
+  transform: rotate(4deg) translateX(16px) translateY(4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
   z-index: 0;
 }
