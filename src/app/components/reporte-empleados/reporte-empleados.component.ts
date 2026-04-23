@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -29,9 +29,11 @@ export class ReporteEmpleadosComponent implements OnInit {
   }
 
   obtenerReporte(mes: number, anio: number) {
-    const body = { Mes: mes, Anio: anio };
+    const params = new HttpParams()
+      .set('anio', anio.toString())
+      .set('mes', mes.toString());
 
-    this.http.post<any[]>(this.apiUrl, body).subscribe({
+    this.http.get<any[]>(this.apiUrl, { params }).subscribe({
       next: (data) => {
         // Procesar los datos para calcular rowspans
         let currentDep = '';

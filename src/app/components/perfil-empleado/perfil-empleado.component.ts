@@ -19,7 +19,7 @@ export class PerfilEmpleadoComponent {
   
   // Variables para el modal de edición de horas
   mostrarModal: boolean = false;
-  nuevasHoras: number | null = null;
+  nuevasHoras: string | null = null;
   mensajeHoras: string = '';
   errorHoras: boolean = false;
   actualizandoHoras: boolean = false;
@@ -114,21 +114,33 @@ export class PerfilEmpleadoComponent {
   }
   
   actualizarHoras() {
-    if (this.nuevasHoras === null) {
+    if (!this.nuevasHoras) {
       this.mensajeHoras = 'Por favor ingrese un valor para las horas disponibles';
       this.errorHoras = true;
       return;
     }
-    
+
     this.actualizandoHoras = true;
     this.mensajeHoras = '';
-    
-    const payload = {
+
+    const token = localStorage.getItem('token');
+    let actualizadoPor = '';
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      actualizadoPor = payload.sub || '';
+    }
+
+    const horaFormateada = /^\d{2}:\d{2}$/.test(this.nuevasHoras)
+      ? `${this.nuevasHoras}:00`
+      : this.nuevasHoras;
+
+    const body = {
       email_institucional: this.empleado.emailInstitucional,
-      hor_disponibles: this.nuevasHoras
+      hor_disponibles: horaFormateada,
+      actualizado_por: actualizadoPor
     };
-    
-    this.http.put(`${environment.apiUrl}/empleados/actualizar-horas`, payload)
+
+    this.http.put(`${environment.apiUrl}/actualizarHorasDisponibles/`, body)
       .subscribe({
         next: (response: any) => {
           this.actualizandoHoras = false;
